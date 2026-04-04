@@ -27,7 +27,7 @@ const socialLinks = [
       <p class="cta-subline">Agenda una llamada de 30 min sin costo. Hablamos de tu proyecto.</p>
     </div>
 
-    <form class="contact-form" action="#" method="POST">
+    <form class="contact-form" id="contact-form">
       <div class="form-field">
         <label for="name">Nombre</label>
         <input id="name" type="text" name="name" placeholder="Tu nombre completo" required />
@@ -40,7 +40,16 @@ const socialLinks = [
         <label for="message">Mensaje</label>
         <textarea id="message" name="message" rows="4" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
       </div>
-      <button type="submit" class="submit-btn">Agendar mi llamada gratis</button>
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <span id="btn-text">Enviar mensaje</span>
+        <span id="btn-loading" style="display:none">Enviando...</span>
+      </button>
+      <p id="form-success" class="form-feedback form-feedback--success" style="display:none">
+        ✓ Mensaje enviado. Te respondo pronto.
+      </p>
+      <p id="form-error" class="form-feedback form-feedback--error" style="display:none">
+        Algo salió mal. Intenta de nuevo.
+      </p>
     </form>
 
     <div class="social-links">
@@ -54,6 +63,53 @@ const socialLinks = [
 
   </div>
 </section>
+
+<script>
+  const form      = document.getElementById('contact-form') as HTMLFormElement;
+  const btnText   = document.getElementById('btn-text') as HTMLElement;
+  const btnLoad   = document.getElementById('btn-loading') as HTMLElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const success   = document.getElementById('form-success') as HTMLElement;
+  const error     = document.getElementById('form-error') as HTMLElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Loading state
+    btnText.style.display = 'none';
+    btnLoad.style.display = 'inline';
+    submitBtn.disabled = true;
+    success.style.display = 'none';
+    error.style.display = 'none';
+
+    const data = {
+      name:    (form.querySelector('#name') as HTMLInputElement).value,
+      email:   (form.querySelector('#email') as HTMLInputElement).value,
+      message: (form.querySelector('#message') as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        success.style.display = 'block';
+        form.reset();
+      } else {
+        error.style.display = 'block';
+      }
+    } catch {
+      error.style.display = 'block';
+    } finally {
+      btnText.style.display = 'inline';
+      btnLoad.style.display = 'none';
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 
 <style>
   .contact-section { background: var(--blue-primary); }
@@ -133,6 +189,11 @@ const socialLinks = [
   }
 
   .submit-btn:hover { opacity: 0.9; }
+  .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  .form-feedback { font-size: 14px; font-weight: 500; text-align: center; padding: 10px; border-radius: var(--radius-sm); }
+  .form-feedback--success { background: rgba(255,255,255,0.15); color: #86efac; }
+  .form-feedback--error   { background: rgba(255,100,100,0.2);  color: #fca5a5; }
 
   /* Social links */
   .social-links { display: flex; align-items: center; gap: 24px; }
