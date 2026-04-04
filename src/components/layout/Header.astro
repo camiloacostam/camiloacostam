@@ -1,0 +1,188 @@
+---
+---
+<header>
+  <nav class="navbar">
+    <a href="/" class="logo">Camilo Acosta</a>
+
+    <ul class="nav-links">
+      <li><a href="/#servicios">Servicios</a></li>
+      <li><a href="/proyectos">Proyectos</a></li>
+      <li><a href="/#sobre-mi">Sobre mí</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/#contacto">Contacto</a></li>
+    </ul>
+
+    <a href="#contacto" class="cta-btn">Agendar llamada</a>
+
+    <button class="hamburger" id="menu-toggle" aria-label="Abrir menú">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="/#servicios">Servicios</a></li>
+      <li><a href="/proyectos">Proyectos</a></li>
+      <li><a href="/#sobre-mi">Sobre mí</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="cta-btn-mobile">Agendar llamada</a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu   = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => menu?.classList.toggle('open'));
+  menu?.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => menu.classList.remove('open'))
+  );
+</script>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 clamp(20px, 5.5vw, 80px);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--blue-primary);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--blue-primary);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    transition: opacity 0.2s;
+  }
+
+  .cta-btn:hover { opacity: 0.85; }
+
+  /* Hamburger: hidden on desktop */
+  .hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 4px;
+  }
+
+  /* Mobile drawer: hidden by default on ALL sizes */
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 20px;
+    background: var(--white);
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease, border-color 0.35s ease;
+    /* Flota sobre la página sin empujar el contenido */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* Only show when toggled on mobile */
+  .mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu ul a {
+    display: block;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-default);
+    transition: color 0.2s;
+  }
+
+  .mobile-menu ul a:hover { color: var(--text-primary); }
+
+  .cta-btn-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    background: var(--blue-primary);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Mobile ─────────────────────────────── */
+  @media (max-width: 900px) {
+    .navbar { height: 56px; }
+    .logo   { font-size: 16px; }
+
+    /* Hide desktop nav + CTA */
+    .nav-links { display: none; }
+    .cta-btn   { display: none; }
+
+    /* Show hamburger */
+    .hamburger { display: flex; }
+
+    /* Drawer slides down when JS adds .open class */
+    .mobile-menu.open {
+      max-height: 400px;
+      padding: 16px 20px 20px;
+      border-top-color: var(--border-default);
+      border-bottom-color: var(--border-default);
+    }
+  }
+</style>

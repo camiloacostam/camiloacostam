@@ -1,0 +1,161 @@
+---
+const techBadges = [
+  { icon: 'atom',            label: 'React' },
+  { icon: 'layout-template', label: 'Next.js' },
+  { icon: 'wind',            label: 'Tailwind' },
+  { icon: 'figma',           label: 'Figma' },
+];
+---
+
+<svg style="display:none">
+  <symbol id="icon-atom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="1"/>
+    <path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/>
+    <path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>
+  </symbol>
+  <symbol id="icon-layout-template" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>
+  </symbol>
+  <symbol id="icon-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+  </symbol>
+  <symbol id="icon-figma" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/>
+    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/>
+    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/>
+    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/>
+    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/>
+  </symbol>
+</svg>
+
+<section class="about-section" id="sobre-mi">
+  <div class="about-inner">
+
+    <div class="about-photo" style="background-image: url('/images/about.webp')"></div>
+
+    <div class="about-text">
+      <span class="about-label">SOBRE MÍ</span>
+      <h2 class="about-heading">Diseño y código,<br/>todo en uno.</h2>
+      <p class="about-desc">
+        Soy Camilo Acosta, desarrollador frontend y diseñador web full stack basado en
+        Cartagena, Colombia. Combino diseño visual con desarrollo técnico para crear sitios
+        web que no solo se ven increíbles, sino que generan resultados reales.
+      </p>
+      <p class="about-desc about-desc--extra">
+        Con visión internacional y raíces locales, trabajo con startups, marcas personales
+        y empresas que quieren destacar en digital. Mi enfoque combina estrategia, estética
+        y tecnología moderna.
+      </p>
+      <div class="tech-badges">
+        {techBadges.map(b => (
+          <span class="tech-badge">
+            <svg class="badge-icon"><use href={`#icon-${b.icon}`}/></svg>
+            {b.label}
+          </span>
+        ))}
+      </div>
+      <div class="avail-pill">
+        <span class="avail-dot"></span>
+        <span>Disponible para proyectos</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about-section { background: var(--white); }
+
+  .about-inner {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 80px clamp(24px, 5.5vw, 80px);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .about-photo {
+    width: 400px;
+    height: 580px;
+    border-radius: var(--radius-lg);
+    background: var(--blue-light);
+    background-size: cover;
+    background-position: top center;
+    flex-shrink: 0;
+  }
+
+  .about-text { display: flex; flex-direction: column; gap: 24px; flex: 1; min-width: 0; }
+
+  .about-label   { font-size: 12px; font-weight: 600; color: var(--blue-primary); letter-spacing: 2px; }
+  .about-heading { font-size: 40px; font-weight: 700; color: var(--text-primary); line-height: 1.15; }
+  .about-desc    { font-size: 17px; color: var(--gray-text); line-height: 1.6; }
+
+  /* Hide extra paragraph on mobile */
+  .about-desc--extra { display: block; }
+
+  /* Availability pill: hidden on desktop */
+  .avail-pill {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: #DCFCE7;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #14532D;
+    align-self: flex-start;
+  }
+
+  .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
+
+  .tech-badges { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue-primary);
+    background: var(--blue-light);
+    border-radius: 100px;
+    padding: 8px 16px;
+  }
+
+  .badge-icon { width: 16px; height: 16px; color: var(--blue-primary); flex-shrink: 0; }
+
+  /* ── Tablet ── */
+  @media (max-width: 1100px) {
+    .about-photo { width: 320px; height: 480px; }
+    .about-inner { gap: 48px; }
+    .about-heading { font-size: 34px; }
+    .about-desc { font-size: 16px; }
+  }
+
+  /* ── Mobile ─────────────────────────────── */
+  @media (max-width: 900px) {
+    .about-section { background: #FAFAFA; }
+
+    .about-inner {
+      flex-direction: column;
+      gap: 20px;
+      padding: 40px 24px;
+    }
+
+    .about-photo { width: 100%; height: 360px; flex-shrink: 0; }
+
+    .about-text    { gap: 20px; }
+    .about-label   { font-size: 13px; letter-spacing: 0.5px; }
+    .about-heading { font-size: 24px; line-height: 1.2; }
+    .about-desc    { font-size: 14px; line-height: 1.7; }
+
+    .about-desc--extra { display: none; }
+    .avail-pill        { display: flex; }
+
+    .tech-badges { gap: 6px; }
+    .tech-badge  { font-size: 12px; padding: 5px 10px; border-radius: 6px; gap: 4px; }
+    .badge-icon  { width: 14px; height: 14px; }
+  }
+</style>
