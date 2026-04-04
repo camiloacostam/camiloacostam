@@ -1,0 +1,362 @@
+---
+---
+<section class="hero" id="inicio">
+
+  <!-- Decorative background blobs -->
+  <div class="blob blob--tl" aria-hidden="true"></div>
+  <div class="blob blob--br" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+
+    <!-- Left column -->
+    <div class="hero-left">
+      <span class="hero-name">
+        <span class="hero-name-text">Camilo Acosta</span><span class="hero-cursor" aria-hidden="true"></span>
+      </span>
+
+      <!-- Availability badge: visible only on mobile -->
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Disponible para proyectos</span>
+      </div>
+
+      <h1 class="headline">
+        Creo webs que enamoran y convierten de verdad.
+      </h1>
+      <p class="subline">
+        Diseño y desarrollo sitios web a medida para startups, marcas y empresas
+        que quieren crecer en digital — desde Cartagena para el mundo.
+      </p>
+      <div class="hero-btns">
+        <a href="#contacto" class="btn-primary">Agendar llamada gratis</a>
+        <a href="#proyectos" class="btn-outline">Ver proyectos</a>
+      </div>
+    </div>
+
+    <!-- Right column: photo -->
+    <div class="hero-right">
+      <div class="photo-wrap">
+        <div class="photo-ring"></div>
+        <div class="photo-circle" style="background-image: url('/images/camilo.webp')"></div>
+        <div class="photo-dot photo-dot--1"></div>
+        <div class="photo-dot photo-dot--2"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Keyframes ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+
+  @keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  @keyframes blobPulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.08); }
+  }
+
+  @keyframes handwrite {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  @keyframes cursorFade {
+    to { opacity: 0; width: 0; margin: 0; }
+  }
+
+  .hero {
+    position: relative;
+    background: #F8FBFF;
+    overflow: hidden;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+  }
+
+  /* Decorative blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.06);
+    pointer-events: none;
+    animation: blobPulse 8s ease-in-out infinite;
+  }
+
+  .blob--tl {
+    width: 420px;
+    height: 420px;
+    top: -140px;
+    left: -100px;
+    animation-delay: 0s;
+  }
+
+  .blob--br {
+    width: 360px;
+    height: 360px;
+    bottom: -120px;
+    right: -80px;
+    animation-delay: -4s;
+  }
+
+  .hero-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding: 80px clamp(24px, 5.5vw, 80px);
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ── Left ── */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ── Entrance animations ── */
+  .hero-name  { animation: fadeUp 0.5s ease both 0.1s; }
+  .hero-badge { animation: fadeUp 0.6s ease both; animation-delay: 0.15s; }
+  .headline   { animation: fadeUp 0.6s ease both; animation-delay: 0.25s; }
+  .subline    { animation: fadeUp 0.6s ease both; animation-delay: 0.4s; }
+  .hero-btns  { animation: fadeUp 0.6s ease both; animation-delay: 0.55s; }
+  .hero-right { animation: fadeIn 0.8s ease both; animation-delay: 0.3s; }
+
+  .hero-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--blue-primary);
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+
+  .hero-name-text {
+    display: inline-block;
+    animation: handwrite 1.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.3s;
+  }
+
+  .hero-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.85em;
+    background: var(--blue-primary);
+    border-radius: 1px;
+    margin-left: 3px;
+    vertical-align: baseline;
+    position: relative;
+    top: 0.05em;
+    /* Blink while writing, then fade out */
+    animation:
+      cursorBlink 0.55s ease infinite,
+      cursorFade  0.4s ease forwards;
+    animation-delay: 0s, 2.1s;
+  }
+
+  /* Badge: hidden on desktop */
+  .hero-badge {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: var(--white);
+    border: 1px solid var(--border-default);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    align-self: flex-start;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-dot);
+    flex-shrink: 0;
+  }
+
+  .headline {
+    font-size: clamp(36px, 3.8vw, 52px);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .subline {
+    font-size: clamp(15px, 1.4vw, 18px);
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .hero-btns {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue-primary);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-default);
+    white-space: nowrap;
+    background: transparent;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--blue-primary);
+    background: var(--blue-light);
+    color: var(--blue-primary);
+  }
+
+  /* ── Right: photo ── */
+  .hero-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .photo-wrap {
+    position: relative;
+    width: 380px;
+    height: 480px;
+    animation: floatY 5s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  .photo-ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 28px;
+    border: 2px dashed rgba(37, 99, 235, 0.25);
+    animation: spinSlow 18s linear infinite;
+  }
+
+  .photo-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: var(--blue-light);
+    background-size: cover;
+    background-position: top center;
+    overflow: hidden;
+  }
+
+  /* Accent dots */
+  .photo-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--blue-primary);
+  }
+
+  .photo-dot--1 {
+    width: 14px;
+    height: 14px;
+    top: 24px;
+    right: -4px;
+  }
+
+  .photo-dot--2 {
+    width: 10px;
+    height: 10px;
+    bottom: 32px;
+    left: -8px;
+    opacity: 0.5;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .hero {
+      min-height: calc(100vh - 56px);
+      align-items: center;
+    }
+
+    .hero-inner {
+      flex-direction: column;
+      gap: 32px;
+      padding: 40px 24px 48px;
+    }
+
+    .hero-name    { font-size: 30px; }
+    .hero-badge   { display: flex; align-self: center; }
+    .hero-left    { gap: 20px; width: 100%; align-items: center; text-align: center; }
+    .headline     { font-size: 28px; line-height: 1.2; }
+    .subline      { font-size: 14px; max-width: none; }
+
+    .hero-btns {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-primary,
+    .btn-outline {
+      width: 100%;
+      font-size: 15px;
+      padding: 14px 24px;
+      justify-content: center;
+    }
+
+    /* Hide photo on mobile (no photo in mobile Pencil design) */
+    .hero-right { display: none; }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+---
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-logo">Camilo Acosta</span>
+      <span class="footer-sep">·</span>
+      <span class="footer-copy">© 2026 Todos los derechos reservados</span>
+    </div>
+
+    <nav class="footer-links">
+      <a href="/#servicios">Servicios</a>
+      <a href="/proyectos">Proyectos</a>
+      <a href="/blog">Blog</a>
+      <a href="/#contacto">Contacto</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border-default);
+    background: var(--white);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px clamp(20px, 5.5vw, 80px);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-logo { font-family: 'Dancing Script', cursive; font-size: 22px; font-weight: 700; color: var(--blue-primary); }
+
+  .footer-sep,
+  .footer-copy { font-size: 14px; color: var(--gray-text); }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-text);
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text-primary); }
+
+  /* ── Mobile ─────────────────────────────── */
+  @media (max-width: 900px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px 20px;
+    }
+
+    .footer-sep  { display: none; }
+    .footer-copy { font-size: 11px; }
+    .footer-links { gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; }
+  }
+</style>

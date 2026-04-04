@@ -1,0 +1,96 @@
+---
+const desktopItems = [
+  { color: 'green', text: '15+ proyectos entregados' },
+  { color: 'blue',  text: 'Cartagena · Colombia' },
+  { color: 'green', text: 'Disponible para proyectos' },
+  { color: 'blue',  text: 'Clientes en 3 países' },
+];
+
+const mobileItems = [
+  { color: 'green', text: '15+ proyectos entregados' },
+  { color: 'blue',  text: 'Cartagena · Colombia · Disponible' },
+  { color: 'blue',  text: 'Clientes en 3 países' },
+];
+---
+<section class="proof-bar">
+  <!-- Desktop: 4 items en fila -->
+  <div class="proof-inner proof-desktop">
+    {desktopItems.map(item => (
+      <div class="proof-item">
+        <span class={`dot dot--${item.color}`}></span>
+        <span class="proof-text">{item.text}</span>
+      </div>
+    ))}
+  </div>
+
+  <!-- Mobile: 3 items en columna -->
+  <div class="proof-inner proof-mobile">
+    {mobileItems.map(item => (
+      <div class="proof-item">
+        <span class={`dot dot--${item.color}`}></span>
+        <span class="proof-text">{item.text}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .proof-bar {
+    background: #F8FAFF;
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  .proof-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* Desktop */
+  .proof-desktop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px clamp(20px, 5.5vw, 80px);
+  }
+
+  /* Mobile: hidden by default */
+  .proof-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 24px;
+  }
+
+  .proof-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot--green { background: var(--green-dot); }
+  .dot--blue  { background: var(--blue-primary); }
+
+  .proof-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  /* ── Mobile ─────────────────────────────── */
+  @media (max-width: 900px) {
+    .proof-desktop { display: none; }
+    .proof-mobile  { display: flex; }
+
+    .dot       { width: 7px; height: 7px; }
+    .proof-text{ font-size: 13px; white-space: normal; }
+  }
+</style>

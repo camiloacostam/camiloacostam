@@ -1,0 +1,113 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.id.replace(/\.mdx?$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const badgeColors: Record<string, string> = {
+  IA:         'badge--ia',
+  Marketing:  'badge--marketing',
+  Desarrollo: 'badge--desarrollo',
+};
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+<Layout title={`${post.data.title} — Camilo Acosta`} description={post.data.excerpt}>
+  <article class="post-page">
+    <div class="post-inner">
+
+      <a href="/blog" class="back-link">← Volver al blog</a>
+
+      <header class="post-header">
+        <span class={`badge ${badgeColors[post.data.badge]}`}>{post.data.badge}</span>
+        <h1 class="post-title">{post.data.title}</h1>
+        <p class="post-date">{formatDate(post.data.date)}</p>
+      </header>
+
+      {post.data.cover && (
+        <div class="post-cover" style={`background-image: url('${post.data.cover}')`}></div>
+      )}
+
+      <div class="post-content">
+        <Content />
+      </div>
+
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .post-page { background: var(--white); }
+
+  .post-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 60px clamp(24px, 5.5vw, 80px);
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue-primary);
+    align-self: flex-start;
+    transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.75; }
+
+  .post-header { display: flex; flex-direction: column; gap: 16px; }
+
+  .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; align-self: flex-start; }
+  .badge--ia         { background: #EEEDFE; color: #3C3489; }
+  .badge--marketing  { background: #E1F5EE; color: #085041; }
+  .badge--desarrollo { background: #FAECE7; color: #712B13; }
+
+  .post-title { font-size: clamp(28px, 4vw, 40px); font-weight: 700; color: var(--text-primary); line-height: 1.2; letter-spacing: -0.3px; }
+  .post-date  { font-size: 14px; color: var(--text-secondary); }
+
+  .post-cover {
+    width: 100%;
+    height: 360px;
+    border-radius: var(--radius-lg);
+    background: var(--blue-light);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Markdown content styles */
+  .post-content { display: flex; flex-direction: column; gap: 0; }
+
+  .post-content :global(h2) { font-size: 24px; font-weight: 700; color: var(--text-primary); margin: 40px 0 16px; }
+  .post-content :global(h3) { font-size: 20px; font-weight: 600; color: var(--text-primary); margin: 32px 0 12px; }
+  .post-content :global(p)  { font-size: 17px; color: var(--gray-text); line-height: 1.75; margin: 0 0 20px; }
+  .post-content :global(ul),
+  .post-content :global(ol) { font-size: 17px; color: var(--gray-text); line-height: 1.75; margin: 0 0 20px; padding-left: 24px; }
+  .post-content :global(li) { margin-bottom: 8px; }
+  .post-content :global(strong) { color: var(--text-primary); font-weight: 600; }
+  .post-content :global(a) { color: var(--blue-primary); text-decoration: underline; }
+  .post-content :global(code) { font-size: 14px; background: var(--blue-light); color: var(--blue-primary); padding: 2px 6px; border-radius: 4px; }
+  .post-content :global(pre)  { background: #1e1e2e; border-radius: var(--radius-md); padding: 24px; overflow-x: auto; margin: 0 0 24px; }
+  .post-content :global(pre code) { background: none; color: #cdd6f4; padding: 0; font-size: 14px; }
+  .post-content :global(blockquote) { border-left: 3px solid var(--blue-primary); padding-left: 20px; margin: 0 0 20px; color: var(--text-secondary); font-style: italic; }
+
+  @media (max-width: 900px) {
+    .post-inner { padding: 40px 24px; gap: 28px; }
+    .post-cover { height: 220px; }
+    .post-content :global(p),
+    .post-content :global(ul),
+    .post-content :global(ol) { font-size: 15px; }
+  }
+</style>

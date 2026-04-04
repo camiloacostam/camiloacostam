@@ -1,0 +1,180 @@
+---
+const socialLinks = [
+  { icon: 'message-circle', label: 'WhatsApp', href: 'https://wa.me/573000000000' },
+  { icon: 'linkedin',       label: 'LinkedIn',  href: 'https://linkedin.com/in/camilo-acosta-m' },
+  { icon: 'github',         label: 'GitHub',    href: 'https://github.com/CamiloAcosta' },
+];
+---
+
+<svg style="display:none">
+  <symbol id="icon-message-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </symbol>
+  <symbol id="icon-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+  </symbol>
+  <symbol id="icon-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  </symbol>
+</svg>
+
+<section class="contact-section" id="contacto">
+  <div class="contact-inner">
+
+    <div class="cta-header">
+      <h2 class="cta-headline">¿Listo para tener una web<br/>que trabaje por ti?</h2>
+      <p class="cta-subline">Agenda una llamada de 30 min sin costo. Hablamos de tu proyecto.</p>
+    </div>
+
+    <form class="contact-form" action="#" method="POST">
+      <div class="form-field">
+        <label for="name">Nombre</label>
+        <input id="name" type="text" name="name" placeholder="Tu nombre completo" required />
+      </div>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" placeholder="tu@email.com" required />
+      </div>
+      <div class="form-field">
+        <label for="message">Mensaje</label>
+        <textarea id="message" name="message" rows="4" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Agendar mi llamada gratis</button>
+    </form>
+
+    <div class="social-links">
+      {socialLinks.map(link => (
+        <a href={link.href} target="_blank" rel="noopener noreferrer" class="social-link">
+          <svg class="social-icon"><use href={`#icon-${link.icon}`}/></svg>
+          <span class="social-label">{link.label}</span>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .contact-section { background: var(--blue-primary); }
+
+  .contact-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    padding: 80px clamp(24px, 8vw, 120px);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .cta-header { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+
+  .cta-headline {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .cta-subline {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+  }
+
+  /* Form */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: min(560px, 100%);
+  }
+
+  .form-field { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-field label { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); }
+
+  .form-field input,
+  .form-field textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--white);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: rgba(255,255,255,0.4); }
+
+  .form-field input:focus,
+  .form-field textarea:focus { border-color: rgba(255,255,255,0.6); }
+
+  .submit-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--blue-primary);
+    background: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .submit-btn:hover { opacity: 0.9; }
+
+  /* Social links */
+  .social-links { display: flex; align-items: center; gap: 24px; }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    transition: color 0.2s;
+  }
+
+  .social-link:hover { color: var(--white); }
+
+  .social-icon  { width: 20px; height: 20px; color: inherit; flex-shrink: 0; }
+  .social-label { font-size: 14px; }
+
+  /* ── Mobile ─────────────────────────────── */
+  @media (max-width: 900px) {
+    .contact-inner { padding: 48px 24px; gap: 24px; }
+
+    .cta-headline { font-size: 26px; letter-spacing: -0.3px; }
+    .cta-subline  { font-size: 15px; }
+
+    .contact-form { gap: 12px; }
+
+    .form-field label { font-size: 13px; }
+
+    .form-field input,
+    .form-field textarea {
+      font-size: 14px;
+      padding: 12px;
+    }
+
+    .submit-btn { font-size: 15px; padding: 14px; }
+
+    /* Icons only on mobile */
+    .social-label { display: none; }
+    .social-links { gap: 20px; }
+    .social-icon  { width: 22px; height: 22px; color: rgba(255,255,255,0.7); }
+    .social-link:hover .social-icon { color: var(--white); }
+  }
+</style>
