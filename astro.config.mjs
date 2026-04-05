@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://camiloacosta.dev',
-  adapter: node({ mode: 'middleware' }),
+  adapter: cloudflare(),
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
