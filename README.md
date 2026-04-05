@@ -9,7 +9,7 @@
 
 [![Disponible para proyectos](https://img.shields.io/badge/●%20Disponible%20para%20proyectos-22C55E?style=for-the-badge&logoColor=white&labelColor=14532D&color=22C55E)](mailto:hello@camiloacosta.dev)
 [![Portfolio](https://img.shields.io/badge/🌐%20camiloacosta.dev-2563EB?style=for-the-badge)](https://camiloacosta.dev)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/camilo-acosta-m)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/camilo-acosta-m/)
 [![Cartagena 🇨🇴](https://img.shields.io/badge/Cartagena%20🇨🇴-71717A?style=for-the-badge)](https://camiloacosta.dev)
 
 </div>
@@ -121,9 +121,9 @@ Landing page diseñada para una psicóloga independiente que busca atraer nuevos
 <br/><br/>
 
 [![Email](https://img.shields.io/badge/✉️%20hello@camiloacosta.dev-2563EB?style=for-the-badge)](mailto:hello@camiloacosta.dev)
-[![LinkedIn](https://img.shields.io/badge/💼%20LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/camilo-acosta-m)
+[![LinkedIn](https://img.shields.io/badge/💼%20LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/camilo-acosta-m/)
 [![Portfolio](https://img.shields.io/badge/🌐%20camiloacosta.dev-18181B?style=for-the-badge)](https://camiloacosta.dev)
-[![WhatsApp](https://img.shields.io/badge/💬%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/573000000000)
+[![WhatsApp](https://img.shields.io/badge/💬%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/573007458843)
 
 </div>
 
