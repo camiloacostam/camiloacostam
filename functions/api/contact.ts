@@ -1,23 +1,30 @@
-import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-export const prerender = false;
+interface Env {
+  RESEND_API_KEY: string;
+  RESEND_TO: string;
+}
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
-export const POST: APIRoute = async ({ request }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try {
-    const { name, email, message } = await request.json();
+    const { name, email, message } = await request.json<{
+      name: string;
+      email: string;
+      message: string;
+    }>();
 
     if (!name || !email || !message) {
       return new Response(JSON.stringify({ error: 'Todos los campos son obligatorios.' }), {
         status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
+    const resend = new Resend(env.RESEND_API_KEY);
+
     await resend.emails.send({
       from: 'Formulario Web <onboarding@resend.dev>',
-      to: import.meta.env.RESEND_TO,
+      to: env.RESEND_TO,
       reply_to: email,
       subject: `Nuevo mensaje de ${name}`,
       html: `
@@ -43,10 +50,14 @@ export const POST: APIRoute = async ({ request }) => {
       `,
     });
 
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch {
     return new Response(JSON.stringify({ error: 'Error al enviar el mensaje. Intenta de nuevo.' }), {
       status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 };
