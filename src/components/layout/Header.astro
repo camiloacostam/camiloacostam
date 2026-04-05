@@ -1,18 +1,27 @@
 ---
+import { t, getLang, getAlternatePath } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const tr   = t(lang);
+const prefix    = lang === 'en' ? '/en' : '';
+const altPath   = getAlternatePath(Astro.url.pathname, lang);
+const altLabel  = lang === 'es' ? 'EN' : 'ES';
 ---
 <header>
   <nav class="navbar">
-    <a href="/" class="logo">Camilo Acosta</a>
+    <a href={prefix + '/'} class="logo">Camilo Acosta</a>
 
     <ul class="nav-links">
-      <li><a href="/#servicios">Servicios</a></li>
-      <li><a href="/proyectos">Proyectos</a></li>
-      <li><a href="/#sobre-mi">Sobre mí</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/#contacto">Contacto</a></li>
+      <li><a href={prefix + '/#servicios'}>{tr.nav.services}</a></li>
+      <li><a href={prefix + '/proyectos'}>{tr.nav.projects}</a></li>
+      <li><a href={prefix + '/#sobre-mi'}>{tr.nav.about}</a></li>
+      <li><a href={prefix + '/blog'}>{tr.nav.blog}</a></li>
+      <li><a href={prefix + '/#contacto'}>{tr.nav.contact}</a></li>
     </ul>
 
-    <button class="cta-btn" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">Agendar llamada</button>
+    <div class="navbar-actions">
+      <a href={altPath} class="lang-switcher">{altLabel}</a>
+      <button class="cta-btn" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">{tr.nav.cta}</button>
+    </div>
 
     <button class="hamburger" id="menu-toggle" aria-label="Abrir menú">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -25,13 +34,16 @@
 
   <div class="mobile-menu" id="mobile-menu">
     <ul>
-      <li><a href="/#servicios">Servicios</a></li>
-      <li><a href="/proyectos">Proyectos</a></li>
-      <li><a href="/#sobre-mi">Sobre mí</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/#contacto">Contacto</a></li>
+      <li><a href={prefix + '/#servicios'}>{tr.nav.services}</a></li>
+      <li><a href={prefix + '/proyectos'}>{tr.nav.projects}</a></li>
+      <li><a href={prefix + '/#sobre-mi'}>{tr.nav.about}</a></li>
+      <li><a href={prefix + '/blog'}>{tr.nav.blog}</a></li>
+      <li><a href={prefix + '/#contacto'}>{tr.nav.contact}</a></li>
     </ul>
-    <button class="cta-btn-mobile" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">Agendar llamada</button>
+    <div class="mobile-bottom">
+      <button class="cta-btn-mobile" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">{tr.nav.cta}</button>
+      <a href={altPath} class="lang-switcher-mobile">{altLabel}</a>
+    </div>
   </div>
 </header>
 
@@ -85,6 +97,24 @@
   }
 
   .nav-links a:hover { color: var(--text-primary); }
+
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lang-switcher {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-default);
+    border-radius: 6px;
+    padding: 5px 10px;
+    transition: border-color 0.2s, color 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .lang-switcher:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
 
   .cta-btn {
     display: inline-flex;
@@ -152,11 +182,29 @@
 
   .mobile-menu ul a:hover { color: var(--text-primary); }
 
+  .mobile-bottom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .lang-switcher-mobile {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-default);
+    border-radius: 6px;
+    padding: 13px 16px;
+    white-space: nowrap;
+  }
+
   .cta-btn-mobile {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 12px;
+    flex: 1;
+    margin-top: 0;
     background: var(--blue-primary);
     color: var(--white);
     font-size: 15px;

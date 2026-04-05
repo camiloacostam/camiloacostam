@@ -1,15 +1,19 @@
 ---
+import { t, getLang } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const tr = t(lang);
+
 const desktopItems = [
-  { color: 'green', text: '15+ proyectos entregados' },
-  { color: 'blue',  text: 'Cartagena · Colombia' },
-  { color: 'green', text: 'Disponible para proyectos' },
-  { color: 'blue',  text: 'Clientes en 3 países' },
+  { color: 'green', text: tr.proof.projects },
+  { color: 'blue',  text: tr.proof.location },
+  { color: 'green', text: tr.proof.available },
+  { color: 'blue',  text: tr.proof.clients },
 ];
 
 const mobileItems = [
-  { color: 'green', text: '15+ proyectos entregados' },
-  { color: 'blue',  text: 'Cartagena · Colombia · Disponible' },
-  { color: 'blue',  text: 'Clientes en 3 países' },
+  { color: 'green', text: tr.proof.projects },
+  { color: 'blue',  text: tr.proof.mobileCombo },
+  { color: 'blue',  text: tr.proof.clients },
 ];
 ---
 <section class="proof-bar">

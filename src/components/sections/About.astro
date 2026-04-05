@@ -1,4 +1,8 @@
 ---
+import { t, getLang } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const tr = t(lang);
+
 const techBadges = [
   { icon: 'atom',            label: 'React' },
   { icon: 'layout-template', label: 'Next.js' },
@@ -34,17 +38,13 @@ const techBadges = [
     <div class="about-photo" style="background-image: url('/images/about.webp')"></div>
 
     <div class="about-text">
-      <span class="about-label">SOBRE MÍ</span>
-      <h2 class="about-heading">Diseño y código,<br/>todo en uno.</h2>
+      <span class="about-label">{tr.about.label}</span>
+      <h2 class="about-heading">{tr.about.heading}</h2>
       <p class="about-desc">
-        Soy Camilo Acosta, desarrollador frontend y diseñador web full stack basado en
-        Cartagena, Colombia. Combino diseño visual con desarrollo técnico para crear sitios
-        web que no solo se ven increíbles, sino que generan resultados reales.
+        {tr.about.desc1}
       </p>
       <p class="about-desc about-desc--extra">
-        Con visión internacional y raíces locales, trabajo con startups, marcas personales
-        y empresas que quieren destacar en digital. Mi enfoque combina estrategia, estética
-        y tecnología moderna.
+        {tr.about.desc2}
       </p>
       <div class="tech-badges">
         {techBadges.map(b => (
@@ -56,7 +56,7 @@ const techBadges = [
       </div>
       <div class="avail-pill">
         <span class="avail-dot"></span>
-        <span>Disponible para proyectos</span>
+        <span>{tr.about.available}</span>
       </div>
     </div>
 

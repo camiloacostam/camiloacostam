@@ -1,4 +1,7 @@
 ---
+import { t, getLang } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const tr = t(lang);
 ---
 <section class="hero" id="inicio">
 
@@ -17,19 +20,18 @@
       <!-- Availability badge: visible only on mobile -->
       <div class="hero-badge">
         <span class="badge-dot"></span>
-        <span>Disponible para proyectos</span>
+        <span>{tr.hero.badge}</span>
       </div>
 
       <h1 class="headline">
-        Creo webs que enamoran y convierten de verdad.
+        {tr.hero.headline}
       </h1>
       <p class="subline">
-        Diseño y desarrollo sitios web a medida para startups, marcas y empresas
-        que quieren crecer en digital — desde Cartagena para el mundo.
+        {tr.hero.subline}
       </p>
       <div class="hero-btns">
-        <button class="btn-primary" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">Agendar llamada gratis</button>
-        <a href="#proyectos" class="btn-outline">Ver proyectos</a>
+        <button class="btn-primary" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">{tr.hero.ctaPrimary}</button>
+        <a href="#proyectos" class="btn-outline">{tr.hero.ctaSecondary}</a>
       </div>
     </div>
 
