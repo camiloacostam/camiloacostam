@@ -1,4 +1,8 @@
 ---
+import { t, getLang } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const tr = t(lang);
+
 const socialLinks = [
   { icon: 'message-circle', label: 'WhatsApp', href: 'https://wa.me/573000000000' },
   { icon: 'linkedin',       label: 'LinkedIn',  href: 'https://linkedin.com/in/camilo-acosta-m' },
@@ -23,32 +27,32 @@ const socialLinks = [
   <div class="contact-inner">
 
     <div class="cta-header">
-      <h2 class="cta-headline">¿Listo para tener una web<br/>que trabaje por ti?</h2>
-      <p class="cta-subline">Agenda una llamada de 30 min sin costo. Hablamos de tu proyecto.</p>
+      <h2 class="cta-headline" set:html={tr.contact.headline.replace('\n', '<br/>')}></h2>
+      <p class="cta-subline">{tr.contact.subline}</p>
     </div>
 
     <form class="contact-form" id="contact-form">
       <div class="form-field">
-        <label for="name">Nombre</label>
-        <input id="name" type="text" name="name" placeholder="Tu nombre completo" required />
+        <label for="name">{tr.contact.nameLabel}</label>
+        <input id="name" type="text" name="name" placeholder={tr.contact.namePh} required />
       </div>
       <div class="form-field">
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email" placeholder="tu@email.com" required />
+        <label for="email">{tr.contact.emailLabel}</label>
+        <input id="email" type="email" name="email" placeholder={tr.contact.emailPh} required />
       </div>
       <div class="form-field">
-        <label for="message">Mensaje</label>
-        <textarea id="message" name="message" rows="4" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+        <label for="message">{tr.contact.msgLabel}</label>
+        <textarea id="message" name="message" rows="4" placeholder={tr.contact.msgPh} required></textarea>
       </div>
       <button type="submit" class="submit-btn" id="submit-btn">
-        <span id="btn-text">Enviar mensaje</span>
-        <span id="btn-loading" style="display:none">Enviando...</span>
+        <span id="btn-text">{tr.contact.submit}</span>
+        <span id="btn-loading" style="display:none">{tr.contact.submitting}</span>
       </button>
       <p id="form-success" class="form-feedback form-feedback--success" style="display:none">
-        ✓ Mensaje enviado. Te respondo pronto.
+        {tr.contact.success}
       </p>
       <p id="form-error" class="form-feedback form-feedback--error" style="display:none">
-        Algo salió mal. Intenta de nuevo.
+        {tr.contact.error}
       </p>
     </form>
 

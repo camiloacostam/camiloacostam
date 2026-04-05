@@ -1,4 +1,7 @@
 ---
+import { t, getLang } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const tr = t(lang);
 ---
 
 <svg style="display:none">
@@ -27,7 +30,7 @@
 
 <section class="bento-section" id="servicios">
   <div class="bento-inner">
-    <h2 class="section-title">Lo que hago</h2>
+    <h2 class="section-title">{tr.bento.title}</h2>
 
     <!-- ── Desktop: 3-column bento ── -->
     <div class="bento-grid">
@@ -36,13 +39,13 @@
         <div class="card card--blue card--tall">
           <svg class="icon icon--white icon--lg"><use href="#icon-palette"/></svg>
           <div>
-            <h3 class="card-title card-title--white">Diseño UI/UX</h3>
-            <p class="card-desc card-desc--white">Interfaces intuitivas y atractivas que ponen al usuario en el centro. Desde wireframes hasta prototipos interactivos.</p>
+            <h3 class="card-title card-title--white">{tr.bento.uiux.title}</h3>
+            <p class="card-desc card-desc--white">{tr.bento.uiux.desc}</p>
           </div>
         </div>
         <div class="card">
           <svg class="icon"><use href="#icon-layers"/></svg>
-          <h4 class="card-title">Stack tecnológico</h4>
+          <h4 class="card-title">{tr.bento.stack.title}</h4>
           <div class="tag-row">
             <span class="tag">React</span><span class="tag">Next.js</span>
             <span class="tag">Tailwind</span><span class="tag">Figma</span>
@@ -51,16 +54,16 @@
         </div>
         <div class="card">
           <svg class="icon"><use href="#icon-zap"/></svg>
-          <h4 class="card-title">Entrega rápida</h4>
-          <p class="card-desc">Landing pages listas en 2–4 semanas con proceso claro y comunicación constante.</p>
+          <h4 class="card-title">{tr.bento.delivery.title}</h4>
+          <p class="card-desc">{tr.bento.delivery.desc}</p>
         </div>
       </div>
 
       <div class="bento-col">
         <div class="card">
           <svg class="icon"><use href="#icon-code"/></svg>
-          <h4 class="card-title">Desarrollo Frontend</h4>
-          <p class="card-desc">Sitios rápidos, responsivos y accesibles con las mejores tecnologías.</p>
+          <h4 class="card-title">{tr.bento.frontend.title}</h4>
+          <p class="card-desc">{tr.bento.frontend.desc}</p>
           <div class="tag-row">
             <span class="tag">React</span><span class="tag">Next.js</span>
             <span class="tag">Tailwind</span>
@@ -68,36 +71,36 @@
         </div>
         <div class="card card--center">
           <svg class="icon"><use href="#icon-map-pin"/></svg>
-          <h4 class="card-title" style="text-align:center">Cartagena Colombia → Mundo</h4>
+          <h4 class="card-title" style="text-align:center">{tr.bento.location}</h4>
         </div>
         <div class="card card--blue card--center">
           <span class="stat-num">20+</span>
-          <span class="stat-lbl">Clientes satisfechos</span>
+          <span class="stat-lbl">{tr.bento.clients}</span>
         </div>
       </div>
 
       <div class="bento-col">
         <div class="card">
           <svg class="icon"><use href="#icon-server"/></svg>
-          <h4 class="card-title">Full Stack</h4>
-          <p class="card-desc">Backend robusto y APIs escalables para proyectos completos.</p>
+          <h4 class="card-title">{tr.bento.fullstack.title}</h4>
+          <p class="card-desc">{tr.bento.fullstack.desc}</p>
           <div class="tag-row">
             <span class="tag">Node.js</span><span class="tag">Databases</span>
           </div>
         </div>
         <div class="card card--center">
           <span class="stat-num stat-num--blue">15+</span>
-          <span class="stat-lbl stat-lbl--gray">Proyectos entregados</span>
+          <span class="stat-lbl stat-lbl--gray">{tr.bento.delivered}</span>
         </div>
         <div class="card card--center">
           <div class="avail-row">
             <span class="avail-dot"></span>
-            <span class="avail-text">Disponible para proyectos</span>
+            <span class="avail-text">{tr.bento.available}</span>
           </div>
         </div>
         <div class="card card--center">
           <span class="stat-num stat-num--blue">3+</span>
-          <span class="stat-lbl stat-lbl--gray">Años de experiencia</span>
+          <span class="stat-lbl stat-lbl--gray">{tr.bento.experience}</span>
         </div>
       </div>
 
@@ -108,37 +111,37 @@
       <div class="m-stats">
         <div class="m-stat m-stat--blue">
           <span class="m-stat-num">15+</span>
-          <span class="m-stat-lbl">Proyectos</span>
+          <span class="m-stat-lbl">{tr.bento.mProjects}</span>
         </div>
         <div class="m-stat">
           <span class="m-stat-num m-stat-num--blue">20+</span>
-          <span class="m-stat-lbl m-stat-lbl--gray">Clientes</span>
+          <span class="m-stat-lbl m-stat-lbl--gray">{tr.bento.mClients}</span>
         </div>
         <div class="m-stat">
           <span class="m-stat-num m-stat-num--blue">3+</span>
-          <span class="m-stat-lbl m-stat-lbl--gray">Años</span>
+          <span class="m-stat-lbl m-stat-lbl--gray">{tr.bento.mYears}</span>
         </div>
       </div>
       <div class="m-cards">
         <div class="card card--blue">
           <svg class="icon icon--white"><use href="#icon-palette"/></svg>
-          <h4 class="card-title card-title--white">Diseño UI/UX</h4>
-          <p class="card-desc card-desc--white">Interfaces que enamoran y convierten.</p>
+          <h4 class="card-title card-title--white">{tr.bento.uiux.title}</h4>
+          <p class="card-desc card-desc--white">{tr.bento.uiux.desc}</p>
         </div>
         <div class="card">
           <svg class="icon"><use href="#icon-zap"/></svg>
-          <h4 class="card-title">Entrega rápida</h4>
-          <p class="card-desc">2–4 semanas con proceso claro.</p>
+          <h4 class="card-title">{tr.bento.delivery.title}</h4>
+          <p class="card-desc">{tr.bento.delivery.desc}</p>
         </div>
         <div class="card">
           <svg class="icon"><use href="#icon-code"/></svg>
-          <h4 class="card-title">Frontend</h4>
-          <p class="card-desc">Sitios rápidos y responsivos.</p>
+          <h4 class="card-title">{tr.bento.frontend.title}</h4>
+          <p class="card-desc">{tr.bento.frontend.desc}</p>
         </div>
         <div class="card">
           <svg class="icon"><use href="#icon-server"/></svg>
-          <h4 class="card-title">Full Stack</h4>
-          <p class="card-desc">Backend y APIs escalables.</p>
+          <h4 class="card-title">{tr.bento.fullstack.title}</h4>
+          <p class="card-desc">{tr.bento.fullstack.desc}</p>
         </div>
       </div>
     </div>

@@ -1,5 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
+import { t, getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const tr   = t(lang);
 
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -20,11 +24,11 @@ function formatDate(date: Date) {
   <div class="blog-inner">
 
     <div class="blog-header">
-      <h2 class="section-title">Últimas del blog</h2>
+      <h2 class="section-title">{tr.blog.title}</h2>
       {posts.length > 0 && (
         <a href="/blog" class="blog-cta">
-          <span class="cta-long">Ver todos los artículos →</span>
-          <span class="cta-short">Ver todos →</span>
+          <span class="cta-long">{tr.blog.seeAllLong}</span>
+          <span class="cta-short">{tr.blog.seeAllShort}</span>
         </a>
       )}
     </div>
@@ -33,15 +37,15 @@ function formatDate(date: Date) {
       <!-- Empty state -->
       <div class="empty-state">
         <p class="empty-icon">✍️</p>
-        <p class="empty-title">Los primeros artículos están en camino</p>
-        <p class="empty-desc">Pronto compartiré contenido sobre diseño web, desarrollo e IA para negocios.</p>
-        <a href="/blog" class="empty-cta">Ir al blog →</a>
+        <p class="empty-title">{tr.blog.emptyTitle}</p>
+        <p class="empty-desc">{tr.blog.emptyDesc}</p>
+        <a href="/blog" class="empty-cta">{tr.blog.emptyLink}</a>
       </div>
     ) : (
       <>
         <!-- Filters: desktop only -->
         <div class="filter-row">
-          {['Todos', 'IA', 'Marketing', 'Desarrollo'].map((f, i) => (
+          {tr.blog.filters.map((f: string, i: number) => (
             <button class={`filter-btn ${i === 0 ? 'filter-btn--active' : ''}`}>{f}</button>
           ))}
         </div>
@@ -56,7 +60,7 @@ function formatDate(date: Date) {
               <p class="card-excerpt">{post.data.excerpt}</p>
               <div class="card-footer">
                 <span class="card-date">{formatDate(post.data.date)}</span>
-                <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`} class="card-read">Leer más →</a>
+                <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`} class="card-read">{tr.blog.readMore}</a>
               </div>
             </article>
           ))}
@@ -72,7 +76,7 @@ function formatDate(date: Date) {
                 <h3 class="slide-title">{post.data.title}</h3>
                 <div class="card-footer">
                   <span class="card-date">{formatDate(post.data.date)}</span>
-                  <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`} class="card-read">Leer más →</a>
+                  <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`} class="card-read">{tr.blog.readMore}</a>
                 </div>
               </article>
             ))}

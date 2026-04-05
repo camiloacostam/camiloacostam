@@ -1,18 +1,23 @@
 ---
+import { t, getLang } from '../../i18n/utils';
+
+const lang   = getLang(Astro.currentLocale);
+const tr     = t(lang);
+const prefix = lang === 'en' ? '/en' : '';
 ---
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
       <span class="footer-logo">Camilo Acosta</span>
       <span class="footer-sep">·</span>
-      <span class="footer-copy">© 2026 Todos los derechos reservados</span>
+      <span class="footer-copy">{tr.footer.rights}</span>
     </div>
 
     <nav class="footer-links">
-      <a href="/#servicios">Servicios</a>
-      <a href="/proyectos">Proyectos</a>
-      <a href="/blog">Blog</a>
-      <a href="/#contacto">Contacto</a>
+      <a href={`${prefix}/#servicios`}>{tr.nav.services}</a>
+      <a href="/proyectos">{tr.nav.projects}</a>
+      <a href={`${prefix}/blog`}>{tr.nav.blog}</a>
+      <a href={`${prefix}/#contacto`}>{tr.nav.contact}</a>
     </nav>
   </div>
 </footer>

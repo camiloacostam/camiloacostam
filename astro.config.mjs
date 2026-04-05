@@ -4,4 +4,9 @@ import node from '@astrojs/node';
 
 export default defineConfig({
   adapter: node({ mode: 'middleware' }),
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
 });

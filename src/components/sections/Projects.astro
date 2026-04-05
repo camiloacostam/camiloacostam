@@ -1,5 +1,9 @@
 ---
 import { projects } from '../../data/projects';
+import { t, getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const tr   = t(lang);
 
 const featured = projects
   .filter(p => p.featured)
@@ -9,20 +13,20 @@ const featured = projects
   <div class="projects-inner">
 
     <div class="section-header">
-      <h2 class="section-title">Proyectos destacados</h2>
-      <a href="/proyectos" class="see-all">Ver todos →</a>
+      <h2 class="section-title">{tr.projects.title}</h2>
+      <a href="/proyectos" class="see-all">{tr.projects.seeAll}</a>
     </div>
 
     {featured.length === 0 ? (
       <div class="empty-state">
-        <p class="empty-title">Proyectos en camino</p>
-        <p class="empty-desc">Estoy cargando el catálogo. Vuelve pronto.</p>
+        <p class="empty-title">{tr.projects.emptyTitle}</p>
+        <p class="empty-desc">{tr.projects.emptyDesc}</p>
       </div>
     ) : (
       <div class="slider-wrap">
 
         <!-- Flecha izquierda -->
-        <button class="arrow arrow--prev" id="proj-prev" aria-label="Proyecto anterior" disabled>
+        <button class="arrow arrow--prev" id="proj-prev" aria-label={tr.projects.prev} disabled>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15,18 9,12 15,6"/>
           </svg>
@@ -36,7 +40,7 @@ const featured = projects
                   class="slide-cover"
                   style={p.cover ? `background-image:url('${p.cover}')` : ''}
                 >
-                  {!p.cover && <span class="cover-placeholder">Screenshot del proyecto</span>}
+                  {!p.cover && <span class="cover-placeholder">{tr.projects.cover}</span>}
                 </div>
                 <div class="slide-details">
                   <span class="project-cat">{p.category.toUpperCase()}</span>
@@ -46,7 +50,7 @@ const featured = projects
                     {p.tech.map(t => <span class="tech-tag">{t}</span>)}
                   </div>
                   {p.link && (
-                    <a href={p.link} class="project-link">Ver proyecto →</a>
+                    <a href={p.link} class="project-link">{tr.projects.viewProject}</a>
                   )}
                 </div>
               </article>
@@ -55,7 +59,7 @@ const featured = projects
         </div>
 
         <!-- Flecha derecha -->
-        <button class="arrow arrow--next" id="proj-next" aria-label="Proyecto siguiente">
+        <button class="arrow arrow--next" id="proj-next" aria-label={tr.projects.next}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9,18 15,12 9,6"/>
           </svg>
