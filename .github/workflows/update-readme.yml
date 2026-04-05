@@ -1,0 +1,43 @@
+name: Update README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/data/projects.ts'
+      - 'src/content/blog/**'
+      - '.github/scripts/update-readme.ts'
+  schedule:
+    # Todos los días a las 8:00 AM UTC (3:00 AM Cartagena)
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run update script
+        run: npx --yes tsx .github/scripts/update-readme.ts
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet README.md || (
+            git add README.md &&
+            git commit -m "docs: auto-update projects & blog in README [skip ci]" &&
+            git push
+          )
