@@ -99,16 +99,16 @@ const techBadges = [
     display: none;
     align-items: center;
     gap: 6px;
-    background: #DCFCE7;
+    background: var(--avail-bg);
     border-radius: 20px;
     padding: 6px 14px;
     font-size: 12px;
     font-weight: 600;
-    color: #14532D;
+    color: var(--avail-text);
     align-self: flex-start;
   }
 
-  .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
+  .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-dot); flex-shrink: 0; }
 
   .tech-badges { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -136,7 +136,7 @@ const techBadges = [
 
   /* ── Mobile ─────────────────────────────── */
   @media (max-width: 900px) {
-    .about-section { background: #FAFAFA; }
+    .about-section { background: var(--bg-about-mobile); }
 
     .about-inner {
       flex-direction: column;
