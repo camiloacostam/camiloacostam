@@ -5,18 +5,68 @@
 }
 
 :root {
+  /* Brand */
   --blue-primary: #2563EB;
   --blue-light: #EFF6FF;
-  --border-default: #E4E4E7;
-  --gray-text: #6B7280;
   --green-dot: #22C55E;
+
+  /* Text */
   --text-primary: #18181B;
   --text-secondary: #71717A;
-  --white: #FFFFFF;
+  --gray-text: #6B7280;
 
+  /* Surfaces */
+  --white: #FFFFFF;
+  --bg-hero: #F8FBFF;
+  --bg-subtle: #F8FAFF;
+  --bg-about-mobile: #FAFAFA;
+
+  /* Borders */
+  --border-default: #E4E4E7;
+
+  /* Availability pill */
+  --avail-bg: #DCFCE7;
+  --avail-text: #14532D;
+
+  /* Blog badges */
+  --badge-ia-bg: #EEEDFE;
+  --badge-ia-text: #3C3489;
+  --badge-marketing-bg: #E1F5EE;
+  --badge-marketing-text: #085041;
+  --badge-desarrollo-bg: #FAECE7;
+  --badge-desarrollo-text: #712B13;
+
+  /* Radii */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
+}
+
+[data-theme="dark"] {
+  --blue-primary: #3B82F6;
+  --blue-light: #1E3A5F;
+  --green-dot: #22C55E;
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --gray-text: #94A3B8;
+
+  --white: #0F172A;
+  --bg-hero: #0F172A;
+  --bg-subtle: #111827;
+  --bg-about-mobile: #111827;
+
+  --border-default: #334155;
+
+  --avail-bg: #052e16;
+  --avail-text: #86efac;
+
+  --badge-ia-bg: #1e1b4b;
+  --badge-ia-text: #a5b4fc;
+  --badge-marketing-bg: #052e16;
+  --badge-marketing-text: #6ee7b7;
+  --badge-desarrollo-bg: #450a0a;
+  --badge-desarrollo-text: #fca5a5;
 }
 
 body {
@@ -24,6 +74,7 @@ body {
   color: var(--text-primary);
   background: var(--white);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 a {
