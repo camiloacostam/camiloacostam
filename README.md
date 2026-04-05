@@ -91,7 +91,7 @@ Diseño y desarrollo de un sitio web profesional que refleja la marca personal y
 
 **Nathalia Acosta — Landing Page**
 
-Landing page para psicóloga independiente que convierte visitas de Instagram en consultas agendadas. Enfoque en transmitir confianza, calidez y profesionalismo.
+Landing page diseñada para una psicóloga independiente que busca atraer nuevos pacientes desde redes sociales. Enfoque en transmitir confianza, calidez y profesionalismo desde el primer scroll.
 
 ![Astro](https://img.shields.io/badge/Astro-FF5D01?style=flat-square&logo=astro&logoColor=white) ![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=figma&logoColor=white)
 
