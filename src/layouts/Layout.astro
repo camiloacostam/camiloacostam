@@ -6,29 +6,95 @@ import Footer from '../components/layout/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  lang?: string;
+  ogImage?: string;
+  noIndex?: boolean;
 }
 
 const {
-  title = 'Camilo Acosta — Diseño & Desarrollo Web',
-  description = 'Diseño y desarrollo sitios web a medida para startups, marcas y empresas que quieren crecer en digital.',
+  title = 'Camilo Acosta — Diseño & Desarrollo Web en Cartagena',
+  description = 'Diseñador y desarrollador web Full Stack en Cartagena, Colombia. Landing pages para psicólogos, wedding planners, coaches y emprendedores. Diseño + desarrollo + copy en un solo lugar.',
+  lang = 'es',
+  ogImage = '/og-image.jpg',
+  noIndex = false,
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const isEnglish = lang === 'en';
+const esURL = new URL(Astro.url.pathname.replace(/^\/en/, '') || '/', Astro.site);
+const enURL = new URL('/en' + (Astro.url.pathname === '/' ? '' : Astro.url.pathname), Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Camilo Acosta',
+  url: 'https://camiloacosta.dev',
+  jobTitle: isEnglish ? 'Full Stack Web Designer & Developer' : 'Diseñador y Desarrollador Web Full Stack',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Cartagena',
+    addressRegion: 'Bolívar',
+    addressCountry: 'CO',
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/camiloacostam',
+    'https://github.com/camiloacostam',
+    'https://twitter.com/camiloacostam',
+  ],
+};
 ---
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO básico -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="diseñador web Cartagena, landing page Colombia, desarrollo web Cartagena, landing page para psicólogos, landing page para wedding planners, diseño web freelance Colombia, Camilo Acosta" />
+    <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="es" href={esURL} />
+    <link rel="alternate" hreflang="en" href={enURL} />
+    <link rel="alternate" hreflang="x-default" href={esURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content={isEnglish ? 'en_US' : 'es_CO'} />
+    <meta property="og:site_name" content="Camilo Acosta" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:creator" content="@camiloacostam" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
-    <title>{title}</title>
+
     <!-- Calendly -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+    <!-- Schema.org JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <!-- Runs synchronously before first paint to avoid flash -->
