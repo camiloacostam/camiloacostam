@@ -22,8 +22,9 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
 const isEnglish = lang === 'en';
-const esURL = new URL(Astro.url.pathname.replace(/^\/en/, '') || '/', Astro.site);
-const enURL = new URL('/en' + (Astro.url.pathname === '/' ? '' : Astro.url.pathname), Astro.site);
+const pathnameBase = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const esURL = new URL(pathnameBase, Astro.site);
+const enURL = new URL('/en' + pathnameBase, Astro.site);
 
 const jsonLd = {
   '@context': 'https://schema.org',
