@@ -1,0 +1,62 @@
+---
+import { getHome, links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c    = getHome(lang).statement;
+---
+<section class="statement-sec" data-nav="light">
+  <div class="wrap statement">
+    <div>
+      <p class="statement-text reveal">{c.textStart} <span class="hl">{c.highlight}</span>{c.textEnd}</p>
+      <ol class="pains reveal">
+        {c.pains.map((p, i) => (
+          <li><span class="pain-num">{String(i + 1).padStart(2, '0')}</span><p>{p}</p></li>
+        ))}
+      </ol>
+    </div>
+    <div class="statement-aside">
+      <p class="aside-text">{c.aside}</p>
+      <div class="magnet" data-magnet>
+        <a class="circle-btn fill-btn breathe statement-btn" href={links.calendly} data-calendly data-track="agendar" data-track-place="presentacion">{c.button[0]}<br />{c.button[1]}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .statement-sec { padding: 160px 0 128px; }
+  .statement { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 64px; align-items: start; }
+  .statement-text { font-size: 48px; line-height: 58px; letter-spacing: -0.025em; }
+  .hl { color: var(--mediterraneo); }
+
+  .pains { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 80px; }
+  .pains li { border-top: 1px solid var(--line); padding-top: 20px; }
+  .pain-num { font-size: 13px; color: var(--ink-muted); }
+  .pains p { margin-top: 8px; font-size: 18px; line-height: 27px; }
+
+  .statement-aside { display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
+  .aside-text { font-size: 15px; line-height: 24px; color: var(--ink-muted); }
+  .statement-btn { width: 180px; height: 180px; background: var(--mar); color: var(--crema); font-size: 17px; line-height: 24px; }
+
+  @media (max-width: 960px) {
+    .statement { grid-template-columns: minmax(0, 1fr); }
+    .statement-text { font-size: 40px; line-height: 50px; }
+  }
+
+  @media (max-width: 640px) {
+    .statement-sec { padding: 88px 0 72px; }
+    .wrap { padding: 0 20px; }
+    .statement { gap: 40px; }
+    .statement-text { font-size: 28px; line-height: 36px; }
+    .pains { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 40px; }
+    .pains li { display: flex; gap: 16px; padding: 18px 0; }
+    .pains li:last-child { border-bottom: 1px solid var(--line); }
+    .pain-num { font-size: 12px; padding-top: 3px; }
+    .pains p { margin-top: 0; font-size: 16px; line-height: 24px; }
+    .statement-aside { flex-direction: row-reverse; align-items: center; gap: 20px; }
+    .aside-text { font-size: 14px; line-height: 21px; }
+    .statement-btn { width: 132px; height: 132px; font-size: 15px; line-height: 20px; }
+    .magnet { flex-shrink: 0; }
+  }
+</style>

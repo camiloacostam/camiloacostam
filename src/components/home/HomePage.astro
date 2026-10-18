@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import Statement from './Statement.astro';
+import Bento from './Bento.astro';
+import Cases from './Cases.astro';
+import Process from './Process.astro';
+import Plans from './Plans.astro';
+import Faq from './Faq.astro';
+import Closing from './Closing.astro';
+import MobileBar from './MobileBar.astro';
+import { getHome } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+import '../../styles/home.css';
+
+const lang = getLang(Astro.currentLocale);
+const { meta } = getHome(lang);
+---
+<Layout title={meta.title} description={meta.description} lang={lang} variant="funnel">
+  <Nav />
+  <main>
+    <Hero />
+    <Statement />
+    <Bento />
+    <Cases />
+    <Process />
+    <Plans />
+    <Faq />
+    <Closing />
+  </main>
+  <MobileBar />
+</Layout>
+
+<script>
+  import '../../scripts/home';
+</script>

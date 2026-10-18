@@ -38,23 +38,27 @@ Es la vitrina principal para conseguir clientes: cada decisión de diseño, copy
 
 ```
 src/
-  layouts/Layout.astro          # <head>: SEO, OG, hreflang, JSON-LD, fuentes, Calendly
-  components/layout/            # Header.astro, Footer.astro
-  components/sections/          # Hero, SocialProofBar, BentoGrid, Projects, Blog, About, Contact
+  layouts/Layout.astro          # <head>: SEO, OG, hreflang, JSON-LD, fuentes, Calendly (variant="funnel" para el home)
+  components/home/              # home rediseñado: Nav, Hero, Statement, Bento, Cases, Process, Plans, Faq, Closing, MobileBar
+  components/layout/            # Header.astro, Footer.astro (páginas clásicas: /proyectos/, /blog/, 404)
+  components/sections/          # secciones del home anterior (Contact aún tiene el formulario)
   pages/                        # es en raíz, en bajo /en/
   i18n/                         # textos y helpers de traducción
+  data/home.ts                  # textos del home (es/en); [corchetes] = contenido pendiente
   data/projects.ts              # portafolio
+  styles/home.css               # tokens y utilidades del rediseño
+  scripts/home.ts               # interacciones del home (JS vanilla)
 functions/api/contact.ts        # endpoint del formulario
 public/                         # og-image.jpg, favicons, robots.txt, images/
 ```
 
-Anclas de la home (en español también en /en/): `#inicio`, `#servicios`, `#proyectos`, `#blog`, `#sobre-mi`, `#contacto`.
+Anclas de la home (en español también en /en/): `#inicio`, `#servicios`, `#proyectos`, `#proceso`, `#paquetes`, `#preguntas`, `#contacto`.
 
 ## Identidad visual
 
-- Color primario: azul `#2563EB`. Tema oscuro por defecto con toggle claro/oscuro.
-- Tipografía: Inter para la interfaz; firma manuscrita para el nombre (el diseño original usaba Caveat; el sitio en producción carga Dancing Script, hay que decidir cuál queda).
-- Componentes clave: hero con firma, barra de prueba social, grid bento de servicios, carrusel de proyectos, carrusel de blog en móvil.
+- Rediseño (home): secciones alternas crema `#F7F1E8` y mar `#0A2342`, acento aqua `#2DD4BF`, azul Mediterráneo `#1D5FAE`. Tokens en `src/styles/home.css`; brief y referencias en `docs/rediseno/`.
+- Tipografía: Inter Tight en el home; Dancing Script solo para la firma y acentos. Las páginas clásicas aún usan Inter y el azul `#2563EB` con toggle claro/oscuro.
+- Todos los CTA de agendar usan `data-calendly` (abre el popup) y `data-track` (eventos de analítica).
 
 ## Contacto público
 

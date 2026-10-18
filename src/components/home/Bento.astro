@@ -1,0 +1,181 @@
+---
+import Icon from './Icon.astro';
+import { getHome, links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c    = getHome(lang).bento;
+const [num, plus] = c.experience.value.endsWith('+')
+  ? [c.experience.value.slice(0, -1), '+']
+  : [c.experience.value, ''];
+---
+<section id="servicios" class="bento-sec" data-nav="light">
+  <div class="wrap">
+    <div class="bento-head">
+      <h2 class="h-section reveal">{c.title}</h2>
+      <p class="bento-intro">{c.intro}</p>
+    </div>
+
+    <div class="bento" data-spotlight>
+      <div class="cell b-hero">
+        <p class="eyebrow cell-eyebrow">{c.case.eyebrow}</p>
+        <h3 class="cell-h">{c.case.title}</h3>
+        <p class="cell-desc">{c.case.desc}</p>
+        <div class="mockups" aria-hidden="true">
+          <div class="mock-desktop"><div>{c.case.desktop}</div></div>
+          <div class="mock-mobile"><div>{c.case.mobile}</div></div>
+        </div>
+      </div>
+
+      <div class="cell cell--light cell-delivery">
+        <p class="cell-label">{c.delivery.label}</p>
+        <div class="cell-bottom">
+          <div class="stat">{c.delivery.value}</div>
+          <p class="cell-note">{c.delivery.desc}</p>
+        </div>
+      </div>
+
+      <figure class="cell b-tall cell--cielo">
+        <p class="cell-label">{c.testimonial.label}</p>
+        <blockquote class="quote">{c.testimonial.quote}</blockquote>
+        <figcaption class="person">
+          <span class="person-avatar"></span>
+          <span><strong>{c.testimonial.name}</strong>{c.testimonial.role}</span>
+        </figcaption>
+      </figure>
+
+      <div class="cell cell--light cell-exp">
+        <p class="cell-label">{c.experience.label}</p>
+        <div class="cell-bottom">
+          <div class="stat">{num}<span class="stat-plus">{plus}</span></div>
+          <p class="cell-note">{c.experience.desc}</p>
+        </div>
+      </div>
+
+      <div class="cell cell--light">
+        <p class="cell-label">{c.allInOne.label}</p>
+        <p class="cell-text">{c.allInOne.text}</p>
+        <p class="cell-stack">{c.allInOne.stack}</p>
+      </div>
+
+      <div class="cell cell--light">
+        <p class="cell-label cell-label--dot"><span class="pulse"></span>{c.availability.label}</p>
+        <p class="cell-text">{c.availability.text}</p>
+        <p class="cell-note cell-note--sm">{c.availability.desc}</p>
+      </div>
+
+      <a class="cell b-wide cell--cta fill-btn" href={links.calendly} data-calendly data-track="agendar" data-track-place="bento">
+        <span class="cta-text">{c.cta}</span>
+        <Icon name="arrow-up-right" size={40} strokeWidth={1.5} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bento-sec { padding: 32px 0 160px; }
+  .bento-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .bento-intro { max-width: 320px; font-size: 15px; line-height: 24px; color: var(--ink-muted); }
+
+  /* Spotlight: el degradado sigue al cursor y se ve en los espacios entre celdas */
+  .bento {
+    --sx: -999px; --sy: -999px;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(240px, auto); gap: 10px;
+    padding: 10px; border-radius: 32px;
+    background: radial-gradient(360px circle at var(--sx) var(--sy), rgba(45,212,191,.85), rgba(29,95,174,.25) 45%, transparent 70%), #E7E3DA;
+  }
+  .b-hero { grid-column: span 2; grid-row: span 2; }
+  .b-tall { grid-row: span 2; }
+  .b-wide { grid-column: span 2; }
+
+  .cell {
+    border-radius: 24px; padding: 28px; display: flex; flex-direction: column; margin: 0;
+    transition: transform .5s var(--ease);
+  }
+  .cell:hover { transform: translateY(-3px); }
+  .cell--light { background: var(--crema-raised); }
+  .cell--cielo { background: var(--cielo); color: var(--mar); }
+
+  .b-hero { background: var(--mar); color: var(--crema); padding: 36px; overflow: hidden; position: relative; }
+  .cell-eyebrow { color: var(--aqua-light); }
+  .cell-h { margin-top: 12px; font-size: 36px; line-height: 40px; letter-spacing: -0.03em; }
+  .cell-desc { margin-top: 10px; max-width: 400px; color: var(--ink-muted-dark); }
+
+  .mockups { flex-grow: 1; min-height: 240px; position: relative; margin-top: 32px; }
+  .mock-desktop {
+    position: absolute; left: 0; right: 100px; top: 0; bottom: 20px; border-radius: 14px;
+    background: var(--mar-raised); border: 1px solid var(--mar-line); padding: 10px 10px 0;
+  }
+  .mock-desktop > div {
+    height: 100%; border-radius: 8px 8px 0 0; background: linear-gradient(160deg, var(--mediterraneo), var(--mar-raised));
+    display: flex; align-items: center; justify-content: center; color: var(--ink-muted-dark); font-size: 14px; text-align: center; padding: 16px;
+  }
+  .mock-mobile {
+    position: absolute; right: 8px; bottom: 0; width: 116px; height: 220px; border-radius: 22px;
+    background: var(--mar-raised); border: 1px solid var(--mar-line); padding: 6px;
+  }
+  .mock-mobile > div {
+    height: 100%; border-radius: 16px; background: linear-gradient(160deg, var(--aqua), var(--mediterraneo));
+    display: flex; align-items: center; justify-content: center; color: var(--mar); font-size: 12px; text-align: center; padding: 8px;
+  }
+
+  .cell-label { font-size: 13px; line-height: 20px; color: var(--ink-muted); }
+  .cell--cielo .cell-label { color: var(--mar); }
+  .cell-label--dot { display: flex; align-items: center; gap: 8px; }
+  .cell-bottom { margin-top: auto; }
+  .stat { font-size: 64px; line-height: 64px; font-weight: 500; letter-spacing: -0.04em; }
+  .stat-plus { color: var(--mediterraneo); }
+  .cell-note { margin-top: 10px; font-size: 15px; line-height: 23px; color: var(--ink-muted); }
+  .cell-note--sm { margin-top: 8px; font-size: 14px; line-height: 21px; }
+  .cell-text { margin-top: auto; font-size: 22px; line-height: 30px; letter-spacing: -0.015em; }
+  .cell-stack { margin-top: 12px; font-size: 13px; line-height: 20px; color: var(--ink-muted); }
+
+  .quote { margin-top: 24px; font-size: 24px; line-height: 32px; letter-spacing: -0.015em; }
+  .person { margin-top: auto; padding-top: 24px; display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 20px; }
+  .person strong { display: block; font-weight: 600; }
+  .person-avatar { width: 44px; height: 44px; border-radius: 9999px; background: var(--cielo-soft); flex-shrink: 0; }
+
+  .cell--cta {
+    background: var(--mediterraneo); color: #FFFFFF; padding: 32px; flex-direction: row;
+    align-items: flex-end; justify-content: space-between; gap: 20px; text-decoration: none;
+  }
+  .cta-text { font-size: 36px; line-height: 40px; font-weight: 500; letter-spacing: -0.03em; max-width: 340px; }
+
+  @media (max-width: 960px) {
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .b-tall { grid-row: span 1; }
+  }
+
+  @media (max-width: 640px) {
+    .bento-sec { padding: 0 0 80px; }
+    .bento-head { margin: 0 4px 24px; }
+    .bento-intro { display: none; }
+    .bento { gap: 8px; padding: 0; background: none; grid-auto-rows: auto; }
+    .b-hero, .b-tall, .b-wide { grid-row: span 1; }
+    .b-hero, .b-wide, .b-tall { grid-column: span 2; }
+    /* Orden de la referencia móvil: caso, 7 días + experiencia, testimonio, resto */
+    .b-hero { order: -3; }
+    .cell-delivery { order: -2; }
+    .cell-exp { order: -1; }
+    .cell { padding: 18px; min-height: 150px; }
+    .b-hero, .b-tall, .cell--cta { padding: 22px; }
+    .cell-eyebrow { font-size: 11px; }
+    .cell-h { margin-top: 8px; font-size: 26px; line-height: 30px; }
+    .cell-desc { display: none; }
+    .mockups { min-height: 0; height: 170px; margin-top: 18px; flex-grow: 0; }
+    .mock-desktop { right: 64px; bottom: 10px; padding: 7px 7px 0; border-radius: 12px; }
+    .mock-desktop > div { font-size: 12px; }
+    .mock-mobile { right: 4px; width: 76px; height: 148px; border-radius: 16px; padding: 4px; }
+    .mock-mobile > div { font-size: 0; }
+    .cell-label { font-size: 12px; }
+    .stat { font-size: 40px; line-height: 40px; }
+    .cell-note { margin-top: 6px; font-size: 13px; line-height: 18px; }
+    .cell-text { font-size: 17px; line-height: 23px; }
+    .cell-stack, .cell-note--sm { display: none; }
+    .quote { margin-top: 14px; font-size: 19px; line-height: 27px; }
+    .person { padding-top: 16px; font-size: 13px; line-height: 18px; }
+    .person-avatar { width: 36px; height: 36px; }
+    .cta-text { font-size: 26px; line-height: 30px; }
+    .cell--cta :global(svg) { width: 30px; height: 30px; }
+  }
+</style>

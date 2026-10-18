@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import { getHome, links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const home = getHome(lang);
+const c    = home.mobileBar;
+const wa   = `${links.whatsapp}?text=${encodeURIComponent(home.closing.whatsappText(home.closing.needs[0]))}`;
+---
+<div class="mobile-bar glass" id="mobile-bar">
+  <a class="mobile-bar-cta" href={links.calendly} data-calendly data-track="agendar" data-track-place="barra-movil">
+    <span class="cta-label" data-cta-label data-cta-default={c.cta}>{c.cta}</span>
+  </a>
+  <a class="mobile-bar-wa" href={wa} target="_blank" rel="noopener noreferrer" aria-label={c.whatsappAria} data-track="whatsapp" data-track-place="barra-movil">
+    <Icon name="whatsapp" size={22} />
+  </a>
+</div>
+
+<style>
+  .mobile-bar { display: none; }
+
+  @media (max-width: 640px) {
+    .mobile-bar {
+      position: fixed; left: 12px; right: 12px; bottom: 14px; z-index: 39; height: 64px; border-radius: 9999px;
+      display: flex; align-items: center; gap: 8px; padding: 6px;
+      background: linear-gradient(135deg, rgba(10,35,66,.72), rgba(10,35,66,.55));
+      transition: transform .45s var(--ease), opacity .45s;
+    }
+    .mobile-bar[hidden] { display: none; }
+    .mobile-bar.is-hidden { transform: translateY(120%); opacity: 0; pointer-events: none; }
+    .mobile-bar-cta {
+      flex-grow: 1; height: 52px; border-radius: 9999px; background: var(--aqua); color: var(--mar);
+      font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none;
+    }
+    .mobile-bar-wa {
+      width: 52px; height: 52px; flex-shrink: 0; border-radius: 9999px; background: var(--disponible); color: var(--mar);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mobile-bar-cta:active, .mobile-bar-wa:active { transform: scale(.97); }
+  }
+</style>

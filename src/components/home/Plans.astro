@@ -1,0 +1,86 @@
+---
+import { getHome, links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c    = getHome(lang).plans;
+---
+<section id="paquetes" class="plans-sec" data-nav="light">
+  <div class="wrap">
+    <h2 class="h-section reveal">{c.title}</h2>
+    <div class="plans" data-plans>
+      {c.items.map((p, i) => (
+        <a
+          class:list={['plan reveal', { 'plan--featured': p.featured }]}
+          href={links.calendly}
+          data-calendly
+          data-track="agendar"
+          data-track-place={`paquete-${i + 1}`}
+        >
+          <p class="plan-name">{p.name}{p.badge && <span class="plan-badge">{p.badge}</span>}</p>
+          <p class="plan-desc muted">{p.desc}</p>
+          <p class="plan-price">{p.price}{p.per && <span class="plan-per">{p.per}</span>}</p>
+          <p class="plan-note muted">{p.note}</p>
+        </a>
+      ))}
+    </div>
+    <div class="plan-dots" aria-hidden="true" data-plan-dots>
+      {c.items.map((_, i) => <span class:list={['plan-dot', { 'is-active': i === 0 }]}></span>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .plans-sec { padding: 160px 0; }
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 56px; }
+
+  .plan {
+    background: var(--crema-raised); color: var(--mar); border-radius: 24px; padding: 32px; min-height: 380px;
+    display: flex; flex-direction: column; text-decoration: none; transition: background .45s, color .45s;
+  }
+  .plan .muted { color: var(--ink-muted); transition: color .45s; }
+  .plan--featured { background: var(--mediterraneo); color: #FFFFFF; }
+  .plan--featured .muted { color: var(--cielo-soft); }
+  .plan:hover { background: var(--mar); color: var(--crema); }
+  .plan:hover .muted { color: var(--ink-muted-dark); }
+  .plan:focus-visible { border-radius: 24px; }
+
+  .plan-name { font-size: 22px; line-height: 30px; font-weight: 500; }
+  .plan-badge {
+    font-size: 12px; line-height: 18px; font-weight: 600; padding: 4px 10px; border-radius: 9999px;
+    background: rgba(10,35,66,.32); vertical-align: middle; margin-left: 6px;
+  }
+  .plan-desc { margin-top: 8px; font-size: 15px; line-height: 23px; }
+  .plan-price { margin-top: auto; font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em; }
+  .plan-per { font-size: 18px; }
+  .plan-note { margin-top: 16px; font-size: 14px; line-height: 21px; }
+
+  .plan-dots { display: none; }
+
+  @media (max-width: 960px) {
+    .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* Móvil: carrusel con snap y puntos */
+  @media (max-width: 640px) {
+    .plans-sec { padding: 88px 0 72px; }
+    .wrap { padding: 0; }
+    .wrap > h2 { margin: 0 20px; }
+    .plans {
+      display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 4px 20px; margin-top: 24px; scrollbar-width: none;
+    }
+    .plans::-webkit-scrollbar { display: none; }
+    .plan { flex: 0 0 300px; scroll-snap-align: center; min-height: 340px; padding: 24px; }
+    .plan-name { font-size: 20px; }
+    .plan-badge { font-size: 11px; padding: 3px 9px; }
+    .plan-desc { font-size: 14px; line-height: 21px; }
+    .plan-price { font-size: 36px; line-height: 40px; }
+    .plan-per { font-size: 16px; }
+    .plan-note { margin-top: 12px; font-size: 13px; }
+
+    .plan-dots { display: flex; justify-content: center; gap: 6px; margin-top: 16px; }
+    .plan-dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--line); transition: all .3s; }
+    .plan-dot.is-active { width: 20px; background: var(--mediterraneo); }
+  }
+</style>
