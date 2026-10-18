@@ -1,0 +1,155 @@
+/* ── Rediseño "funnel": tokens y utilidades compartidas del home ───────────── */
+
+:root {
+  --mar: #0A2342;
+  --mar-raised: #10305A;
+  --mar-line: #224A7A;
+  --crema: #F7F1E8;
+  --crema-raised: #FFFBF5;
+  --line: #DCE2E3;
+  --ink-muted: #4A5868;
+  --ink-muted-dark: #A9C0DA;
+  --aqua: #2DD4BF;
+  --aqua-light: #5EEAD4;
+  --mediterraneo: #1D5FAE;
+  --cielo: #9FD3F2;
+  --cielo-soft: #E1F1FB;
+  --disponible: #7FDB9A;
+
+  --font-sans: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Dancing Script', cursive;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --focus-ring: 0 0 0 3px var(--crema), 0 0 0 5px var(--mediterraneo);
+  --focus-ring-dark: 0 0 0 3px var(--mar), 0 0 0 5px var(--aqua-light);
+}
+
+body.funnel {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 28px;
+  background: var(--crema);
+  color: var(--mar);
+  overflow-x: hidden;
+}
+
+.funnel h1, .funnel h2, .funnel h3 { font-weight: 500; }
+
+.funnel :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 9999px; }
+.funnel [data-nav='dark'] :focus-visible,
+.funnel .on-dark :focus-visible { box-shadow: var(--focus-ring-dark); }
+
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+.script { font-family: var(--font-script); font-weight: 700; letter-spacing: 0; }
+.eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.h-section { font-size: 72px; line-height: 74px; letter-spacing: -0.04em; }
+
+/* Vidrio */
+.glass {
+  background: linear-gradient(135deg, rgba(255,255,255,.28), rgba(255,255,255,.08));
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255,255,255,.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -1px 0 rgba(255,255,255,.12), 0 10px 40px -12px rgba(10,35,66,.45);
+}
+
+/* Botones */
+.pill { transition: background .35s, color .35s, transform .35s var(--ease); }
+.pill:hover { transform: scale(1.04); }
+
+.fill-btn { position: relative; overflow: hidden; isolation: isolate; }
+.fill-btn::before {
+  content: ''; position: absolute; left: 50%; top: 100%; width: 160%; aspect-ratio: 1;
+  border-radius: 9999px; background: var(--aqua); transform: translate(-50%, 0);
+  transition: top .55s var(--ease); z-index: -1;
+}
+.fill-btn:hover::before { top: -30%; }
+.fill-btn:hover { color: var(--mar) !important; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 56px; padding: 0 28px; border-radius: 9999px;
+  font-weight: 600; font-size: 16px; text-decoration: none; white-space: nowrap;
+}
+.btn--blue { background: var(--mediterraneo); color: #FFFFFF; }
+.btn--aqua { background: var(--aqua); color: var(--mar); }
+.btn--mar  { background: var(--mar); color: #FFFFFF; }
+.btn--line { border: 1px solid var(--mar-line); color: var(--crema); }
+
+.link-u {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size .45s var(--ease); text-decoration: none;
+}
+.link-u:hover { background-size: 100% 1px; }
+
+.magnet { display: inline-block; transition: transform .7s var(--ease); will-change: transform; }
+.magnet.is-active { transition-duration: .2s; }
+
+.circle-btn {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  border-radius: 9999px; font-weight: 500; text-decoration: none;
+}
+
+.icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* Indicadores */
+.pulse { width: 8px; height: 8px; border-radius: 9999px; background: var(--disponible); display: inline-block; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(127,219,154,.6); } 50% { box-shadow: 0 0 0 6px rgba(127,219,154,0); } }
+
+.blob {
+  position: absolute; border-radius: 9999px; filter: blur(80px); opacity: .55; pointer-events: none;
+  animation: float 14s ease-in-out infinite alternate;
+}
+@keyframes float { to { transform: translate(40px, -30px) scale(1.08); } }
+
+/* Entrada al hacer scroll: CSS si hay animation-timeline, IntersectionObserver si no */
+@keyframes up { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@keyframes grow { from { transform: scale(.92); border-radius: 64px; } to { transform: none; } }
+@keyframes breathe {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45,212,191,.55); }
+  45% { transform: scale(1.03); }
+  100% { transform: scale(1); box-shadow: 0 0 0 20px rgba(45,212,191,0); }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal { animation: up linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+  .scale-in { animation: grow linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+}
+
+@supports not (animation-timeline: view()) {
+  .io .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .io .reveal.is-in { opacity: 1; transform: none; }
+}
+
+/* Latido único al entrar en pantalla (lo activa home.ts) */
+.breathe.is-in { animation: breathe 1.2s var(--ease) 1; }
+
+@keyframes labelin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes glow { 0% { box-shadow: 0 0 0 0 rgba(45,212,191,.75); } 100% { box-shadow: 0 0 0 14px rgba(45,212,191,0); } }
+.cta-label { display: inline-block; }
+.cta-label.is-swapping { animation: labelin .45s var(--ease); }
+.is-glowing { animation: glow 1.1s ease-out; }
+
+@media (max-width: 960px) {
+  .h-section { font-size: 56px; line-height: 60px; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  .h-section { font-size: 40px; line-height: 44px; }
+  body.funnel { font-size: 16px; line-height: 25px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .funnel *, .funnel *::before, .funnel *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .io .reveal { opacity: 1 !important; transform: none !important; }
+  .magnet { transform: none !important; }
+}

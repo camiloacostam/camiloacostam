@@ -1,0 +1,217 @@
+---
+import Icon from './Icon.astro';
+import { getHome, links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c    = getHome(lang).cases;
+const total = String(c.items.length).padStart(2, '0');
+const allProjects = lang === 'en' ? '/en/proyectos/' : '/proyectos/';
+---
+<section id="proyectos" class="cases-sec" data-nav="light">
+  <div class="wrap">
+    <div class="cases-head">
+      <div>
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h2 class="h-section reveal cases-title">{c.title}</h2>
+      </div>
+      <div class="cases-controls">
+        <span class="cases-counter" data-cases-counter aria-live="polite">01 / {total}</span>
+        <button class="arrow-btn" type="button" data-cases-prev aria-label={c.prev}><Icon name="arrow-left" /></button>
+        <button class="arrow-btn" type="button" data-cases-next aria-label={c.next}><Icon name="arrow-right" /></button>
+      </div>
+    </div>
+
+    <div class="strips" data-cases>
+      <div class="strip-track" data-cases-track>
+        {c.items.map((p, i) => {
+          const num = String(i + 1).padStart(2, '0');
+          const ctaAttrs = p.cta
+            ? { 'data-calendly': '', 'data-track': 'agendar', 'data-track-place': 'casos' }
+            : {};
+          return (
+            <a
+              class:list={['strip', `strip--${p.tone}`, { 'is-open': i === 0, 'strip--cta': p.cta }]}
+              href={p.href}
+              data-strip
+              {...ctaAttrs}
+            >
+              <div class="strip-closed" aria-hidden="true">
+                <span class="strip-num">{num}</span>
+                <span class="vtext">{p.name}</span>
+              </div>
+              <div class="strip-open">
+                <div class="media">{p.media}</div>
+                <div class="strip-info">
+                  <div class="strip-copy">
+                    <p class="strip-cat">{num} · {p.cat}</p>
+                    <p class="strip-title">{p.title}</p>
+                    <p class="strip-desc">{p.desc}</p>
+                  </div>
+                  <span class="strip-action">{p.cta ? c.actionCta : c.actionCase}</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <div class="case-cursor" aria-hidden="true" data-cases-cursor>{c.cursor}</div>
+    </div>
+
+    <div class="cases-bar-track"><div class="cases-bar" data-cases-bar></div></div>
+    <p class="cases-hint">{c.hint}</p>
+
+    <div class="cases-cta reveal">
+      <p class="cases-cta-text">{c.barText}</p>
+      <div class="cases-cta-actions">
+        <a class="link-u cases-all" href={allProjects}>{c.barAll}</a>
+        <a class="btn btn--blue pill fill-btn breathe" href={links.calendly} data-calendly data-track="agendar" data-track-place="casos-barra">
+          {c.barCta}<Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cases-sec { padding: 0 0 160px; }
+  .cases-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cases-title { margin-top: 12px; }
+  .cases-controls { display: flex; align-items: center; gap: 16px; }
+  .cases-counter { font-size: 14px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+  .arrow-btn {
+    width: 52px; height: 52px; border-radius: 9999px; border: 1px solid var(--line); background: transparent;
+    color: var(--mar); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: background .3s, color .3s, border-color .3s;
+  }
+  .arrow-btn:hover { background: var(--mar); color: var(--crema); border-color: var(--mar); }
+  .arrow-btn:disabled { opacity: .35; pointer-events: none; }
+
+  .strips { --open: 760px; --closed: 180px; --sh: 560px; position: relative; margin-right: calc(50% - 50vw); }
+  .strip-track {
+    /* Sin scroll-behavior: smooth: con snap, Chrome hace un scroll inicial y deja de medir el LCP */
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity;
+    padding-right: 40px; padding-bottom: 4px; scrollbar-width: none;
+  }
+  .strip-track::-webkit-scrollbar { display: none; }
+
+  .strip {
+    flex: 0 0 var(--closed); height: var(--sh); border-radius: 28px; position: relative; overflow: hidden;
+    scroll-snap-align: start; text-decoration: none; border: 1px solid transparent;
+    transition: flex-basis .75s var(--ease);
+  }
+  .strip.is-open { flex-basis: var(--open); }
+  .strip:focus-visible { border-radius: 28px; }
+
+  .strip--mar   { background: var(--mar); color: var(--crema); }
+  .strip--cielo { background: var(--cielo); color: var(--mar); }
+  .strip--crema { background: var(--crema-raised); color: var(--mar); border-color: var(--line); }
+  .strip--aqua  { background: var(--aqua); color: var(--mar); }
+
+  .strip-closed {
+    position: absolute; inset: 0; padding: 24px; display: flex; flex-direction: column;
+    justify-content: space-between; align-items: flex-start; transition: opacity .35s; pointer-events: none;
+  }
+  .strip-num { font-size: 13px; font-weight: 600; }
+  .vtext {
+    writing-mode: vertical-rl; transform: rotate(180deg); font-size: 30px; line-height: 34px;
+    font-weight: 500; letter-spacing: -0.02em; white-space: nowrap;
+  }
+  .strip-open {
+    position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
+    opacity: 0; transition: opacity .45s 0s;
+  }
+  .strip.is-open .strip-closed { opacity: 0; }
+  .strip.is-open .strip-open { opacity: 1; transition-delay: .25s; }
+
+  .media {
+    position: absolute; left: 24px; right: 24px; top: 24px; bottom: 150px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; text-align: center; padding: 16px;
+    transition: transform .9s var(--ease);
+  }
+  .strip:hover .media { transform: scale(1.03); }
+  .strip--mar   .media { background: linear-gradient(160deg, var(--mediterraneo), var(--mar-raised)); color: var(--ink-muted-dark); }
+  .strip--cielo .media { background: linear-gradient(160deg, var(--cielo-soft), var(--cielo)); color: var(--mediterraneo); }
+  .strip--crema .media { background: linear-gradient(160deg, var(--crema), var(--line)); color: var(--ink-muted); }
+  .strip--cta   .media {
+    left: auto; right: -60px; top: -60px; bottom: auto; width: 320px; height: 320px; border-radius: 9999px;
+    background: rgba(255,255,255,.35); font-size: 0; padding: 0;
+  }
+
+  .strip-info { position: relative; padding: 32px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .strip-copy { max-width: 420px; }
+  .strip-cat { font-size: 12px; line-height: 18px; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+  .strip-title { margin-top: 8px; font-size: 40px; line-height: 44px; font-weight: 500; letter-spacing: -0.03em; }
+  .strip-desc { margin-top: 8px; font-size: 15px; line-height: 23px; opacity: .8; }
+  .strip-action {
+    flex-shrink: 0; display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px;
+    border-radius: 9999px; font-size: 15px; font-weight: 600; background: var(--mar); color: var(--crema);
+  }
+  .strip--mar .strip-action { background: var(--crema); color: var(--mar); }
+
+  /* Cursor "Ver caso" de vidrio: solo con puntero fino */
+  .case-cursor {
+    position: absolute; left: 0; top: 0; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 9999px;
+    background: rgba(255,255,255,.22); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.5); color: #FFFFFF; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; pointer-events: none; z-index: 6; box-shadow: 0 10px 30px -10px rgba(10,35,66,.5);
+    opacity: 0; transform: scale(.6); transition: opacity .25s, transform .25s var(--ease), left .18s var(--ease), top .18s var(--ease);
+  }
+  .strips.show-cursor .case-cursor { opacity: 1; transform: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .strips.show-cursor .strip.is-open:not(.strip--cta) { cursor: none; }
+  }
+
+  .cases-bar-track { margin-top: 28px; height: 2px; border-radius: 9999px; background: var(--line); max-width: 320px; }
+  .cases-bar {
+    height: 100%; border-radius: 9999px; background: var(--mediterraneo); transform-origin: left center;
+    transform: scaleX(.12); transition: transform .2s;
+  }
+  .cases-hint { display: none; }
+
+  .cases-cta {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;
+    margin-top: 56px; padding: 28px 28px 28px 36px; border-radius: 9999px; background: var(--crema-raised);
+  }
+  .cases-cta-text { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; }
+  .cases-cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .cases-all { color: var(--mar); font-size: 15px; }
+
+  @media (max-width: 960px) {
+    .strips { --open: 520px; --closed: 120px; --sh: 480px; }
+    .cases-cta { border-radius: 32px; }
+  }
+
+  @media (max-width: 640px) {
+    .cases-sec { padding: 0 0 80px; }
+    .cases-head { margin-bottom: 24px; flex-wrap: nowrap; padding: 0 4px; }
+    .cases-title { margin-top: 8px; }
+    .arrow-btn { display: none; }
+    .cases-counter { font-size: 13px; padding-bottom: 6px; }
+
+    .strips { --open: 272px; --closed: 64px; --sh: 420px; margin: 0 -16px; }
+    .strip-track { gap: 8px; padding: 0 20px 4px; }
+    .strip { border-radius: 22px; transition-duration: .7s; }
+    .strip-closed { padding: 18px 0; align-items: center; }
+    .strip-num { font-size: 12px; }
+    .vtext { font-size: 22px; line-height: 26px; }
+    .media { left: 14px; right: 14px; top: 14px; bottom: 186px; border-radius: 14px; font-size: 12px; padding: 12px; }
+    .strip--cta .media { right: -50px; top: -50px; width: 220px; height: 220px; }
+    .strip-info { display: block; padding: 18px; }
+    .strip-cat { font-size: 11px; }
+    .strip-title { margin-top: 6px; font-size: 24px; line-height: 28px; }
+    .strip-desc { margin-top: 6px; font-size: 13px; line-height: 19px; }
+    .strip-action { margin-top: 12px; min-height: 40px; padding: 0 16px; font-size: 14px; }
+    .case-cursor { display: none; }
+
+    .cases-bar-track { display: none; }
+    .cases-hint { display: block; margin: 12px 4px 0; font-size: 12px; line-height: 18px; color: var(--ink-muted); }
+
+    .cases-cta { display: block; margin-top: 28px; padding: 20px; border-radius: 24px; }
+    .cases-cta-text { font-size: 20px; line-height: 27px; }
+    .cases-cta-actions { margin-top: 14px; }
+    .cases-all { display: none; }
+    .cases-cta .btn { width: 100%; min-height: 52px; }
+  }
+</style>

@@ -16,6 +16,8 @@ const enNotFound = {
 
 export default defineConfig({
   site: 'https://camiloacosta.dev',
+  // CSS dentro del HTML: evita peticiones que bloquean el primer render
+  build: { inlineStylesheets: 'always' },
   integrations: [
     sitemap({ filter: (page) => !/\/404\/?$/.test(new URL(page).pathname) }),
     enNotFound,

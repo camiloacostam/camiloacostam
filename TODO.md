@@ -3,8 +3,9 @@
 Pendientes del sitio. Prioridad: 🔴 bloquea el lanzamiento · 🟠 importante · 🟡 pulido.
 Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octubre de 2026.
 
-> **Rediseño en curso** (rama `redesign/funnel`, brief en `docs/rediseno/BRIEF-CLAUDE-CODE.md`).
+> **Rediseño implementado** en la rama `redesign/funnel` (brief en `docs/rediseno/BRIEF-CLAUDE-CODE.md`), pendiente de revisión y merge.
 > El nuevo home resuelve varios puntos de esta lista (marcados con 🎨). Se cierran cuando el rediseño llegue a `main`.
+> Lighthouse móvil en local: 99–100 performance, 100 accesibilidad, buenas prácticas y SEO.
 
 ---
 
@@ -105,6 +106,9 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octu
 
 ### Coherencia visual
 - [ ] Llevar `/proyectos/`, `/blog/` y la 404 al sistema visual del rediseño (crema / mar, Inter Tight).
+- [ ] El Header clásico enlaza a `/#sobre-mi`, que ya no existe en el home nuevo (cae al inicio).
+- [ ] Reemplazar los placeholders de capturas del home (bento y casos) por imágenes reales con `astro:assets`.
+- [ ] Borrar los componentes viejos de `src/components/sections/` cuando se decida qué pasa con el formulario.
 
 ---
 

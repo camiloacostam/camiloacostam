@@ -1,0 +1,180 @@
+---
+import Icon from './Icon.astro';
+import { getHome, links } from '../../data/home';
+import { getLang, getAlternatePath } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c    = getHome(lang).nav;
+const altPath = getAlternatePath(Astro.url.pathname, lang);
+
+const socials = [
+  links.instagram && { label: 'Instagram', href: links.instagram },
+  { label: 'LinkedIn', href: links.linkedin },
+  { label: 'GitHub',   href: links.github },
+].filter(Boolean) as { label: string; href: string }[];
+---
+<header
+  class="nav on-dark"
+  id="nav"
+  data-cta-default={c.cta}
+  data-cta-map={JSON.stringify(c.ctaBySection)}
+>
+  <div class="nav-pill glass">
+    <div class="nav-progress" aria-hidden="true"><div class="nav-progress-bar" id="nav-progress"></div></div>
+
+    <a class="brand" href="#inicio">
+      <span class="brand-mark">CA</span>
+      <span class="brand-name">Camilo Acosta</span>
+    </a>
+
+    <nav class="nav-links" aria-label={c.label}>
+      {c.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-lang" href={altPath} hreflang={lang === 'es' ? 'en' : 'es'} aria-label={c.langAria}>{c.langLabel}</a>
+      <a
+        class="nav-cta pill fill-btn"
+        href={links.calendly}
+        data-calendly
+        data-track="agendar"
+        data-track-place="nav"
+      ><span class="cta-label" data-cta-label>{c.cta}</span></a>
+      <button
+        class="menu-btn"
+        type="button"
+        aria-label={c.openMenu}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        id="menu-open"
+      ><Icon name="menu" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" hidden>
+  <div class="mobile-menu-top">
+    <span class="script mobile-menu-brand">Camilo Acosta</span>
+    <button class="mobile-menu-close" type="button" aria-label={c.closeMenu} id="menu-close"><Icon name="close" /></button>
+  </div>
+  <nav class="mobile-menu-links" aria-label={c.label}>
+    {c.links.map((l, i) => (
+      <a class="mobile-menu-link" href={l.href} style={`animation-delay: ${0.05 * (i + 1)}s`} data-menu-close>{l.label}</a>
+    ))}
+  </nav>
+  <div class="mobile-menu-bottom">
+    <a class="btn btn--aqua" href={links.calendly} data-calendly data-track="agendar" data-track-place="menu" data-menu-close>{c.menuCta}</a>
+    <div class="mobile-menu-meta">
+      <span>
+        {socials.map((s, i) => (
+          <>{i > 0 && ' · '}<a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a></>
+        ))}
+      </span>
+      <a href={altPath} hreflang={lang === 'es' ? 'en' : 'es'}>ES / EN</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 40; padding: 0 16px; }
+
+  .nav-pill {
+    position: relative; overflow: hidden; max-width: 1120px; margin: 0 auto; height: 64px;
+    border-radius: 9999px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 0 10px 0 12px;
+    transition: background .45s, border-color .45s, box-shadow .45s;
+  }
+
+  .nav-progress {
+    position: absolute; left: 32px; right: 32px; bottom: 0; height: 2px;
+    border-radius: 9999px; background: rgba(159,211,242,.18); pointer-events: none;
+  }
+  .nav-progress-bar {
+    height: 100%; width: 100%; border-radius: 9999px;
+    background: linear-gradient(90deg, var(--mediterraneo), var(--aqua));
+    transform-origin: left center; transform: scaleX(0); transition: transform .15s linear;
+  }
+
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #FFFFFF; transition: color .45s; }
+  .brand-mark {
+    width: 40px; height: 40px; border-radius: 9999px; background: var(--mar);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-script); font-size: 20px; font-weight: 700; color: var(--aqua);
+  }
+  .brand-name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+
+  .nav-links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; }
+  .nav-link {
+    position: relative; color: var(--crema); text-decoration: none; padding: 8px 2px; opacity: .9;
+    transition: opacity .3s, color .45s;
+  }
+  .nav-link::after {
+    content: ''; position: absolute; left: 50%; bottom: 0; width: 4px; height: 4px; border-radius: 9999px;
+    background: var(--aqua); transform: translate(-50%, 6px) scale(0); transition: transform .35s var(--ease);
+  }
+  .nav-link:hover { opacity: 1; color: #FFFFFF; }
+  .nav-link:hover::after { transform: translate(-50%, 6px) scale(1); }
+
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  .nav-lang { font-size: 13px; font-weight: 600; text-decoration: none; padding: 10px; opacity: .85; color: #FFFFFF; transition: color .45s; }
+
+  .nav-cta {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; border-radius: 9999px;
+    background: var(--mediterraneo); color: #FFFFFF; font-weight: 600; font-size: 15px;
+    text-decoration: none; white-space: nowrap;
+  }
+
+  .menu-btn {
+    display: none; width: 44px; height: 44px; border-radius: 9999px; border: 0;
+    background: var(--mediterraneo); color: #FFFFFF; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .menu-btn:active, .mobile-menu-close:active { transform: scale(.97); }
+
+  /* Sobre fondo claro */
+  .on-light .nav-pill {
+    background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.46));
+    border-color: rgba(10,35,66,.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 10px 40px -14px rgba(10,35,66,.25);
+  }
+  .on-light .nav-link, .on-light .nav-link:hover, .on-light .brand, .on-light .nav-lang { color: var(--mar); }
+
+  /* Menú móvil a pantalla completa */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 60; background: rgba(10,35,66,.82);
+    backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
+    color: var(--crema); display: flex; flex-direction: column; padding: 24px 24px 32px;
+    animation: menuin .45s var(--ease);
+  }
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu-top { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+  .mobile-menu-brand { font-size: 26px; color: var(--aqua); }
+  .mobile-menu-close {
+    width: 44px; height: 44px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.3);
+    background: transparent; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .mobile-menu-links { margin-top: 48px; display: flex; flex-direction: column; gap: 6px; }
+  .mobile-menu-link {
+    color: var(--crema); text-decoration: none; font-size: 40px; line-height: 52px; font-weight: 500;
+    letter-spacing: -0.03em; animation: linkin .5s var(--ease) both;
+  }
+  .mobile-menu-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
+  .mobile-menu-meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-muted-dark); }
+  .mobile-menu-meta a { color: inherit; text-decoration: none; }
+
+  @keyframes menuin { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  @keyframes linkin { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .menu-btn { display: inline-flex; }
+  }
+
+  @media (max-width: 640px) {
+    .nav { top: 12px; padding: 0 12px; }
+    .nav-pill { height: 56px; padding: 0 6px 0 8px; }
+    .nav-progress { left: 24px; right: 24px; }
+    .brand { gap: 8px; }
+    .brand-name { font-size: 15px; }
+    .nav-cta, .nav-lang { display: none; }
+  }
+</style>

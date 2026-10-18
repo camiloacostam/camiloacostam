@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import { getHome, links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c    = getHome(lang).faq;
+const wa   = `${links.whatsapp}?text=${encodeURIComponent(c.whatsappText)}`;
+---
+<section id="preguntas" class="faq-sec" data-nav="light">
+  <div class="wrap faq-grid">
+    <h2 class="h-section reveal faq-title">{c.title}</h2>
+
+    <div class="faq-list">
+      {c.items.map(([q, a], i) => (
+        <details class="faq-item" name="faq" open={i === 0}>
+          <summary class="faq-q">{q}<span class="faq-icon"><Icon name="plus" size={16} /></span></summary>
+          <p class="faq-a">{a}</p>
+        </details>
+      ))}
+    </div>
+
+    <div class="faq-more reveal">
+      <p class="faq-more-title">{c.moreTitle}</p>
+      <p class="faq-more-desc">{c.moreDesc}</p>
+      <a class="btn btn--mar pill fill-btn breathe" href={wa} target="_blank" rel="noopener noreferrer" data-track="whatsapp" data-track-place="faq">
+        <Icon name="whatsapp" />{c.moreCta}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-sec { padding: 0 0 160px; }
+  .faq-grid {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: 64px;
+    grid-template-areas: 'title list' 'more list'; grid-template-rows: auto 1fr;
+  }
+  .faq-title { grid-area: title; font-size: 56px; line-height: 60px; letter-spacing: -0.035em; }
+  .faq-list  { grid-area: list; border-bottom: 1px solid var(--line); }
+  .faq-more  { grid-area: more; align-self: start; margin-top: 40px; padding: 24px; border-radius: 24px; background: var(--crema-raised); max-width: 360px; }
+
+  .faq-item { border-top: 1px solid var(--line); }
+  .faq-q {
+    min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 0; cursor: pointer; font-size: 20px; line-height: 28px; font-weight: 500; color: var(--mar);
+    list-style: none;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q:focus-visible { border-radius: 12px; }
+  .faq-icon {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line); color: var(--mar); transition: all .35s;
+  }
+  .faq-item[open] .faq-icon { background: var(--mediterraneo); border-color: var(--mediterraneo); color: #FFFFFF; transform: rotate(45deg); }
+  .faq-a { padding: 0 48px 24px 0; font-size: 16px; line-height: 26px; color: var(--ink-muted); }
+
+  .faq-more-title { font-size: 18px; line-height: 27px; }
+  .faq-more-desc { margin-top: 4px; font-size: 15px; line-height: 23px; color: var(--ink-muted); }
+  .faq-more .btn { margin-top: 18px; min-height: 52px; padding: 0 24px; }
+
+  @media (max-width: 960px) {
+    .faq-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'title' 'list' 'more'; }
+    .faq-list { margin-top: 32px; }
+  }
+
+  @media (max-width: 640px) {
+    .faq-sec { padding: 0 0 88px; }
+    .wrap { padding: 0 20px; }
+    .faq-title { font-size: 40px; line-height: 44px; letter-spacing: -0.04em; }
+    .faq-list { margin-top: 24px; }
+    .faq-q { min-height: 64px; padding: 16px 0; gap: 12px; font-size: 17px; line-height: 24px; }
+    .faq-icon { width: 34px; height: 34px; }
+    .faq-a { padding: 0 36px 18px 0; font-size: 15px; line-height: 23px; }
+    .faq-more { margin-top: 28px; padding: 20px; max-width: none; }
+    .faq-more-title { font-size: 17px; line-height: 25px; }
+    .faq-more-desc { margin-top: 2px; font-size: 14px; line-height: 21px; }
+    .faq-more .btn { margin-top: 14px; width: 100%; }
+  }
+</style>
