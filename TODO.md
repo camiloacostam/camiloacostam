@@ -13,7 +13,8 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octu
 
 - [ ] **Cifras reales**: proyectos entregados, años de experiencia, clientes, países y cupos por mes. Hoy son `[N]` en `src/data/home.ts`.
 - [ ] **Prometálica y Atelier**: tipo, sector, qué se hizo, URL en vivo, resultado con métricas, capturas desktop + móvil y testimonio.
-- [ ] **Paquetes**: confirmar nombres y precios del nuevo home (Landing / Sitio profesional / Acompañamiento mensual) frente a los de `CLAUDE.md` (Esencial $1.200.000 · Profesional $2.200.000 · Premium $3.500.000).
+- [x] **Precios** definidos en USD: Landing desde USD 200 · Sitio profesional desde USD 500 · Acompañamiento USD 25/mes.
+- [ ] **Sitio profesional**: cuántas páginas incluye (hoy dice "Hasta [N] páginas").
 - [ ] **FAQ**: qué incluye dominio, hosting y correo.
 - [ ] **Testimonio** con nombre, profesión y foto.
 - [ ] **URL de Instagram**.
