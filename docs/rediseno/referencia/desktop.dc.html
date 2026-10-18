@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Camilo Acosta — Webs para marcas personales</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&amp;family=Dancing+Script:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F1E8}
+a{color:#1D5FAE}a:hover{color:#0A2342}
+*{box-sizing:border-box}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(255,255,255,.08));backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.12),0 10px 40px -12px rgba(10,35,66,.45)}
+.navlink{position:relative;color:#F7F1E8;text-decoration:none;padding:8px 2px;opacity:.9;transition:opacity .3s}
+.navlink:after{content:"";position:absolute;left:50%;bottom:0;width:4px;height:4px;border-radius:9999px;background:#2DD4BF;transform:translate(-50%,6px) scale(0);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.navlink:hover{opacity:1;color:#FFFFFF}
+.navlink:hover:after{transform:translate(-50%,6px) scale(1)}
+.pill{transition:background .35s,color .35s,transform .35s cubic-bezier(.2,.8,.2,1)}
+.pill:hover{transform:scale(1.04)}
+.fill-btn{position:relative;overflow:hidden;isolation:isolate}
+.fill-btn:before{content:"";position:absolute;left:50%;top:100%;width:160%;aspect-ratio:1;border-radius:9999px;background:#2DD4BF;transform:translate(-50%,0);transition:top .55s cubic-bezier(.2,.8,.2,1);z-index:-1}
+.fill-btn:hover:before{top:-30%}
+.fill-btn:hover{color:#0A2342}
+.marquee{display:flex;width:max-content;animation:slide 26s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.pulse{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(127,219,154,.6)}50%{box-shadow:0 0 0 6px rgba(127,219,154,0)}}
+.blob{position:absolute;border-radius:9999px;filter:blur(80px);opacity:.55;animation:float 14s ease-in-out infinite alternate}
+@keyframes float{to{transform:translate(40px,-30px) scale(1.08)}}
+.row{transition:padding .5s cubic-bezier(.2,.8,.2,1),opacity .4s}
+.rows:hover .row{opacity:.35}
+.rows .row:hover{opacity:1;padding-left:20px;padding-right:20px}
+.cell{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.cell:hover{transform:translateY(-3px)}
+.plan{transition:background .45s,color .45s}
+.plan:hover{background:#0A2342!important;color:#F7F1E8!important}
+.plan:hover .muted{color:#A9C0DA!important}
+.link-u{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .45s cubic-bezier(.2,.8,.2,1);text-decoration:none}
+.link-u:hover{background-size:100% 1px}
+@supports (animation-timeline: view()){
+.reveal{animation:up linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+.scale-in{animation:grow linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+}
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scale(.92);border-radius:64px}to{transform:none}}
+.nav .glass,.nav .navlink,.nav .brand,.nav .lang{transition:background .45s,border-color .45s,box-shadow .45s,color .45s}
+.nav .brand,.nav .lang{color:#FFFFFF}
+.on-light .glass{background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.46));border-color:rgba(10,35,66,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 40px -14px rgba(10,35,66,.25)}
+.on-light .navlink,.on-light .navlink:hover,.on-light .brand,.on-light .lang{color:#0A2342}
+.glow-a{animation:glowA 1.1s ease-out}
+.glow-b{animation:glowB 1.1s ease-out}
+@keyframes glowA{0%{box-shadow:0 0 0 0 rgba(45,212,191,.75)}100%{box-shadow:0 0 0 14px rgba(45,212,191,0)}}
+@keyframes glowB{0%{box-shadow:0 0 0 0 rgba(45,212,191,.75)}100%{box-shadow:0 0 0 14px rgba(45,212,191,0)}}
+.cta-label{display:inline-block;animation:labelin .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes labelin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@supports (animation-timeline: view()){
+.breathe{animation:breathe linear none;animation-timeline:view();animation-range:entry 70% cover 40%}
+}
+@keyframes breathe{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(45,212,191,.55)}45%{transform:scale(1.03)}100%{transform:scale(1);box-shadow:0 0 0 20px rgba(45,212,191,0)}}
+.strips{--open:760px;--closed:180px;--sh:560px}
+.strip-track{scrollbar-width:none;scroll-behavior:smooth}
+.strip-track::-webkit-scrollbar{display:none}
+.vtext{writing-mode:vertical-rl;transform:rotate(180deg)}
+.strip .media{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.strip:hover .media{transform:scale(1.03)}
+.arrow-btn{transition:background .3s,color .3s,border-color .3s}
+.arrow-btn:hover{background:#0A2342;color:#F7F1E8;border-color:#0A2342}
+@media (max-width:960px){.strips{--open:520px;--closed:120px;--sh:480px}}
+@media (max-width:640px){.strips{--open:280px;--closed:76px;--sh:420px}.strip-info{padding:20px!important}.strip-title{font-size:26px!important;line-height:30px!important}}
+.hero-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;align-items:center}
+.phone{animation:phone 7s ease-in-out infinite}
+@keyframes phone{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-14px)}}
+.callout{opacity:0;animation:callin .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes callin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.wire path{stroke-dasharray:220;stroke-dashoffset:220;animation:wire 1s cubic-bezier(.6,.1,.3,1) forwards}
+@keyframes wire{to{stroke-dashoffset:0}}
+.scroll-line{animation:scrollline 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes scrollline{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.arrow-cta{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.cta-main:hover .arrow-cta{transform:translateX(4px) rotate(-45deg)}
+@media (max-width:960px){.hero-split{grid-template-columns:minmax(0,1fr)}.callouts{display:none}.phone-box{transform:scale(.82);margin:-40px auto -60px}.outline-word{font-size:160px!important}}
+@media (max-width:640px){.h-hero{font-size:44px!important;line-height:48px!important}.h-hero .script{font-size:60px!important}.meta-side{display:none}.phone-box{max-width:none!important;justify-self:start!important;margin:0 0 -290px calc(50% - 310px)!important;transform:scale(.56)!important;transform-origin:top center}}
+@media (prefers-reduced-motion: reduce){.marquee,.pulse,.blob,.reveal,.scale-in,.phone,.callout,.wire path,.scroll-line,.breathe,.glow-a,.glow-b,.cta-label{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end}
+.statement{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:64px;align-items:start}
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(240px,auto);gap:10px}
+.b-hero{grid-column:span 2;grid-row:span 2}
+.b-tall{grid-row:span 2}
+.b-wide{grid-column:span 2}
+.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.faqgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:64px}
+.navlinks{display:flex;gap:28px}
+.menu-btn{display:none!important}
+@media (max-width:960px){
+.hero-grid,.statement,.faqgrid{grid-template-columns:minmax(0,1fr)}
+.bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+.b-tall{grid-row:span 1}
+.four,.three{grid-template-columns:repeat(2,minmax(0,1fr))}
+.navlinks{display:none}
+.menu-btn{display:inline-flex!important}
+.big{font-size:56px!important;line-height:60px!important}
+}
+@media (max-width:640px){
+.wrap{padding:0 16px}
+.bento,.four,.three{grid-template-columns:minmax(0,1fr)}
+.b-hero,.b-wide{grid-column:span 1}
+.b-hero{grid-row:span 1}
+.big{font-size:40px!important;line-height:44px!important}
+.huge{font-size:96px!important}
+.sec{padding-top:96px!important;padding-bottom:96px!important}
+.nav-cta{display:none!important}
+.rowcat{display:none}
+}
+</style>
+</helmet>
+<div style="background: #F7F1E8; color: #0A2342; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 17px; line-height: 28px; overflow-x: hidden; position: relative;">
+
+<header class="nav {{navMode}}" style="position: fixed; top: 16px; left: 0; right: 0; z-index: 40; padding: 0 16px;">
+<div class="glass" style="position: relative; overflow: hidden; max-width: 1120px; margin: 0 auto; height: 64px; border-radius: 9999px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 10px 0 12px;">
+<div aria-hidden="true" style="position: absolute; left: 32px; right: 32px; bottom: 0; height: 2px; border-radius: 9999px; background: rgba(159,211,242,.18); pointer-events: none;"><div style="{{progressStyle}}"></div></div>
+<a class="brand" href="#inicio" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+<span style="width: 40px; height: 40px; border-radius: 9999px; background: #0A2342; display: inline-flex; align-items: center; justify-content: center; font-family: 'Dancing Script', cursive; font-size: 20px; font-weight: 700; color: #2DD4BF;">CA</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.01em;">Camilo Acosta</span>
+</a>
+<nav class="navlinks" aria-label="Principal" style="font-size: 15px; font-weight: 500;">
+<a class="navlink" href="#solucion">Servicios</a>
+<a class="navlink" href="#trabajo">Trabajo</a>
+<a class="navlink" href="#proceso">Proceso</a>
+<a class="navlink" href="#paquetes">Paquetes</a>
+<a class="navlink" href="#faq">Preguntas</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 8px;">
+<a class="lang" href="#" style="font-size: 13px; font-weight: 600; text-decoration: none; padding: 10px; opacity: .85;">EN</a>
+<a class="nav-cta pill fill-btn {{ctaGlow}}" href="#agenda" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; border-radius: 9999px; background: #1D5FAE; color: #FFFFFF; font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap;"><sc-if value="{{ctaEven}}" hint-placeholder-val="{{ctaEven}}"><span class="cta-label">{{ctaText}}</span></sc-if><sc-if value="{{ctaOdd}}" hint-placeholder-val="{{ctaOdd}}"><span class="cta-label">{{ctaText}}</span></sc-if></a>
+<button class="menu-btn" type="button" aria-label="Abrir menú" style="width: 44px; height: 44px; border-radius: 9999px; border: 0; background: #1D5FAE; color: #FFFFFF; align-items: center; justify-content: center; cursor: pointer;">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16"></path><path d="M4 16h16"></path></svg></button>
+</div>
+</div>
+</header>
+
+<section id="inicio" data-nav="dark" style="position: relative; min-height: 920px; background: #0A2342; color: #F7F1E8; overflow: hidden; display: flex; flex-direction: column;">
+<div class="blob" aria-hidden="true" style="width: 620px; height: 620px; right: 4%; top: -120px; background: #1D5FAE;"></div>
+<div class="blob" aria-hidden="true" style="width: 420px; height: 420px; right: 30%; bottom: -80px; background: #2DD4BF; opacity: .3; animation-delay: -6s;"></div>
+
+<div class="wrap hero-split" style="position: relative; width: 100%; flex-grow: 1; padding-top: 140px; padding-bottom: 32px;">
+<div>
+<div class="glass" style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px; border-radius: 9999px; font-size: 13px; color: #E1F1FB;"><span class="pulse" style="width: 8px; height: 8px; border-radius: 9999px; background: #7FDB9A; display: inline-block;"></span>Disponible · [N] cupos este mes</div>
+<h1 class="h-hero" style="margin: 28px 0 0; font-size: 64px; line-height: 68px; font-weight: 400; letter-spacing: -0.035em;">Tu talento ya tiene seguidores. Hagamos que te <span class="script" style="font-family: 'Dancing Script', cursive; font-size: 84px; font-weight: 700; letter-spacing: 0; color: #2DD4BF;">elijan.</span></h1>
+<p style="margin: 24px 0 0; max-width: 440px; font-size: 18px; line-height: 29px; color: #A9C0DA;">Diseño y desarrollo webs para psicólogos, coaches y profesionales independientes. Listas en 7 días y pensadas, pieza por pieza, para convertir.</p>
+<div style="position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 36px;">
+<a class="cta-main pill breathe" href="#agenda" style="display: inline-flex; align-items: center; gap: 14px; min-height: 60px; padding: 0 8px 0 26px; border-radius: 9999px; background: #F7F1E8; color: #0A2342; font-weight: 600; font-size: 16px; text-decoration: none;">Agenda tu llamada gratis<span style="width: 44px; height: 44px; border-radius: 9999px; background: #1D5FAE; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center;"><svg class="arrow-cta" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span></a>
+<a class="link-u" href="#trabajo" style="color: #F7F1E8; font-size: 15px;">Ver trabajos</a>
+<svg aria-hidden="true" viewBox="0 0 120 70" style="position: absolute; left: 250px; top: 58px; width: 110px; height: 64px;"><path d="M110 60 C 80 66, 40 58, 22 30 M22 30 l-2 14 M22 30 l13 5" fill="none" stroke="#2DD4BF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 64px;">
+<img src="/_blob/c1c1a7b287762282fea0912554d64473" alt="" style="width: 44px; height: 44px; border-radius: 9999px; object-fit: cover; object-position: 50% 12%; border: 1px solid rgba(255,255,255,.25); background: #9FD3F2;">
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: #A9C0DA;"><span style="font-family: 'Dancing Script', cursive; font-size: 20px; color: #F7F1E8;">Hola, soy Camilo</span><br>Diseñador y desarrollador web · 5+ años</p>
+</div>
+</div>
+
+<div class="phone-box" style="position: relative; width: 620px; max-width: 100%; height: 680px; justify-self: center;">
+<div aria-hidden="true" style="position: absolute; left: 100px; top: 40px; width: 480px; height: 480px; border-radius: 9999px; background: radial-gradient(circle, rgba(159,211,242,.55) 0%, rgba(29,95,174,.35) 45%, rgba(10,35,66,0) 72%);"></div>
+<div aria-hidden="true" style="position: absolute; left: 140px; top: 80px; width: 400px; height: 400px; border-radius: 9999px; border: 1px solid rgba(94,234,212,.35);"></div>
+<div aria-hidden="true" style="position: absolute; left: 196px; top: 136px; width: 288px; height: 288px; border-radius: 9999px; border: 1px dashed rgba(159,211,242,.25);"></div>
+<img src="/_blob/ad772bb4f2d38075f782e4b7bd2b0a72" alt="Camilo Acosta, diseñador y desarrollador web" style="position: absolute; left: 125px; bottom: 0; width: 430px; height: auto; display: block; filter: drop-shadow(0 30px 40px rgba(0,0,0,.35));">
+<div aria-hidden="true" style="position: absolute; left: 60px; right: 0; bottom: 0; height: 130px; background: linear-gradient(to top, #0A2342 10%, rgba(10,35,66,0));"></div>
+
+<div style="position: absolute; left: 0; top: 318px; width: 280px; height: 580px; transform: scale(.6); transform-origin: top left;">
+<div class="phone" style="position: absolute; left: 0; top: 0; width: 280px; height: 580px; border-radius: 44px; background: #10305A; border: 1px solid rgba(255,255,255,.22); padding: 10px; box-shadow: 0 50px 100px -30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.25);">
+<div style="position: relative; height: 100%; border-radius: 34px; background: #F7F1E8; overflow: hidden; padding: 40px 18px 18px; color: #0A2342; font-size: 10px; line-height: 14px;">
+<div style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 80px; height: 22px; border-radius: 9999px; background: #10305A;"></div>
+<div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-family: 'Dancing Script', cursive; font-size: 15px; font-weight: 700;">Dra. Nombre</span><span style="width: 16px; height: 2px; background: #0A2342; box-shadow: 0 5px 0 #0A2342;"></span></div>
+<p style="margin: 22px 0 0; font-size: 21px; line-height: 23px; font-weight: 500; letter-spacing: -0.03em;">Terapia que te acompaña a tu ritmo.</p>
+<p style="margin: 8px 0 0; color: #4A5868;">Psicóloga clínica · sesiones online y presenciales.</p>
+<span style="margin-top: 14px; display: inline-flex; align-items: center; padding: 8px 14px; border-radius: 9999px; background: #2DD4BF; font-weight: 600;">Agenda tu primera cita</span>
+<div style="margin-top: 16px; height: 140px; border-radius: 16px; background: linear-gradient(160deg,#9FD3F2,#1D5FAE);"></div>
+<div style="margin-top: 14px; padding: 10px 12px; border-radius: 14px; background: #FFFBF5; border: 1px solid #DCE2E3;"><span style="color: #1D5FAE; letter-spacing: 1px;">★★★★★</span><p style="margin: 4px 0 0; color: #4A5868;">“[Testimonio de un paciente]”</p></div>
+<span style="position: absolute; right: 14px; bottom: 16px; width: 38px; height: 38px; border-radius: 9999px; background: #7FDB9A; display: flex; align-items: center; justify-content: center;"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></span>
+</div>
+</div>
+</div>
+
+<div class="callouts">
+<div class="glass callout" style="position: absolute; left: 0; top: 120px; width: 214px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 18px; animation-delay: .6s;"><span style="flex-shrink: 0; width: 30px; height: 30px; border-radius: 9999px; background: rgba(45,212,191,.18); color: #5EEAD4; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;">01</span><span><span style="display: block; font-size: 14px; line-height: 18px; font-weight: 600; color: #FFFFFF;">Mensaje claro</span><span style="display: block; font-size: 12px; line-height: 16px; color: #C9D8E8;">Se entiende en 5 segundos</span></span></div>
+<div class="glass callout" style="position: absolute; right: 0; top: 262px; width: 214px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 18px; animation-delay: .8s;"><span style="flex-shrink: 0; width: 30px; height: 30px; border-radius: 9999px; background: rgba(45,212,191,.18); color: #5EEAD4; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;">02</span><span><span style="display: block; font-size: 14px; line-height: 18px; font-weight: 600; color: #FFFFFF;">Agenda integrada</span><span style="display: block; font-size: 12px; line-height: 16px; color: #C9D8E8;">Citas sin ir y venir por DMs</span></span></div>
+<div class="glass callout" style="position: absolute; right: 16px; top: 500px; width: 214px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 18px; animation-delay: 1s;"><span style="flex-shrink: 0; width: 30px; height: 30px; border-radius: 9999px; background: rgba(45,212,191,.18); color: #5EEAD4; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;">03</span><span><span style="display: block; font-size: 14px; line-height: 18px; font-weight: 600; color: #FFFFFF;">WhatsApp a un toque</span><span style="display: block; font-size: 12px; line-height: 16px; color: #C9D8E8;">Para quien prefiere escribir</span></span></div>
+</div>
+</div>
+</div>
+
+<div class="wrap" style="position: relative; width: 100%; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: 28px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #A9C0DA;">
+<span class="meta-side">[ Cartagena, CO — GMT−5 ]</span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 10px;">Desliza para explorar<span class="scroll-line" style="display: block; width: 1px; height: 32px; background: #2DD4BF;"></span></span>
+<span class="meta-side">[ 15+ webs entregadas ]</span>
+</div>
+</section>
+
+<section class="sec" data-nav="light" style="padding: 160px 0 128px;">
+<div class="wrap statement">
+<div>
+<p class="big reveal" style="margin: 0; font-size: 48px; line-height: 58px; font-weight: 400; letter-spacing: -0.025em;">Ayudo a psicólogos, coaches, wedding planners y profesionales independientes a convertir su audiencia de Instagram en <span style="color: #1D5FAE;">clientes agendados</span>. Sin tecnicismos, sin intermediarios.</p>
+<div class="three reveal" style="margin-top: 80px; gap: 40px;">
+<div style="border-top: 1px solid #DCE2E3; padding-top: 20px;"><p style="margin: 0; font-size: 13px; color: #4A5868;">01</p><p style="margin: 8px 0 0; font-size: 18px; line-height: 27px;">Tu link en bio no explica qué haces ni por qué elegirte.</p></div>
+<div style="border-top: 1px solid #DCE2E3; padding-top: 20px;"><p style="margin: 0; font-size: 13px; color: #4A5868;">02</p><p style="margin: 8px 0 0; font-size: 18px; line-height: 27px;">Todo pasa por DMs y muchos se enfrían antes de agendar.</p></div>
+<div style="border-top: 1px solid #DCE2E3; padding-top: 20px;"><p style="margin: 0; font-size: 13px; color: #4A5868;">03</p><p style="margin: 8px 0 0; font-size: 18px; line-height: 27px;">Tu trabajo es excelente, pero tu presencia digital no lo transmite.</p></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 32px; align-items: flex-start;">
+<p style="margin: 0; font-size: 15px; line-height: 24px; color: #4A5868;">Diseño, código y lanzamiento en las mismas manos. Más de 5 años y 15+ webs entregadas.</p>
+<div onMouseMove="{{magA.move}}" onMouseLeave="{{magA.leave}}" style="{{magA.style}}">
+<a class="fill-btn breathe" href="#agenda" style="width: 180px; height: 180px; border-radius: 9999px; background: #0A2342; color: #F7F1E8; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 17px; font-weight: 500; text-decoration: none;">Agenda tu<br>llamada gratis</a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="solucion" class="sec" data-nav="light" style="padding: 32px 0 160px;">
+<div class="wrap">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px;">
+<h2 class="big reveal" style="margin: 0; font-size: 72px; line-height: 74px; font-weight: 500; letter-spacing: -0.04em;">Lo que recibes</h2>
+<p style="margin: 0; max-width: 320px; font-size: 15px; line-height: 24px; color: #4A5868;">Todo lo que tu marca necesita para vender en línea, en un solo lugar.</p>
+</div>
+<div class="bento" onMouseMove="{{spot.move}}" onMouseLeave="{{spot.leave}}" style="{{spot.style}}">
+
+<div class="cell b-hero" style="background: #0A2342; color: #F7F1E8; border-radius: 24px; padding: 36px; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+<p style="margin: 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #5EEAD4;">Caso real · Psicología</p>
+<h3 style="margin: 12px 0 0; font-size: 36px; line-height: 40px; font-weight: 500; letter-spacing: -0.03em;">Tu web en acción</h3>
+<p style="margin: 10px 0 0; max-width: 400px; color: #A9C0DA;">La landing de Nathalia convierte visitas de Instagram en consultas agendadas.</p>
+<div style="flex-grow: 1; min-height: 240px; position: relative; margin-top: 32px;">
+<div style="position: absolute; left: 0; right: 100px; top: 0; bottom: 20px; border-radius: 14px; background: #10305A; border: 1px solid #224A7A; padding: 10px 10px 0;"><div style="height: 100%; border-radius: 8px 8px 0 0; background: linear-gradient(160deg,#1D5FAE,#10305A); display: flex; align-items: center; justify-content: center; color: #A9C0DA; font-size: 14px; text-align: center; padding: 16px;">[Captura escritorio — Nathalia Acosta]</div></div>
+<div style="position: absolute; right: 8px; bottom: 0; width: 116px; height: 220px; border-radius: 22px; background: #10305A; border: 1px solid #224A7A; padding: 6px;"><div style="height: 100%; border-radius: 16px; background: linear-gradient(160deg,#2DD4BF,#1D5FAE); display: flex; align-items: center; justify-content: center; color: #0A2342; font-size: 12px; text-align: center; padding: 8px;">[Móvil]</div></div>
+</div>
+</div>
+
+<div class="cell" style="background: #FFFBF5; border-radius: 24px; padding: 28px; display: flex; flex-direction: column;">
+<p style="margin: 0; font-size: 13px; color: #4A5868;">Entrega</p>
+<div style="margin-top: auto;">
+<div style="font-size: 64px; line-height: 64px; font-weight: 500; letter-spacing: -0.04em;">7 días</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 23px; color: #4A5868;">De la primera llamada a tu web en línea.</p>
+</div>
+</div>
+
+<div class="cell b-tall" style="background: #9FD3F2; color: #0A2342; border-radius: 24px; padding: 28px; display: flex; flex-direction: column;">
+<p style="margin: 0; font-size: 13px;">Testimonio</p>
+<p style="margin: 24px 0 0; font-size: 24px; line-height: 32px; font-weight: 400; letter-spacing: -0.015em;">“[Qué cambió en el negocio del cliente después de tener su web.]”</p>
+<div style="margin-top: auto; padding-top: 24px; display: flex; align-items: center; gap: 12px;">
+<div style="width: 44px; height: 44px; border-radius: 9999px; background: #E1F1FB;"></div>
+<div style="font-size: 14px; line-height: 20px;"><strong style="display: block; font-weight: 600;">[Nombre]</strong>[Profesión]</div>
+</div>
+</div>
+
+<div class="cell" style="background: #FFFBF5; border-radius: 24px; padding: 28px; display: flex; flex-direction: column;">
+<p style="margin: 0; font-size: 13px; color: #4A5868;">Experiencia</p>
+<div style="margin-top: auto;">
+<div style="font-size: 64px; line-height: 64px; font-weight: 500; letter-spacing: -0.04em;">15<span style="color: #1D5FAE;">+</span></div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 23px; color: #4A5868;">webs entregadas en más de 5 años.</p>
+</div>
+</div>
+
+<div class="cell" style="background: #FFFBF5; border-radius: 24px; padding: 28px; display: flex; flex-direction: column;">
+<p style="margin: 0; font-size: 13px; color: #4A5868;">Todo en uno</p>
+<p style="margin: auto 0 0; font-size: 22px; line-height: 30px; letter-spacing: -0.015em;">Diseño y código con la misma persona.</p>
+<p style="margin: 12px 0 0; font-size: 13px; color: #4A5868;">Figma · Astro · React · Tailwind</p>
+</div>
+
+<div class="cell" style="background: #FFFBF5; border-radius: 24px; padding: 28px; display: flex; flex-direction: column;">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4A5868;"><span class="pulse" style="width: 8px; height: 8px; border-radius: 9999px; background: #7FDB9A; display: inline-block;"></span>Disponible</div>
+<p style="margin: auto 0 0; font-size: 22px; line-height: 30px; letter-spacing: -0.015em;">[N] cupos este mes</p>
+<p style="margin: 8px 0 0; font-size: 14px; line-height: 21px; color: #4A5868;">Pocos proyectos, dedicación real.</p>
+</div>
+
+<a class="cell b-wide fill-btn" href="#agenda" style="background: #1D5FAE; color: #FFFFFF; border-radius: 24px; padding: 32px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; text-decoration: none;">
+<span style="font-size: 36px; line-height: 40px; font-weight: 500; letter-spacing: -0.03em; max-width: 340px;">Hablemos 30 minutos, gratis.</span>
+<svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+</a>
+
+</div>
+</div>
+</section>
+
+<section id="trabajo" class="sec" data-nav="light" style="padding: 0 0 160px;">
+<div class="wrap">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px;">
+<div>
+<p style="margin: 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #4A5868;">Trabajo reciente</p>
+<h2 class="big reveal" style="margin: 12px 0 0; font-size: 72px; line-height: 74px; font-weight: 500; letter-spacing: -0.04em;">Casos reales</h2>
+</div>
+<div style="display: flex; align-items: center; gap: 16px;">
+<span style="font-size: 14px; color: #4A5868; font-variant-numeric: tabular-nums;">{{work.counter}}</span>
+<button class="arrow-btn" type="button" onClick="{{work.prev}}" aria-label="Proyecto anterior" style="width: 52px; height: 52px; border-radius: 9999px; border: 1px solid #DCE2E3; background: transparent; color: #0A2342; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m11 18-6-6 6-6"></path></svg></button>
+<button class="arrow-btn" type="button" onClick="{{work.next}}" aria-label="Proyecto siguiente" style="width: 52px; height: 52px; border-radius: 9999px; border: 1px solid #DCE2E3; background: transparent; color: #0A2342; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></button>
+</div>
+</div>
+<div class="strips" onMouseMove="{{work.move}}" onMouseLeave="{{work.leave}}" style="position: relative; margin-right: calc(50% - 50vw);">
+<div class="strip-track" ref="{{work.trackRef}}" onScroll="{{work.onTrack}}" style="display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; padding-right: 40px; padding-bottom: 4px;">
+<sc-for list="{{work.items}}" as="p" hint-placeholder-count="4">
+<a class="strip" data-strip="1" href="{{p.href}}" onMouseEnter="{{p.enter}}" onFocus="{{p.enter}}" aria-label="{{p.aria}}" style="{{p.stripStyle}}">
+<div style="{{p.closedStyle}}">
+<span style="font-size: 13px; font-weight: 600;">{{p.num}}</span>
+<span class="vtext" style="font-size: 30px; line-height: 34px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap;">{{p.name}}</span>
+</div>
+<div style="{{p.openStyle}}">
+<div class="media" style="{{p.mediaStyle}}">{{p.media}}</div>
+<div class="strip-info" style="position: relative; padding: 32px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+<div style="max-width: 420px;">
+<p style="margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .75;">{{p.num}} · {{p.cat}}</p>
+<p class="strip-title" style="margin: 8px 0 0; font-size: 40px; line-height: 44px; font-weight: 500; letter-spacing: -0.03em;">{{p.title}}</p>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 23px; opacity: .8;">{{p.desc}}</p>
+</div>
+<span style="{{p.pillStyle}}">{{p.action}}</span>
+</div>
+</div>
+</a>
+</sc-for>
+</div>
+<sc-if value="{{work.showCursor}}" hint-placeholder-val="{{work.showCursor}}">
+<div aria-hidden="true" style="{{work.cursorStyle}}">Ver caso</div>
+</sc-if>
+</div>
+<div style="margin-top: 28px; height: 2px; border-radius: 9999px; background: #DCE2E3; max-width: 320px;"><div style="{{work.barStyle}}"></div></div>
+<div class="reveal" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-top: 56px; padding: 28px 28px 28px 36px; border-radius: 9999px; background: #FFFBF5;">
+<p style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 400; letter-spacing: -0.02em;">¿Quieres una web así para tu marca?</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px;">
+<a class="link-u" href="#" style="color: #0A2342; font-size: 15px;">Ver todos los proyectos</a>
+<a class="pill fill-btn breathe" href="#agenda" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 9999px; background: #1D5FAE; color: #FFFFFF; font-weight: 600; text-decoration: none;">Agenda tu llamada<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="proceso" class="sec scale-in" data-nav="dark" style="background: #0A2342; color: #F7F1E8; padding: 160px 0; border-radius: 0;">
+<div class="wrap">
+<h2 class="big reveal" style="margin: 0; max-width: 820px; font-size: 72px; line-height: 74px; font-weight: 500; letter-spacing: -0.04em;">Cuatro pasos. Siete días.</h2>
+<div class="four" style="margin-top: 96px;">
+<div class="reveal" style="border-top: 1px solid #224A7A; padding-top: 24px;"><p style="margin: 0; font-size: 13px; color: #5EEAD4;">Día 1</p><h3 style="margin: 16px 0 0; font-size: 24px; line-height: 30px; font-weight: 500;">Llamada y brief</h3><p style="margin: 10px 0 0; font-size: 15px; line-height: 24px; color: #A9C0DA;">Conozco tu marca, tu cliente ideal y tus objetivos.</p></div>
+<div class="reveal" style="border-top: 1px solid #224A7A; padding-top: 24px;"><p style="margin: 0; font-size: 13px; color: #5EEAD4;">Días 2–3</p><h3 style="margin: 16px 0 0; font-size: 24px; line-height: 30px; font-weight: 500;">Diseño</h3><p style="margin: 10px 0 0; font-size: 15px; line-height: 24px; color: #A9C0DA;">Te muestro el diseño y lo ajustamos juntos.</p></div>
+<div class="reveal" style="border-top: 1px solid #224A7A; padding-top: 24px;"><p style="margin: 0; font-size: 13px; color: #5EEAD4;">Días 4–6</p><h3 style="margin: 16px 0 0; font-size: 24px; line-height: 30px; font-weight: 500;">Desarrollo</h3><p style="margin: 10px 0 0; font-size: 15px; line-height: 24px; color: #A9C0DA;">Tu web rápida, adaptada a móvil y lista para Google.</p></div>
+<div class="reveal" style="border-top: 1px solid #2DD4BF; padding-top: 24px;"><p style="margin: 0; font-size: 13px; color: #5EEAD4;">Día 7</p><h3 style="margin: 16px 0 0; font-size: 24px; line-height: 30px; font-weight: 500;">Lanzamiento</h3><p style="margin: 10px 0 0; font-size: 15px; line-height: 24px; color: #A9C0DA;">Publicamos y te enseño a actualizarla.</p></div>
+</div>
+<div class="reveal" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-top: 96px; padding-top: 40px; border-top: 1px solid #224A7A;">
+<p style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 400; letter-spacing: -0.02em;">Si empezamos hoy, tu web estaría lista el <span style="color: #5EEAD4;">{{readyDate}}</span>.</p>
+<a class="pill fill-btn breathe" href="#agenda" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 9999px; background: #2DD4BF; color: #0A2342; font-weight: 600; text-decoration: none;">Empezar ahora<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+</div>
+</div>
+</section>
+
+<section id="paquetes" class="sec" data-nav="light" style="padding: 160px 0;">
+<div class="wrap">
+<h2 class="big reveal" style="margin: 0; font-size: 72px; line-height: 74px; font-weight: 500; letter-spacing: -0.04em;">Paquetes</h2>
+<div class="three" style="margin-top: 56px;">
+<a class="plan reveal" href="#agenda" style="background: #FFFBF5; color: #0A2342; border-radius: 24px; padding: 32px; min-height: 380px; display: flex; flex-direction: column; text-decoration: none;">
+<p style="margin: 0; font-size: 22px; font-weight: 500;">Landing page</p>
+<p class="muted" style="margin: 8px 0 0; font-size: 15px; line-height: 23px; color: #4A5868;">Una página enfocada en convertir tus visitas en citas. Lista en 7 días.</p>
+<p style="margin: auto 0 0; font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em;">desde [PRECIO]</p>
+<p class="muted" style="margin: 16px 0 0; font-size: 14px; color: #4A5868;">Agenda y WhatsApp integrados →</p>
+</a>
+<a class="plan reveal" href="#agenda" style="background: #1D5FAE; color: #FFFFFF; border-radius: 24px; padding: 32px; min-height: 380px; display: flex; flex-direction: column; text-decoration: none;">
+<p style="margin: 0; font-size: 22px; font-weight: 500;">Sitio profesional <span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 9999px; background: rgba(255,255,255,.18); vertical-align: middle; margin-left: 6px;">Más elegido</span></p>
+<p class="muted" style="margin: 8px 0 0; font-size: 15px; line-height: 23px; color: #E1F1FB;">Tu marca completa: servicios, sobre ti, blog y contacto.</p>
+<p style="margin: auto 0 0; font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em;">desde [PRECIO]</p>
+<p class="muted" style="margin: 16px 0 0; font-size: 14px; color: #E1F1FB;">Hasta [N] páginas y SEO básico →</p>
+</a>
+<a class="plan reveal" href="#agenda" style="background: #FFFBF5; color: #0A2342; border-radius: 24px; padding: 32px; min-height: 380px; display: flex; flex-direction: column; text-decoration: none;">
+<p style="margin: 0; font-size: 22px; font-weight: 500;">Acompañamiento</p>
+<p class="muted" style="margin: 8px 0 0; font-size: 15px; line-height: 23px; color: #4A5868;">Cambios, hosting y mantenimiento para que tu web crezca contigo.</p>
+<p style="margin: auto 0 0; font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em;">[PRECIO]<span style="font-size: 18px;"> /mes</span></p>
+<p class="muted" style="margin: 16px 0 0; font-size: 14px; color: #4A5868;">Reporte mensual de visitas →</p>
+</a>
+</div>
+</div>
+</section>
+
+<section id="faq" class="sec" data-nav="light" style="padding: 0 0 160px;">
+<div class="wrap faqgrid">
+<div>
+<h2 class="big reveal" style="margin: 0; font-size: 56px; line-height: 60px; font-weight: 500; letter-spacing: -0.035em;">Preguntas frecuentes</h2>
+<div class="reveal" style="margin-top: 40px; padding: 24px; border-radius: 24px; background: #FFFBF5; max-width: 360px;">
+<p style="margin: 0; font-size: 18px; line-height: 27px;">¿Te quedó otra duda?</p>
+<p style="margin: 4px 0 0; font-size: 15px; line-height: 23px; color: #4A5868;">Escríbeme y te respondo personalmente.</p>
+<a class="pill fill-btn breathe" href="#" style="margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 9999px; background: #0A2342; color: #FFFFFF; font-weight: 600; text-decoration: none;"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Escríbeme por WhatsApp</a>
+</div>
+</div>
+<div style="border-bottom: 1px solid #DCE2E3;">
+<sc-for list="{{faqs}}" as="f" hint-placeholder-count="6">
+<div style="border-top: 1px solid #DCE2E3;">
+<button type="button" onClick="{{f.toggle}}" aria-expanded="{{f.open}}" style="width: 100%; min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: inherit; font-size: 20px; font-weight: 500; color: #0A2342;">{{f.q}}<span style="{{f.iconStyle}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span></button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{f.open}}">
+<p style="margin: 0; padding: 0 48px 24px 0; font-size: 16px; line-height: 26px; color: #4A5868;">{{f.a}}</p>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="agenda" data-nav="dark" data-nav-offset="120" style="position: relative; background: #0A2342; color: #F7F1E8; padding: 200px 0 64px; overflow: hidden;">
+<div aria-hidden="true" style="position: absolute; left: -10%; right: -10%; top: -120px; height: 240px; border-radius: 0 0 50% 50%; background: #F7F1E8;"></div>
+<div class="blob" aria-hidden="true" style="width: 520px; height: 520px; right: -140px; bottom: -120px; background: #1D5FAE; opacity: .5;"></div>
+<div class="wrap" style="position: relative;">
+<div style="display: flex; align-items: center; gap: 24px;">
+<img src="/_blob/c1c1a7b287762282fea0912554d64473" alt="" style="width: 88px; height: 88px; border-radius: 9999px; flex-shrink: 0; object-fit: cover; object-position: 50% 12%; background: #9FD3F2;">
+<h2 class="big" style="margin: 0; font-size: 96px; line-height: 96px; font-weight: 500; letter-spacing: -0.045em;">Trabajemos juntos</h2>
+</div>
+<div style="position: relative; margin-top: 72px; border-top: 1px solid #224A7A;">
+<div onMouseMove="{{magB.move}}" onMouseLeave="{{magB.leave}}" style="{{magB.style}}">
+<a class="fill-btn breathe" href="#" style="width: 200px; height: 200px; border-radius: 9999px; background: #1D5FAE; color: #FFFFFF; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 18px; font-weight: 500; text-decoration: none;">Agenda tu<br>llamada</a>
+</div>
+</div>
+<div style="margin-top: 80px; max-width: 560px;">
+<p style="margin: 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #A9C0DA;">¿Qué necesitas?</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;">
+<sc-for list="{{needs}}" as="n" hint-placeholder-count="3">
+<button type="button" onClick="{{n.pick}}" aria-pressed="{{n.on}}" style="{{n.style}}">{{n.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px;">
+<a class="pill" href="#" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 28px; border-radius: 9999px; border: 1px solid #224A7A; color: #F7F1E8; text-decoration: none;">hola@camiloacosta.dev</a>
+<a class="pill" href="#" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 28px; border-radius: 9999px; border: 1px solid #224A7A; color: #F7F1E8; text-decoration: none;">WhatsApp</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 160px; font-size: 13px; color: #A9C0DA;">
+<div style="display: flex; gap: 48px; flex-wrap: wrap;">
+<div><p style="margin: 0 0 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;">Versión</p><p style="margin: 0; color: #F7F1E8;">2026 © Edición</p></div>
+<div><p style="margin: 0 0 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;">Hora local</p><p style="margin: 0; color: #F7F1E8;">{{time}} Cartagena</p></div>
+</div>
+<div><p style="margin: 0 0 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;">Redes</p><div style="display: flex; gap: 20px;"><a class="link-u" href="#" style="color: #F7F1E8;">Instagram</a><a class="link-u" href="#" style="color: #F7F1E8;">LinkedIn</a><a class="link-u" href="#" style="color: #F7F1E8;">GitHub</a></div></div>
+</div>
+</div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":8000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: 0, need: 0, mag: { k: '', x: 0, y: 0 }, spot: { x: -999, y: -999 }, hov: -1, hx: 0, hy: 0, time: this.now(), navMode: 'on-dark', cta: 'base', ctaN: 0, progress: 0, flashed: false, act: 0, wprog: 0, wh: false };
+    this.ctaMap = { trabajo: 'Quiero una web así', proceso: 'Empezar en 7 días', paquetes: 'Elegir mi paquete' };
+    this.onScroll = (e) => {
+      const probe = 48;
+      let mode = 'on-dark';
+      let sec = 'base';
+      const els = document.querySelectorAll('[data-nav]');
+      for (let i = 0; i < els.length; i++) {
+        const el = els[i];
+        const r = el.getBoundingClientRect();
+        const off = parseInt(el.getAttribute('data-nav-offset') || '0', 10);
+        if (r.top + off <= probe && r.bottom > probe) {
+          mode = el.getAttribute('data-nav') === 'light' ? 'on-light' : 'on-dark';
+          sec = this.ctaMap[el.id] ? el.id : 'base';
+          break;
+        }
+      }
+      const t = e && e.target && e.target.nodeType === 1 && e.target.scrollHeight > e.target.clientHeight ? e.target : document.scrollingElement;
+      const max = t ? t.scrollHeight - t.clientHeight : 0;
+      const p = max > 0 ? Math.min(1, Math.max(0, t.scrollTop / max)) : 0;
+      const next = { progress: Math.round(p * 1000) / 1000 };
+      if (mode !== this.state.navMode) next.navMode = mode;
+      if (sec !== this.state.cta) { next.cta = sec; next.ctaN = this.state.ctaN + 1; }
+      if (p > 0.985 && !this.state.flashed) { next.flashed = true; next.ctaN = (next.ctaN || this.state.ctaN) + 1; }
+      if (p < 0.9 && this.state.flashed) next.flashed = false;
+      if (next.navMode || next.cta || next.ctaN || next.progress !== this.state.progress || next.flashed !== undefined) this.setState(next);
+    };
+  }
+  now() {
+    try { return new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit' }); } catch (e) { return '--:--'; }
+  }
+  componentDidMount() {
+    this.timer = setInterval(() => this.setState({ time: this.now() }), 30000);
+    document.addEventListener('scroll', this.onScroll, true);
+    window.addEventListener('resize', this.onScroll);
+    this.onScroll();
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    document.removeEventListener('scroll', this.onScroll, true);
+    window.removeEventListener('resize', this.onScroll);
+  }
+  magnet(key, extra) {
+    const m = this.state.mag;
+    const on = m.k === key;
+    const x = on ? m.x : 0, y = on ? m.y : 0;
+    return {
+      style: extra + 'display: inline-block; transform: translate(' + x + 'px, ' + y + 'px); transition: transform ' + (on ? '.2s' : '.7s') + ' cubic-bezier(.2,.8,.2,1);',
+      move: (e) => { const r = e.currentTarget.getBoundingClientRect(); this.setState({ mag: { k: key, x: (e.clientX - r.left - r.width / 2) * 0.35, y: (e.clientY - r.top - r.height / 2) * 0.35 } }); },
+      leave: () => this.setState({ mag: { k: '', x: 0, y: 0 } })
+    };
+  }
+  renderVals() {
+    const s = this.state;
+    const qa = [
+      ['¿Cuánto cuesta una web?', 'Depende de lo que necesites. Las landing pages empiezan desde [PRECIO] y en la llamada gratis te doy un valor exacto.'],
+      ['¿De verdad está lista en 7 días?', 'Sí, para una landing page. Te pido textos, fotos y logo antes de empezar; si no los tienes, te ayudo a prepararlos.'],
+      ['¿Qué necesito tener listo?', 'Tu logo (o tu nombre), algunas fotos tuyas y una idea de tus servicios. Lo demás lo construimos juntos.'],
+      ['¿Incluye dominio y hosting?', '[Define aquí qué incluye: dominio, hosting y correo, o si se pagan aparte.]'],
+      ['¿Puedo hacer cambios después?', 'Claro. Te enseño a editar lo básico y el plan de acompañamiento cubre los cambios por ti.'],
+      ['¿Trabajas fuera de Colombia?', 'Sí. Todo el proceso es remoto: llamadas, diseño y entregas en línea.']
+    ];
+    const faqs = qa.map((p, i) => {
+      const open = s.open === i;
+      return {
+        q: p[0], a: p[1], open: open,
+        iconStyle: 'flex-shrink: 0; width: 40px; height: 40px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; border: 1px solid ' + (open ? '#1D5FAE' : '#DCE2E3') + '; background: ' + (open ? '#1D5FAE' : 'transparent') + '; color: ' + (open ? '#FFFFFF' : '#0A2342') + '; transition: all .35s; transform: rotate(' + (open ? 45 : 0) + 'deg);',
+        toggle: () => this.setState({ open: open ? -1 : i })
+      };
+    });
+    const needs = ['Landing page', 'Sitio completo', 'Rediseño'].map((label, i) => {
+      const on = s.need === i;
+      return {
+        label: label, on: on,
+        style: 'min-height: 48px; padding: 0 22px; border-radius: 9999px; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 500; transition: all .3s; border: 1px solid ' + (on ? '#2DD4BF' : '#224A7A') + '; color: ' + (on ? '#0A2342' : '#F7F1E8') + '; background: ' + (on ? '#2DD4BF' : 'transparent') + ';',
+        pick: () => this.setState({ need: i })
+      };
+    });
+    const projects = [
+      { name: 'Nathalia Acosta', title: 'Nathalia Acosta', cat: 'Landing page · Psicología', desc: 'Convierte visitas de Instagram en consultas agendadas. [Resultado: X citas al mes]', media: '[Captura — Nathalia Acosta]', bg: '#0A2342', fg: '#F7F1E8', mediaBg: 'linear-gradient(160deg,#1D5FAE,#10305A)', mediaFg: '#A9C0DA', action: 'Ver caso →', href: '#', cta: false },
+      { name: 'Maura Tatis', title: 'Maura Tatis', cat: 'Landing page · Wedding planner', desc: 'Atrae novias desde Instagram y facilita la cotización. [Resultado: X solicitudes al mes]', media: '[Captura — Maura Tatis]', bg: '#9FD3F2', fg: '#0A2342', mediaBg: 'linear-gradient(160deg,#E1F1FB,#9FD3F2)', mediaFg: '#1D5FAE', action: 'Ver caso →', href: '#', cta: false },
+      { name: '[Próximo caso]', title: '[Próximo caso]', cat: 'Sitio web · [Nicho]', desc: '[Agrega aquí tu siguiente proyecto con su resultado.]', media: '[Captura del proyecto]', bg: '#FFFBF5', fg: '#0A2342', mediaBg: 'linear-gradient(160deg,#F7F1E8,#DCE2E3)', mediaFg: '#4A5868', action: 'Ver caso →', href: '#', cta: false },
+      { name: '¿El próximo eres tú?', title: 'Tu marca podría estar aquí.', cat: 'Cupos este mes', desc: 'Agenda 30 minutos gratis y diseñemos la web que convierte a tu audiencia en clientes.', media: '', bg: '#2DD4BF', fg: '#0A2342', mediaBg: 'transparent', mediaFg: '#0A2342', action: 'Agenda tu llamada →', href: '#agenda', cta: true }
+    ];
+    const act = Math.min(s.act, projects.length - 1);
+    const go = (i) => {
+      const n = Math.max(0, Math.min(projects.length - 1, i));
+      this.setState({ act: n });
+      const strips = this.track ? this.track.querySelectorAll('[data-strip]') : [];
+      const el = strips[n];
+      if (this.track && el) this.track.scrollTo({ left: Math.max(0, el.offsetLeft - this.track.offsetLeft - 0), behavior: 'smooth' });
+    };
+    const work = {
+      counter: String(act + 1).padStart(2, '0') + ' / ' + String(projects.length).padStart(2, '0'),
+      prev: () => go(act - 1),
+      next: () => go(act + 1),
+      trackRef: this.trackRef || (this.trackRef = (el) => { this.track = el; }),
+      onTrack: (e) => { const t = e.currentTarget; const m = t.scrollWidth - t.clientWidth; this.setState({ wprog: m > 0 ? t.scrollLeft / m : 1 }); },
+      barStyle: 'height: 100%; border-radius: 9999px; background: #1D5FAE; transform-origin: left center; transition: transform .2s; transform: scaleX(' + Math.max(0.12, (act + 1) / projects.length * 0.5 + s.wprog * 0.5) + ');',
+      showCursor: s.wh && !projects[act].cta,
+      cursorStyle: 'position: absolute; left: ' + s.hx + 'px; top: ' + s.hy + 'px; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 9999px; background: rgba(255,255,255,.22); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border: 1px solid rgba(255,255,255,.5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; pointer-events: none; z-index: 6; transition: left .18s cubic-bezier(.2,.8,.2,1), top .18s cubic-bezier(.2,.8,.2,1); box-shadow: 0 10px 30px -10px rgba(10,35,66,.5);',
+      move: (e) => { const r = e.currentTarget.getBoundingClientRect(); this.setState({ hx: e.clientX - r.left, hy: e.clientY - r.top, wh: true }); },
+      leave: () => this.setState({ wh: false }),
+      items: projects.map((p, i) => {
+        const on = i === act;
+        return {
+          num: String(i + 1).padStart(2, '0'), name: p.name, title: p.title, cat: p.cat, desc: p.desc, media: p.media, action: p.action, href: p.href,
+          aria: p.cta ? 'Agenda tu llamada' : 'Ver caso ' + p.name,
+          enter: () => { if (this.state.act !== i) this.setState({ act: i }); },
+          stripStyle: 'flex: 0 0 ' + (on ? 'var(--open)' : 'var(--closed)') + '; height: var(--sh); border-radius: 28px; position: relative; overflow: hidden; scroll-snap-align: start; text-decoration: none; background: ' + p.bg + '; color: ' + p.fg + '; border: 1px solid ' + (p.bg === '#FFFBF5' ? '#DCE2E3' : 'transparent') + '; transition: flex-basis .75s cubic-bezier(.2,.8,.2,1);' + (on && !p.cta ? ' cursor: none;' : ''),
+          closedStyle: 'position: absolute; inset: 0; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; transition: opacity .35s; opacity: ' + (on ? 0 : 1) + '; pointer-events: none;',
+          openStyle: 'position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .45s ' + (on ? '.25s' : '0s') + '; opacity: ' + (on ? 1 : 0) + ';',
+          mediaStyle: p.cta ? 'position: absolute; right: -60px; top: -60px; width: 320px; height: 320px; border-radius: 9999px; background: rgba(255,255,255,.35); font-size: 0;' : 'position: absolute; left: 24px; right: 24px; top: 24px; bottom: 150px; border-radius: 18px; background: ' + p.mediaBg + '; color: ' + p.mediaFg + '; display: flex; align-items: center; justify-content: center; font-size: 14px; text-align: center; padding: 16px;',
+          pillStyle: 'flex-shrink: 0; display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 9999px; font-size: 15px; font-weight: 600; background: ' + (p.cta ? '#0A2342' : (p.fg === '#F7F1E8' ? '#F7F1E8' : '#0A2342')) + '; color: ' + (p.cta ? '#F7F1E8' : (p.fg === '#F7F1E8' ? '#0A2342' : '#F7F1E8')) + ';'
+        };
+      })
+    };
+    const spot = {
+      style: 'padding: 10px; border-radius: 32px; background: radial-gradient(360px circle at ' + s.spot.x + 'px ' + s.spot.y + 'px, rgba(45,212,191,.85), rgba(29,95,174,.25) 45%, transparent 70%), #E7E3DA;',
+      move: (e) => { const r = e.currentTarget.getBoundingClientRect(); this.setState({ spot: { x: e.clientX - r.left, y: e.clientY - r.top } }); },
+      leave: () => this.setState({ spot: { x: -999, y: -999 } })
+    };
+    return {
+      faqs: faqs, needs: needs, work: work, spot: spot, time: s.time, navMode: s.navMode,
+      ctaText: this.ctaMap[s.cta] || 'Agenda una llamada',
+      ctaEven: s.ctaN % 2 === 0, ctaOdd: s.ctaN % 2 === 1,
+      ctaGlow: s.ctaN === 0 ? '' : (s.ctaN % 2 === 0 ? 'glow-a' : 'glow-b'),
+      progressStyle: 'height: 100%; width: 100%; border-radius: 9999px; background: linear-gradient(90deg, #1D5FAE, #2DD4BF); transform-origin: left center; transform: scaleX(' + s.progress + '); transition: transform .15s linear;',
+      readyDate: (() => { try { const d = new Date(Date.now() + 7 * 864e5); return d.toLocaleDateString('es-CO', { timeZone: 'America/Bogota', day: 'numeric', month: 'long' }); } catch (err) { return '[fecha]'; } })(),
+      magA: this.magnet('a', ''),
+      magB: this.magnet('b', 'position: absolute; right: 8%; top: -100px;')
+    };
+  }
+}
+</script>
+</body>
+</html>
