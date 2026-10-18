@@ -6,7 +6,7 @@ import { getLang } from '../../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const home = getHome(lang);
 const c    = home.mobileBar;
-const wa   = `${links.whatsapp}?text=${encodeURIComponent(home.closing.whatsappText(home.closing.needs[0]))}`;
+const wa   = `${links.whatsapp}?text=${encodeURIComponent(home.closing.whatsappText)}`;
 ---
 <div class="mobile-bar glass" id="mobile-bar">
   <a class="mobile-bar-cta" href={links.calendly} data-calendly data-track="agendar" data-track-place="barra-movil">

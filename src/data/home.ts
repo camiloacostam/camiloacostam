@@ -10,11 +10,11 @@ export const links = {
   github:    'https://github.com/camiloacostam',
 };
 
-// Cifras: deben ser reales y respaldables (ver CLAUDE.md)
+// Cifras: deben ser reales y respaldables (ver CLAUDE.md). Si no se puede respaldar, se quita.
 const stats = {
-  projects: '[N]',
-  years:    '[N]',
-  slots:    '[N]',
+  projects: '[N]', // webs entregadas, con "+": '15+'
+  years:    '[N]', // años de experiencia, con "+": '5+'
+  slots:    '[N]', // cupos libres este mes, entero: '3'
 };
 
 export interface CaseItem {
@@ -79,7 +79,7 @@ const es = {
       title: 'Terapia que te acompaña a tu ritmo.',
       desc: 'Psicóloga clínica · sesiones online y presenciales.',
       cta: 'Agenda tu primera cita',
-      review: '“[Testimonio de un paciente]”',
+      review: '“Me sentí escuchada desde la primera sesión.”', // ejemplo ilustrativo del mockup, no es un testimonio real
     },
   },
   statement: {
@@ -91,7 +91,7 @@ const es = {
       'Todo pasa por DMs y muchos se enfrían antes de agendar.',
       'Tu trabajo es excelente, pero tu presencia digital no lo transmite.',
     ],
-    aside: `Diseño, código y lanzamiento en las mismas manos. Más de ${stats.years} años y ${stats.projects} webs entregadas.`,
+    aside: `Diseño, código y lanzamiento en las mismas manos. ${stats.years} años y ${stats.projects} webs entregadas.`,
     button: ['Agenda tu', 'llamada gratis'],
   },
   bento: {
@@ -111,7 +111,7 @@ const es = {
       name: '[Nombre]',
       role: '[Profesión]',
     },
-    experience: { label: 'Experiencia', value: stats.projects, desc: `webs entregadas en más de ${stats.years} años.` },
+    experience: { label: 'Experiencia', value: stats.projects, desc: `webs entregadas en ${stats.years} años.` },
     allInOne: { label: 'Todo en uno', text: 'Diseño y código con la misma persona.', stack: 'Figma · Astro · React · Tailwind' },
     availability: { label: 'Disponible', text: `${stats.slots} cupos este mes`, desc: 'Pocos proyectos, dedicación real.' },
     cta: 'Hablemos 30 minutos, gratis.',
@@ -135,11 +135,6 @@ const es = {
         media: '[Captura — Atelier]', href: '/proyectos/', tone: 'cielo',
       },
       {
-        name: '[Próximo caso]', title: '[Próximo caso]', cat: 'Sitio web · [Nicho]',
-        desc: '[Agrega aquí tu siguiente proyecto con su resultado.]',
-        media: '[Captura del proyecto]', href: '/proyectos/', tone: 'crema',
-      },
-      {
         name: '¿El próximo eres tú?', title: 'Tu marca podría estar aquí.', cat: 'Cupos este mes',
         desc: 'Agenda 30 minutos gratis y diseñemos la web que convierte a tu audiencia en clientes.',
         media: '', href: links.calendly, tone: 'aqua', cta: true,
@@ -159,8 +154,9 @@ const es = {
       { day: 'Días 4–6', title: 'Desarrollo',      desc: 'Tu web rápida, adaptada a móvil y lista para Google.' },
       { day: 'Día 7',    title: 'Lanzamiento',     desc: 'Publicamos y te enseño a actualizarla.' },
     ],
-    readyStart: 'Si empezamos hoy, tu web estaría lista el',
-    readyFallback: '[fecha]',
+    readyStart: 'Si empezamos hoy, tu web estaría lista',
+    readyPrefix: 'el',            // "lista el 25 de octubre"
+    readyFallback: 'en 7 días',   // si no se puede calcular la fecha
     cta: 'Empezar ahora',
   },
   plans: {
@@ -190,11 +186,35 @@ const es = {
   closing: {
     title: 'Trabajemos juntos',
     button: ['Agenda tu', 'llamada'],
-    needsLabel: '¿Qué necesitas?',
-    needs: ['Landing page', 'Sitio completo', 'Rediseño'],
-    // Mensaje prellenado de WhatsApp y asunto del correo según la necesidad elegida
-    whatsappText: (need: string) => `Hola Camilo, vi tu web y me interesa: ${need}.`,
-    emailSubject: (need: string) => `Quiero cotizar: ${need}`,
+    whatsappText: 'Hola Camilo, quiero una web para mi marca',
+    emailSubject: 'Quiero una web para mi marca',
+    // Formulario por pasos. {n}, {t}, {name}, {need} y {niche} se reemplazan en el navegador.
+    form: {
+      label: 'Cuéntame de tu proyecto',
+      step: 'Paso {n} de {t}',
+      needTitle: '¿Qué necesitas?',
+      nicheTitle: '¿A qué te dedicas?',
+      nicheOther: '¿Cuál?',
+      nicheOtherPh: 'Ej.: nutricionista',
+      budgetTitle: 'Presupuesto aproximado',
+      optional: '(opcional)',
+      continue: 'Continuar',
+      back: '← Atrás',
+      dataTitle: 'Tus datos',
+      name: 'Nombre',
+      email: 'Email',
+      phone: 'WhatsApp',
+      message: '¿Algo más que deba saber?',
+      submit: 'Enviar y elegir horario',
+      submitting: 'Enviando…',
+      pickOne: 'Elige una opción para continuar.',
+      otherRequired: 'Cuéntame a qué te dedicas.',
+      successTitle: '¡Listo, {name}! Ahora elige tu horario.',
+      successCta: 'Elegir horario en Calendly',
+      successWa: '¿Prefieres WhatsApp? Escríbeme',
+      waLead: 'Hola Camilo, soy {name}. Me interesa {need} para mi marca de {niche}.',
+      error: 'No se pudo enviar. Intenta de nuevo o escríbeme por WhatsApp.',
+    },
     whatsapp: 'WhatsApp',
     versionLabel: 'Versión',
     version: '2026 © Edición',
@@ -262,7 +282,7 @@ const en: HomeContent = {
       title: 'Therapy that moves at your pace.',
       desc: 'Clinical psychologist · online and in-person sessions.',
       cta: 'Book your first session',
-      review: '“[Patient testimonial]”',
+      review: '“I felt heard from the very first session.”',
     },
   },
   statement: {
@@ -274,7 +294,7 @@ const en: HomeContent = {
       'Everything happens in DMs and many leads go cold before booking.',
       'Your work is excellent, but your online presence doesn’t show it.',
     ],
-    aside: `Design, code and launch in the same hands. ${stats.years}+ years and ${stats.projects} websites delivered.`,
+    aside: `Design, code and launch in the same hands. ${stats.years} years and ${stats.projects} websites delivered.`,
     button: ['Book your', 'free call'],
   },
   bento: {
@@ -294,7 +314,7 @@ const en: HomeContent = {
       name: '[Name]',
       role: '[Profession]',
     },
-    experience: { label: 'Experience', value: stats.projects, desc: `websites delivered over ${stats.years}+ years.` },
+    experience: { label: 'Experience', value: stats.projects, desc: `websites delivered over ${stats.years} years.` },
     allInOne: { label: 'All in one', text: 'Design and code by the same person.', stack: 'Figma · Astro · React · Tailwind' },
     availability: { label: 'Available', text: `${stats.slots} spots this month`, desc: 'Few projects, real dedication.' },
     cta: 'Let’s talk for 30 minutes, free.',
@@ -318,11 +338,6 @@ const en: HomeContent = {
         media: '[Screenshot — Atelier]', href: '/en/proyectos/', tone: 'cielo',
       },
       {
-        name: '[Next case]', title: '[Next case]', cat: 'Website · [Niche]',
-        desc: '[Add your next project and its result here.]',
-        media: '[Project screenshot]', href: '/en/proyectos/', tone: 'crema',
-      },
-      {
         name: 'Are you next?', title: 'Your brand could be here.', cat: 'Spots this month',
         desc: 'Book a free 30-minute call and let’s design the website that turns your audience into clients.',
         media: '', href: links.calendly, tone: 'aqua', cta: true,
@@ -342,8 +357,9 @@ const en: HomeContent = {
       { day: 'Days 4–6', title: 'Development',    desc: 'A fast website, mobile-ready and set up for Google.' },
       { day: 'Day 7',    title: 'Launch',         desc: 'We go live and I show you how to update it.' },
     ],
-    readyStart: 'If we start today, your website would be ready on',
-    readyFallback: '[date]',
+    readyStart: 'If we start today, your website would be ready',
+    readyPrefix: 'on',
+    readyFallback: 'in 7 days',
     cta: 'Start now',
   },
   plans: {
@@ -373,10 +389,34 @@ const en: HomeContent = {
   closing: {
     title: 'Let’s work together',
     button: ['Book your', 'call'],
-    needsLabel: 'What do you need?',
-    needs: ['Landing page', 'Full website', 'Redesign'],
-    whatsappText: (need: string) => `Hi Camilo, I saw your website and I’m interested in: ${need}.`,
-    emailSubject: (need: string) => `Quote request: ${need}`,
+    whatsappText: 'Hi Camilo, I want a website for my brand',
+    emailSubject: 'I want a website for my brand',
+    form: {
+      label: 'Tell me about your project',
+      step: 'Step {n} of {t}',
+      needTitle: 'What do you need?',
+      nicheTitle: 'What do you do?',
+      nicheOther: 'What exactly?',
+      nicheOtherPh: 'E.g. nutritionist',
+      budgetTitle: 'Approximate budget',
+      optional: '(optional)',
+      continue: 'Continue',
+      back: '← Back',
+      dataTitle: 'Your details',
+      name: 'Name',
+      email: 'Email',
+      phone: 'WhatsApp',
+      message: 'Anything else I should know?',
+      submit: 'Send and pick a time',
+      submitting: 'Sending…',
+      pickOne: 'Choose an option to continue.',
+      otherRequired: 'Tell me what you do.',
+      successTitle: 'All set, {name}! Now pick a time.',
+      successCta: 'Pick a time on Calendly',
+      successWa: 'Prefer WhatsApp? Message me',
+      waLead: 'Hi Camilo, I’m {name}. I’m interested in {need} for my {niche} brand.',
+      error: 'Couldn’t send it. Try again or message me on WhatsApp.',
+    },
     whatsapp: 'WhatsApp',
     versionLabel: 'Version',
     version: '2026 © Edition',

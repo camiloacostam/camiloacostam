@@ -242,8 +242,13 @@ function initPlanDots() {
 function initClock() {
   const tz = 'America/Bogota';
   document.querySelectorAll<HTMLElement>('[data-ready-date]').forEach((el) => {
-    const d = new Date(Date.now() + 7 * 864e5);
-    el.textContent = d.toLocaleDateString(el.dataset.locale, { timeZone: tz, day: 'numeric', month: 'long' });
+    try {
+      const d = new Date(Date.now() + 7 * 864e5);
+      const date = d.toLocaleDateString(el.dataset.locale, { timeZone: tz, day: 'numeric', month: 'long' });
+      el.textContent = `${el.dataset.prefix} ${date}`;
+    } catch {
+      // Se queda el texto de respaldo ("en 7 días")
+    }
   });
 
   const clocks = [...document.querySelectorAll<HTMLElement>('[data-local-time]')];
@@ -257,18 +262,146 @@ function initClock() {
   setInterval(tick, 30_000);
 }
 
-/* ── "¿Qué necesitas?": prellenan WhatsApp y el asunto del correo ──────────── */
-function initNeeds() {
-  const root = document.querySelector('[data-needs]');
-  const wa   = document.querySelector<HTMLAnchorElement>('[data-need-wa]');
-  const mail = document.querySelector<HTMLAnchorElement>('[data-need-mail]');
-  if (!root) return;
-  const chips = [...root.querySelectorAll<HTMLButtonElement>('[data-need]')];
-  chips.forEach((chip) => chip.addEventListener('click', () => {
-    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
-    if (wa && chip.dataset.wa) wa.href = chip.dataset.wa;
-    if (mail && chip.dataset.mail) mail.href = chip.dataset.mail;
-  }));
+/* ── Formulario por pasos del cierre: alimenta a Calendly ───────────────────── */
+function initLeadForm() {
+  const root = document.querySelector<HTMLElement>('[data-lead]');
+  const form = root?.querySelector<HTMLFormElement>('[data-lead-form]');
+  if (!root || !form) return;
+  root.hidden = false;
+
+  const d         = root.dataset;
+  const panes     = [...form.querySelectorAll<HTMLElement>('[data-pane]')];
+  const total     = panes.length;
+  const stepLabel = root.querySelector<HTMLElement>('[data-lead-step]')!;
+  const bar       = root.querySelector<HTMLElement>('[data-lead-bar]')!;
+  const other     = form.querySelector<HTMLElement>('[data-niche-other]')!;
+  const otherIn   = other.querySelector<HTMLInputElement>('input')!;
+  const paneError = form.querySelector<HTMLElement>('[data-pane-error]')!;
+  const sendError = form.querySelector<HTMLElement>('[data-submit-error]')!;
+  const submit    = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const submitTxt = form.querySelector<HTMLElement>('[data-submit-label]')!;
+  const done      = root.querySelector<HTMLElement>('[data-lead-done]')!;
+
+  const fill = (tpl = '', values: Record<string, string>) =>
+    tpl.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? '');
+
+  // Selección actual de cada grupo de chips: { key, label }
+  const picked: Record<string, { key: string; label: string } | undefined> = {};
+  let step = 1;
+
+  const show = (n: number) => {
+    const back = n < step;
+    step = n;
+    panes.forEach((p) => {
+      const on = Number(p.dataset.pane) === n;
+      p.hidden = !on;
+      p.classList.remove('is-entering', 'is-entering-back');
+      if (on && !reduceMotion) p.classList.add(back ? 'is-entering-back' : 'is-entering');
+    });
+    stepLabel.textContent = fill(d.stepTpl, { n: String(n), t: String(total) });
+    bar.style.transform = `scaleX(${n / total})`;
+    paneError.textContent = '';
+    panes[n - 1].querySelector<HTMLElement>('.lead-q')?.focus({ preventScroll: true });
+    track('form_step', { step: String(n) });
+  };
+
+  form.querySelectorAll<HTMLButtonElement>('[data-field]').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const field = chip.dataset.field!;
+      const group = form.querySelectorAll<HTMLButtonElement>(`[data-field="${field}"]`);
+      // El presupuesto es opcional: tocar el chip elegido lo desmarca
+      const toggleOff = field === 'budget' && picked[field]?.key === chip.dataset.value;
+      group.forEach((c) => c.setAttribute('aria-pressed', String(!toggleOff && c === chip)));
+      picked[field] = toggleOff ? undefined : { key: chip.dataset.value!, label: chip.dataset.label! };
+
+      if (field === 'need') show(2);
+      if (field === 'niche') {
+        other.hidden = chip.dataset.value !== 'other';
+        if (!other.hidden) otherIn.focus();
+        paneError.textContent = '';
+      }
+    });
+  });
+
+  form.querySelector('[data-next]')!.addEventListener('click', () => {
+    if (!picked.niche) { paneError.textContent = d.pickOne!; return; }
+    if (picked.niche.key === 'other' && !otherIn.value.trim()) {
+      paneError.textContent = d.otherRequired!;
+      otherIn.focus();
+      return;
+    }
+    show(3);
+  });
+
+  form.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => show(step - 1)));
+
+  const nicheText = () =>
+    picked.niche?.key === 'other' ? otherIn.value.trim() : picked.niche?.label ?? '';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!picked.need || !picked.niche || !form.reportValidity()) return;
+
+    const fd = new FormData(form);
+    const value = (k: string) => String(fd.get(k) ?? '').trim();
+    const payload = {
+      need: picked.need.key,
+      niche: picked.niche.key,
+      nicheOther: picked.niche.key === 'other' ? otherIn.value.trim() : '',
+      budget: picked.budget?.key ?? '',
+      name: value('name'),
+      email: value('email'),
+      phone: value('phone'),
+      message: value('message'),
+      website: value('website'),
+    };
+
+    const label = submitTxt.textContent;
+    submit.disabled = true;
+    submitTxt.textContent = d.submitting!;
+    sendError.textContent = '';
+    track('form_submit', { need: payload.need, niche: payload.niche });
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+    } catch {
+      sendError.textContent = d.error!;
+      submit.disabled = false;
+      submitTxt.textContent = label;
+      return;
+    }
+
+    track('form_success', { need: payload.need, niche: payload.niche });
+
+    const firstName = payload.name.split(/\s+/)[0];
+    const values = { name: firstName, need: picked.need.label, niche: nicheText() };
+
+    const cal = new URL(d.calendlyBase!);
+    cal.searchParams.set('name', payload.name);
+    cal.searchParams.set('email', payload.email);
+    cal.searchParams.set('a1', `${values.need} · ${values.niche}`);
+    const calBtn = done.querySelector<HTMLAnchorElement>('[data-done-calendly]')!;
+    calBtn.href = cal.toString();
+
+    const wa = done.querySelector<HTMLAnchorElement>('[data-done-wa]')!;
+    wa.href = `${d.waBase}?text=${encodeURIComponent(fill(d.waTpl, { ...values, name: payload.name }))}`;
+
+    const title = done.querySelector<HTMLElement>('[data-done-title]')!;
+    title.textContent = fill(d.successTpl, values);
+
+    form.hidden = true;
+    root.querySelector<HTMLElement>('.lead-top')!.hidden = true;
+    done.hidden = false;
+    title.focus({ preventScroll: true });
+
+    // Abre Calendly prellenado; el botón queda por si el usuario lo cierra
+    setTimeout(() => calBtn.click(), 600);
+  });
 }
 
 /* ── Analítica: se conecta a la herramienta que esté cargada ───────────────── */
@@ -300,5 +433,5 @@ initSpotlight();
 initCases();
 initPlanDots();
 initClock();
-initNeeds();
+initLeadForm();
 initTracking();

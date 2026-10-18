@@ -160,12 +160,15 @@ const jsonLd = {
         const trigger = (e.target as Element).closest('[data-calendly]');
         if (!trigger) return;
         e.preventDefault();
+        // Un enlace a Calendly puede traer datos prellenados (name, email, a1)
+        const href = trigger.getAttribute('href') ?? '';
+        const url = href.startsWith(CALENDLY_URL) ? href : CALENDLY_URL;
         try {
           await loadCalendly();
-          (window as any).Calendly.initPopupWidget({ url: CALENDLY_URL });
+          (window as any).Calendly.initPopupWidget({ url });
         } catch {
           // Sin conexión con Calendly: abrimos la página directamente
-          window.open(CALENDLY_URL, '_blank', 'noopener');
+          window.open(url, '_blank', 'noopener');
         }
       });
     </script>
