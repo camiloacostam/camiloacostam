@@ -19,13 +19,14 @@ export const NICHES = {
   other:      { es: 'Otro',              en: 'Other' },
 } satisfies Record<string, Labels>;
 
-export const BUDGETS = {
-  low:  { es: 'Menos de $1.500.000',     en: 'Under COP 1,500,000' },
-  mid:  { es: '$1.500.000 – $3.000.000', en: 'COP 1,500,000 – 3,000,000' },
-  high: { es: 'Más de $3.000.000',       en: 'Over COP 3,000,000' },
-  talk: { es: 'Prefiero hablarlo',       en: 'I’d rather discuss it' },
+// El presupuesto no se pregunta: se habla en la llamada (los precios "desde" de Paquetes sirven de referencia)
+export const TIMELINES = {
+  asap:      { es: 'Lo antes posible',      en: 'As soon as possible' },
+  month:     { es: 'Este mes',              en: 'This month' },
+  quarter:   { es: 'En 1–3 meses',          en: 'In 1–3 months' },
+  exploring: { es: 'Solo estoy explorando', en: 'Just exploring' },
 } satisfies Record<string, Labels>;
 
 export type NeedKey   = keyof typeof NEEDS;
 export type NicheKey  = keyof typeof NICHES;
-export type BudgetKey = keyof typeof BUDGETS;
+export type TimelineKey = keyof typeof TIMELINES;

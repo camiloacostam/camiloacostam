@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { getHome, links } from '../../data/home';
-import { NEEDS, NICHES, BUDGETS } from '../../data/lead';
+import { NEEDS, NICHES, TIMELINES } from '../../data/lead';
 import { getLang } from '../../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -12,7 +12,7 @@ const options = <T extends Record<string, { es: string; en: string }>>(list: T) 
 
 const needs   = options(NEEDS);
 const niches  = options(NICHES);
-const budgets = options(BUDGETS);
+const timelines = options(TIMELINES);
 ---
 <!-- Sin JS queda oculto: el botón circular, el email y WhatsApp siguen disponibles -->
 <div
@@ -63,10 +63,10 @@ const budgets = options(BUDGETS);
         <input id="lead-niche-other" type="text" name="nicheOther" maxlength="80" placeholder={f.nicheOtherPh} autocomplete="organization-title" />
       </div>
 
-      <p class="lead-q lead-q--sub" id="lead-budget-q">{f.budgetTitle} <span class="lead-optional">{f.optional}</span></p>
-      <div class="lead-chips" role="group" aria-labelledby="lead-budget-q">
-        {budgets.map((o) => (
-          <button type="button" class="chip chip--sm" aria-pressed="false" data-field="budget" data-value={o.key} data-label={o.label}>{o.label}</button>
+      <p class="lead-q lead-q--sub" id="lead-timeline-q">{f.timelineTitle}</p>
+      <div class="lead-chips" role="group" aria-labelledby="lead-timeline-q">
+        {timelines.map((o) => (
+          <button type="button" class="chip chip--sm" aria-pressed="false" data-field="timeline" data-value={o.key} data-label={o.label}>{o.label}</button>
         ))}
       </div>
 
