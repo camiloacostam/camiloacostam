@@ -1,0 +1,218 @@
+---
+import Icon from './Icon.astro';
+import { getHome, links } from '../../data/home';
+import { NEEDS, NICHES, BUDGETS } from '../../data/lead';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const f    = getHome(lang).closing.form;
+
+const options = <T extends Record<string, { es: string; en: string }>>(list: T) =>
+  Object.entries(list).map(([key, labels]) => ({ key, label: labels[lang] }));
+
+const needs   = options(NEEDS);
+const niches  = options(NICHES);
+const budgets = options(BUDGETS);
+---
+<!-- Sin JS queda oculto: el botón circular, el email y WhatsApp siguen disponibles -->
+<div
+  class="lead glass"
+  data-lead
+  hidden
+  data-step-tpl={f.step}
+  data-success-tpl={f.successTitle}
+  data-wa-tpl={f.waLead}
+  data-wa-base={links.whatsapp}
+  data-calendly-base={links.calendly}
+  data-submitting={f.submitting}
+  data-pick-one={f.pickOne}
+  data-other-required={f.otherRequired}
+  data-error={f.error}
+>
+  <div class="lead-top">
+    <p class="lead-step" data-lead-step aria-live="polite">{f.step.replace('{n}', '1').replace('{t}', '3')}</p>
+    <div class="lead-bar" aria-hidden="true"><div class="lead-bar-fill" data-lead-bar></div></div>
+  </div>
+
+  <form class="lead-form" data-lead-form method="post" action="/api/contact" aria-label={f.label}>
+    <div class="form-hp" aria-hidden="true">
+      <label for="lead-website">Website</label>
+      <input id="lead-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <!-- Paso 1 -->
+    <div class="lead-pane" data-pane="1">
+      <p class="lead-q" id="lead-need-q" tabindex="-1">{f.needTitle}</p>
+      <div class="lead-chips" role="group" aria-labelledby="lead-need-q">
+        {needs.map((o) => (
+          <button type="button" class="chip" aria-pressed="false" data-field="need" data-value={o.key} data-label={o.label}>{o.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Paso 2 -->
+    <div class="lead-pane" data-pane="2" hidden>
+      <p class="lead-q" id="lead-niche-q" tabindex="-1">{f.nicheTitle}</p>
+      <div class="lead-chips" role="group" aria-labelledby="lead-niche-q">
+        {niches.map((o) => (
+          <button type="button" class="chip" aria-pressed="false" data-field="niche" data-value={o.key} data-label={o.label}>{o.label}</button>
+        ))}
+      </div>
+      <div class="lead-field lead-other" data-niche-other hidden>
+        <label for="lead-niche-other">{f.nicheOther}</label>
+        <input id="lead-niche-other" type="text" name="nicheOther" maxlength="80" placeholder={f.nicheOtherPh} autocomplete="organization-title" />
+      </div>
+
+      <p class="lead-q lead-q--sub" id="lead-budget-q">{f.budgetTitle} <span class="lead-optional">{f.optional}</span></p>
+      <div class="lead-chips" role="group" aria-labelledby="lead-budget-q">
+        {budgets.map((o) => (
+          <button type="button" class="chip chip--sm" aria-pressed="false" data-field="budget" data-value={o.key} data-label={o.label}>{o.label}</button>
+        ))}
+      </div>
+
+      <p class="lead-error" data-pane-error role="alert"></p>
+      <div class="lead-actions">
+        <button type="button" class="lead-back link-u" data-back>{f.back}</button>
+        <button type="button" class="btn btn--aqua pill fill-btn lead-next" data-next>{f.continue}<Icon name="arrow-right" /></button>
+      </div>
+    </div>
+
+    <!-- Paso 3 -->
+    <div class="lead-pane" data-pane="3" hidden>
+      <p class="lead-q" id="lead-data-q" tabindex="-1">{f.dataTitle}</p>
+      <div class="lead-grid">
+        <div class="lead-field">
+          <label for="lead-name">{f.name}</label>
+          <input id="lead-name" type="text" name="name" required maxlength="100" autocomplete="name" />
+        </div>
+        <div class="lead-field">
+          <label for="lead-email">{f.email}</label>
+          <input id="lead-email" type="email" name="email" required maxlength="254" autocomplete="email" />
+        </div>
+        <div class="lead-field lead-field--wide">
+          <label for="lead-phone">{f.phone} <span class="lead-optional">{f.optional}</span></label>
+          <div class="lead-phone">
+            <span class="lead-prefix" aria-hidden="true">+57</span>
+            <input id="lead-phone" type="tel" name="phone" maxlength="20" pattern="[0-9 +\-]*" inputmode="tel" autocomplete="tel-national" />
+          </div>
+        </div>
+        <div class="lead-field lead-field--wide">
+          <label for="lead-message">{f.message} <span class="lead-optional">{f.optional}</span></label>
+          <textarea id="lead-message" name="message" rows="3" maxlength="5000"></textarea>
+        </div>
+      </div>
+
+      <p class="lead-error" data-submit-error role="alert"></p>
+      <div class="lead-actions">
+        <button type="button" class="lead-back link-u" data-back>{f.back}</button>
+        <button type="submit" class="btn btn--aqua pill fill-btn lead-next" data-submit><span data-submit-label>{f.submit}</span><Icon name="arrow-right" /></button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Confirmación -->
+  <div class="lead-done" data-lead-done hidden>
+    <svg class="lead-check" viewBox="0 0 52 52" aria-hidden="true">
+      <circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="2" />
+      <path d="M15 27 l7 7 l15 -16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <p class="lead-done-title" data-done-title tabindex="-1"></p>
+    <a class="btn btn--aqua pill fill-btn" href={links.calendly} data-calendly data-done-calendly data-track="calendly_open" data-track-place="form">
+      {f.successCta}<Icon name="arrow-right" />
+    </a>
+    <a class="lead-wa link-u" href={links.whatsapp} target="_blank" rel="noopener noreferrer" data-done-wa data-track="whatsapp" data-track-place="form">
+      <Icon name="whatsapp" size={16} />{f.successWa}
+    </a>
+  </div>
+</div>
+
+<style>
+  .lead { margin-top: 80px; max-width: 560px; padding: 32px; border-radius: 28px; color: var(--crema); }
+  .lead[hidden] { display: none; }
+
+  .lead-step { font-size: 12px; line-height: 18px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted-dark); }
+  .lead-bar { margin-top: 10px; height: 2px; border-radius: 9999px; background: rgba(159,211,242,.18); overflow: hidden; }
+  .lead-bar-fill {
+    height: 100%; width: 100%; border-radius: 9999px; background: linear-gradient(90deg, var(--mediterraneo), var(--aqua));
+    transform-origin: left center; transform: scaleX(.33); transition: transform .4s var(--ease);
+  }
+
+  .form-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .lead-pane { margin-top: 24px; }
+  .lead-pane.is-entering { animation: pane-in .3s var(--ease); }
+  .lead-pane.is-entering-back { animation: pane-in-back .3s var(--ease); }
+  @keyframes pane-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+  @keyframes pane-in-back { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+
+  .lead-q { font-size: 22px; line-height: 30px; letter-spacing: -0.015em; }
+  .lead-q:focus { outline: none; }
+  .lead-q--sub { margin-top: 24px; font-size: 16px; line-height: 24px; }
+  .lead-optional { color: var(--ink-muted-dark); font-size: .85em; }
+
+  .lead-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .chip {
+    min-height: 48px; padding: 0 22px; border-radius: 9999px; cursor: pointer; font-size: 15px; font-weight: 500;
+    border: 1px solid var(--mar-line); color: var(--crema); background: transparent; transition: all .3s;
+  }
+  .chip:hover { border-color: var(--aqua-light); }
+  .chip[aria-pressed='true'] { border-color: var(--aqua); color: var(--mar); background: var(--aqua); }
+  .chip--sm { min-height: 44px; padding: 0 18px; font-size: 14px; }
+
+  .lead-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+  .lead-field { display: flex; flex-direction: column; gap: 8px; }
+  .lead-field--wide { grid-column: span 2; }
+  .lead-other { margin-top: 16px; }
+  .lead-other[hidden] { display: none; }
+  .lead-field label { font-size: 13px; line-height: 20px; color: var(--ink-muted-dark); }
+  .lead-field input, .lead-field textarea {
+    width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 10px; font: inherit; font-size: 15px; line-height: 22px;
+    color: var(--crema); background: rgba(255,255,255,.06); border: 1px solid var(--mar-line); transition: border-color .2s;
+    resize: vertical;
+  }
+  .lead-field input::placeholder { color: rgba(169,192,218,.6); }
+  .lead-field input:focus, .lead-field textarea:focus { outline: none; border-color: var(--aqua-light); box-shadow: 0 0 0 1px var(--aqua-light); }
+  .lead-field input:user-invalid { border-color: #fca5a5; }
+
+  .lead-phone { display: flex; align-items: stretch; }
+  .lead-prefix {
+    display: flex; align-items: center; padding: 0 12px; border: 1px solid var(--mar-line); border-right: 0;
+    border-radius: 10px 0 0 10px; color: var(--ink-muted-dark); font-size: 15px;
+  }
+  .lead-phone input { border-radius: 0 10px 10px 0; }
+
+  .lead-error { margin-top: 12px; font-size: 14px; line-height: 21px; color: #fca5a5; }
+  .lead-error:empty { display: none; }
+
+  .lead-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; }
+  .lead-back { color: var(--ink-muted-dark); font-size: 15px; padding: 8px 0; cursor: pointer; background: none; border: 0; }
+  .lead-back:hover { color: var(--crema); }
+  .lead-next { min-height: 52px; }
+  .lead-next:disabled { opacity: .7; cursor: progress; }
+
+  .lead-done { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 24px; animation: pane-in .3s var(--ease); }
+  .lead-done[hidden] { display: none; }
+  .lead-check { width: 52px; height: 52px; color: var(--aqua); }
+  .lead-check circle { stroke-dasharray: 151; stroke-dashoffset: 151; animation: draw .6s var(--ease) forwards; }
+  .lead-check path { stroke-dasharray: 36; stroke-dashoffset: 36; animation: draw .4s .45s var(--ease) forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .lead-done-title { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; }
+  .lead-done-title:focus { outline: none; }
+  .lead-wa { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-muted-dark); font-size: 15px; }
+  .lead-wa:hover { color: var(--crema); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lead-check circle, .lead-check path { stroke-dashoffset: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .lead { margin-top: 110px; padding: 20px; border-radius: 24px; }
+    .lead-q { font-size: 20px; line-height: 27px; }
+    .lead-chips { gap: 8px; margin-top: 12px; }
+    .chip { min-height: 44px; padding: 0 18px; font-size: 14px; }
+    .lead-grid { grid-template-columns: minmax(0, 1fr); }
+    .lead-field--wide { grid-column: span 1; }
+    .lead-actions { flex-wrap: wrap-reverse; }
+    .lead-actions .btn { width: 100%; }
+  }
+</style>

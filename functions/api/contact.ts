@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { NEEDS, NICHES, BUDGETS } from '../../src/data/lead';
 
 interface Env {
   RESEND_API_KEY: string;
@@ -7,14 +8,20 @@ interface Env {
 }
 
 interface ContactData {
+  need: string;
+  niche: string;
+  nicheOther: string;
+  budget: string;
   name: string;
   email: string;
+  phone: string;
   message: string;
   website: string; // honeypot: los humanos no lo ven, los bots lo llenan
 }
 
-const LIMITS = { name: 100, email: 254, message: 5000 };
+const LIMITS = { name: 100, email: 254, phone: 20, nicheOther: 80, message: 5000 };
 const EMAIL_RE = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/;
+const PHONE_RE = /^[\d\s+-]*$/;
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -30,6 +37,9 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
+const has = <T extends object>(obj: T, key: string): key is Extract<keyof T, string> =>
+  Object.prototype.hasOwnProperty.call(obj, key);
+
 // Acepta JSON (envío con JS) y formulario clásico (sin JS)
 async function readData(request: Request): Promise<ContactData> {
   const type = request.headers.get('Content-Type') ?? '';
@@ -43,12 +53,27 @@ async function readData(request: Request): Promise<ContactData> {
 
   const field = (key: string) => (typeof raw[key] === 'string' ? (raw[key] as string).trim() : '');
   return {
+    need: field('need'),
+    niche: field('niche'),
+    nicheOther: field('nicheOther'),
+    budget: field('budget'),
     name: field('name'),
     email: field('email'),
+    phone: field('phone'),
     message: field('message'),
     website: field('website'),
   };
 }
+
+// Número para wa.me: solo dígitos; si parece un celular colombiano sin indicativo, se agrega el 57
+function whatsappNumber(phone: string) {
+  const digits = phone.replace(/\D/g, '');
+  if (!digits) return '';
+  return digits.length === 10 && !phone.trim().startsWith('+') ? `57${digits}` : digits;
+}
+
+// TODO: enviar el lead también a Fidelius cuando exponga un webhook.
+async function sendToCrm(_lead: ContactData, _env: Env): Promise<void> {}
 
 export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   if (request.method !== 'POST') {
@@ -73,51 +98,79 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   // Bot detectado: respondemos como si todo hubiera salido bien
   if (data.website) return isForm ? back() : json({ ok: true });
 
-  const { name, email, message } = data;
+  const { need, niche, nicheOther, budget, name, email, phone, message } = data;
 
-  if (!name || !email || !message) {
-    return json({ error: 'Todos los campos son obligatorios.' }, 400);
+  if (!need || !niche || !name || !email) {
+    return json({ error: 'Faltan campos obligatorios.' }, 400);
   }
 
   if (
+    !has(NEEDS, need) ||
+    !has(NICHES, niche) ||
+    (budget && !has(BUDGETS, budget)) ||
+    (niche === 'other' && !nicheOther) ||
     name.length > LIMITS.name ||
     email.length > LIMITS.email ||
+    phone.length > LIMITS.phone ||
+    nicheOther.length > LIMITS.nicheOther ||
     message.length > LIMITS.message ||
-    !EMAIL_RE.test(email)
+    !EMAIL_RE.test(email) ||
+    !PHONE_RE.test(phone)
   ) {
     return json({ error: 'Revisa los datos del formulario.' }, 400);
   }
 
+  const needLabel   = NEEDS[need].es;
+  const nicheLabel  = niche === 'other' ? `Otro: ${nicheOther}` : NICHES[niche].es;
+  const budgetLabel = budget && has(BUDGETS, budget) ? BUDGETS[budget].es : 'No indicó';
+  const waNumber    = whatsappNumber(phone);
+
+  // [etiqueta, texto plano, HTML]
+  const rows: [string, string, string][] = [
+    ['Necesita', needLabel, escapeHtml(needLabel)],
+    ['Se dedica a', nicheLabel, escapeHtml(nicheLabel)],
+    ['Presupuesto', budgetLabel, escapeHtml(budgetLabel)],
+    ['Nombre', name, escapeHtml(name)],
+    ['Email', email, `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`],
+    [
+      'WhatsApp',
+      phone || 'No lo dejó',
+      waNumber ? `<a href="https://wa.me/${waNumber}">${escapeHtml(phone)}</a>` : 'No lo dejó',
+    ],
+    ['Mensaje', message || '—', message ? escapeHtml(message).replace(/\n/g, '<br>') : '—'],
+  ];
+
   const resend = new Resend(env.RESEND_API_KEY);
-  const safeName = escapeHtml(name);
-  const safeEmail = escapeHtml(email);
 
   try {
     const { error } = await resend.emails.send({
       from: env.RESEND_FROM || 'Formulario Web <onboarding@resend.dev>',
       to: env.RESEND_TO,
       replyTo: email,
-      subject: `Nuevo mensaje de ${name.replace(/[\r\n]+/g, ' ')}`,
-      text: `Nombre: ${name}\nEmail: ${email}\n\n${message}`,
+      subject: `Nuevo lead: ${needLabel} · ${nicheLabel} — ${name}`.replace(/[\r\n]+/g, ' '),
+      text: [
+        ...rows.map(([k, plain]) => `${k}: ${plain}`),
+        waNumber ? `\nEscribirle por WhatsApp: https://wa.me/${waNumber}` : '',
+      ].join('\n'),
       html: `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto">
-          <h2 style="color:#2563EB">Nuevo mensaje desde camiloacosta.dev</h2>
+          <h2 style="color:#1D5FAE">Nuevo lead desde camiloacosta.dev</h2>
           <table style="width:100%;border-collapse:collapse;margin-top:16px">
+            ${rows
+              .map(
+                ([k, , html]) => `
             <tr>
-              <td style="padding:10px;background:#f4f4f5;font-weight:600;width:100px">Nombre</td>
-              <td style="padding:10px;border-bottom:1px solid #e4e4e7">${safeName}</td>
-            </tr>
-            <tr>
-              <td style="padding:10px;background:#f4f4f5;font-weight:600">Email</td>
-              <td style="padding:10px;border-bottom:1px solid #e4e4e7">
-                <a href="mailto:${safeEmail}">${safeEmail}</a>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:10px;background:#f4f4f5;font-weight:600;vertical-align:top">Mensaje</td>
-              <td style="padding:10px;line-height:1.6">${escapeHtml(message).replace(/\n/g, '<br>')}</td>
-            </tr>
+              <td style="padding:10px;background:#f4f4f5;font-weight:600;width:120px;vertical-align:top">${k}</td>
+              <td style="padding:10px;border-bottom:1px solid #e4e4e7;line-height:1.6">${html}</td>
+            </tr>`,
+              )
+              .join('')}
           </table>
+          ${
+            waNumber
+              ? `<p style="margin-top:20px"><a href="https://wa.me/${waNumber}" style="display:inline-block;padding:12px 20px;border-radius:9999px;background:#25D366;color:#fff;text-decoration:none;font-weight:600">Escribirle por WhatsApp</a></p>`
+              : ''
+          }
         </div>
       `,
     });
@@ -126,6 +179,12 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     if (error) {
       console.error('Resend error:', error);
       return json({ error: 'Error al enviar el mensaje. Intenta de nuevo.' }, 502);
+    }
+
+    try {
+      await sendToCrm(data, env);
+    } catch (err) {
+      console.error('CRM error:', err);
     }
 
     return isForm ? back() : json({ ok: true });

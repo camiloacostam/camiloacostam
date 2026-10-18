@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import avatar from '../../assets/home/camilo.webp';
+import LeadForm from './LeadForm.astro';
 import { getHome, links } from '../../data/home';
 import { getLang } from '../../i18n/utils';
 
@@ -8,9 +9,8 @@ const lang = getLang(Astro.currentLocale);
 const home = getHome(lang);
 const c    = home.closing;
 
-const firstNeed = c.needs[0];
-const waHref    = (need: string) => `${links.whatsapp}?text=${encodeURIComponent(c.whatsappText(need))}`;
-const mailHref  = (need: string) => `mailto:${links.email}?subject=${encodeURIComponent(c.emailSubject(need))}`;
+const waHref   = `${links.whatsapp}?text=${encodeURIComponent(c.whatsappText)}`;
+const mailHref = `mailto:${links.email}?subject=${encodeURIComponent(c.emailSubject)}`;
 
 const socials = [
   links.instagram && { label: 'Instagram', href: links.instagram },
@@ -34,25 +34,11 @@ const socials = [
       </div>
     </div>
 
-    <div class="needs" data-needs>
-      <p class="needs-label" id="needs-label">{c.needsLabel}</p>
-      <div class="needs-chips" role="group" aria-labelledby="needs-label">
-        {c.needs.map((n, i) => (
-          <button
-            type="button"
-            class="chip"
-            aria-pressed={i === 0 ? 'true' : 'false'}
-            data-need={n}
-            data-wa={waHref(n)}
-            data-mail={mailHref(n)}
-          >{n}</button>
-        ))}
-      </div>
-    </div>
+    <LeadForm />
 
     <div class="contact-links">
-      <a class="btn btn--line pill" href={mailHref(firstNeed)} data-need-mail data-track="email" data-track-place="cierre">{links.email}</a>
-      <a class="btn btn--line pill" href={waHref(firstNeed)} target="_blank" rel="noopener noreferrer" data-need-wa data-track="whatsapp" data-track-place="cierre">{c.whatsapp}</a>
+      <a class="btn btn--line pill" href={mailHref} data-track="email" data-track-place="cierre">{links.email}</a>
+      <a class="btn btn--line pill" href={waHref} target="_blank" rel="noopener noreferrer" data-track="whatsapp" data-track-place="cierre">{c.whatsapp}</a>
     </div>
 
     <footer class="closing-foot">
@@ -90,14 +76,6 @@ const socials = [
   .closing-magnet { position: absolute; right: 8%; top: -100px; }
   .closing-btn { width: 200px; height: 200px; background: var(--mediterraneo); color: #FFFFFF; font-size: 18px; line-height: 25px; }
 
-  .needs { margin-top: 80px; max-width: 560px; }
-  .needs-label { font-size: 13px; line-height: 20px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted-dark); }
-  .needs-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-  .chip {
-    min-height: 48px; padding: 0 22px; border-radius: 9999px; cursor: pointer; font-size: 15px; font-weight: 500;
-    border: 1px solid var(--mar-line); color: var(--crema); background: transparent; transition: all .3s;
-  }
-  .chip[aria-pressed='true'] { border-color: var(--aqua); color: var(--mar); background: var(--aqua); }
 
   .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
   .contact-links .btn { font-weight: 400; }
@@ -127,10 +105,6 @@ const socials = [
     .closing-line { margin-top: 96px; height: 1px; }
     .closing-magnet { right: 0; top: -80px; }
     .closing-btn { width: 160px; height: 160px; font-size: 16px; line-height: 21px; }
-    .needs { margin-top: 110px; }
-    .needs-label { font-size: 12px; }
-    .needs-chips { gap: 8px; margin-top: 12px; }
-    .chip { min-height: 44px; padding: 0 18px; font-size: 14px; }
     .contact-links { flex-direction: column; gap: 10px; margin-top: 28px; }
     .contact-links .btn { min-height: 54px; }
     .closing-foot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 64px; }

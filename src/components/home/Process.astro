@@ -21,7 +21,7 @@ const c    = home.process;
     </ol>
     <div class="process-cta reveal">
       <p class="ready">
-        {c.readyStart} <span class="ready-date" data-ready-date data-locale={home.locale}>{c.readyFallback}</span>.
+        {c.readyStart} <span class="ready-date" data-ready-date data-locale={home.locale} data-prefix={c.readyPrefix}>{c.readyFallback}</span>.
       </p>
       <a class="btn btn--aqua pill fill-btn breathe" href={links.calendly} data-calendly data-track="agendar" data-track-place="proceso">
         {c.cta}<Icon name="arrow-right" />

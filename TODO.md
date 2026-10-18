@@ -17,7 +17,9 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octu
 - [ ] **FAQ**: qué incluye dominio, hosting y correo.
 - [ ] **Testimonio** con nombre, profesión y foto.
 - [ ] **URL de Instagram**.
-- [ ] Decidir si el formulario de contacto sigue en el home (el diseño nuevo solo tiene Calendly, email y WhatsApp).
+- [x] Formulario en el home: decidido en el brief (formulario por pasos en el cierre que alimenta a Calendly).
+- [ ] Confirmar las opciones de nicho del formulario: el brief pide `Wedding planner`; se puso `Odontología` siguiendo `CLAUDE.md` (se cambia en `src/data/lead.ts`).
+- [ ] Confirmar los valores de la tabla "Valores a definir" del brief (cifras, precios, dominio/hosting, resultados de Prometálica y Atelier, testimonio).
 - [ ] Decidir el blog: publicar 2 o 3 artículos o quitarlo del menú hasta tener contenido.
 - [ ] Decidir el inglés: completar o quitar temporalmente.
 
@@ -26,7 +28,8 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octu
 - [ ] Finder → **Mantener descargado** en la carpeta del proyecto (si no, iCloud saca `node_modules` y el build se cuelga).
 - [ ] Verificar `camiloacosta.dev` en Resend y configurar `RESEND_FROM` en Cloudflare Pages (con `onboarding@resend.dev` solo llega al dueño de la cuenta).
 - [ ] Probar el formulario de punta a punta en producción.
-- [ ] Calendly: renombrar "30 Minute Meeting" a "Llamada de diagnóstico gratuita (30 min)" y agregar 2–3 preguntas previas (tipo de negocio, si ya tiene web, presupuesto).
+- [ ] Calendly: renombrar "30 Minute Meeting" a "Llamada de diagnóstico gratuita (30 min)".
+- [ ] Calendly: crear como **primera pregunta personalizada** del evento algo como "¿Qué necesitas y a qué te dedicas?". El formulario la prellena con el parámetro `a1`; si no existe, Calendly ignora el dato.
 - [ ] Google Search Console: registrar el sitio y enviar `sitemap-index.xml`.
 - [ ] Perfil de Empresa en Google (SEO local Cartagena).
 - [ ] Verificar que `@camiloacostam` exista en X/Twitter; si no, quitar `twitter:creator` y el `sameAs`.
@@ -64,7 +67,7 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octu
 
 ### Formulario de contacto
 - [ ] Turnstile si el honeypot no alcanza.
-- [ ] Opcional: enviar el lead a Fidelius además del correo.
+- [ ] Opcional: enviar el lead a Fidelius además del correo (`sendToCrm()` vacío en `functions/api/contact.ts`).
 
 ### Legal
 - [ ] Política de privacidad / tratamiento de datos (Ley 1581 de 2012) en es y en.
