@@ -12,9 +12,9 @@ const altLabel  = lang === 'es' ? 'EN' : 'ES';
 
     <ul class="nav-links">
       <li><a href={prefix + '/#servicios'}>{tr.nav.services}</a></li>
-      <li><a href={prefix + '/proyectos'}>{tr.nav.projects}</a></li>
+      <li><a href={prefix + '/proyectos/'}>{tr.nav.projects}</a></li>
       <li><a href={prefix + '/#sobre-mi'}>{tr.nav.about}</a></li>
-      <li><a href={prefix + '/blog'}>{tr.nav.blog}</a></li>
+      <li><a href={prefix + '/blog/'}>{tr.nav.blog}</a></li>
       <li><a href={prefix + '/#contacto'}>{tr.nav.contact}</a></li>
     </ul>
 
@@ -30,7 +30,7 @@ const altLabel  = lang === 'es' ? 'EN' : 'ES';
         </svg>
       </button>
       <a href={altPath} class="lang-switcher">{altLabel}</a>
-      <button class="cta-btn" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">{tr.nav.cta}</button>
+      <button type="button" class="cta-btn" data-calendly>{tr.nav.cta}</button>
     </div>
 
     <button class="hamburger" id="menu-toggle" aria-label="Abrir menú">
@@ -45,13 +45,13 @@ const altLabel  = lang === 'es' ? 'EN' : 'ES';
   <div class="mobile-menu" id="mobile-menu">
     <ul>
       <li><a href={prefix + '/#servicios'}>{tr.nav.services}</a></li>
-      <li><a href={prefix + '/proyectos'}>{tr.nav.projects}</a></li>
+      <li><a href={prefix + '/proyectos/'}>{tr.nav.projects}</a></li>
       <li><a href={prefix + '/#sobre-mi'}>{tr.nav.about}</a></li>
-      <li><a href={prefix + '/blog'}>{tr.nav.blog}</a></li>
+      <li><a href={prefix + '/blog/'}>{tr.nav.blog}</a></li>
       <li><a href={prefix + '/#contacto'}>{tr.nav.contact}</a></li>
     </ul>
     <div class="mobile-bottom">
-      <button class="cta-btn-mobile" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hello-camiloacosta/30min'});return false;">{tr.nav.cta}</button>
+      <button type="button" class="cta-btn-mobile" data-calendly>{tr.nav.cta}</button>
       <a href={altPath} class="lang-switcher-mobile">{altLabel}</a>
       <button class="theme-toggle theme-toggle--mobile" id="theme-toggle-mobile" aria-label="Cambiar tema">
         <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

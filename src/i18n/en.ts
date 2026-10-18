@@ -91,7 +91,9 @@ export default {
     back:       '← Back to blog',
   },
   projectsPage: {
-    title:      'Projects',
+    title:      'Projects — Web Design & Development | Camilo Acosta',
+    heading:    'Projects',
+    sub:        "Websites, landing pages and applications I've designed and developed.",
     desc:       "Websites, landing pages and applications I've designed and developed.",
     cta:        'Book a free call',
     filterAll:  'All',
@@ -100,5 +102,11 @@ export default {
     noFilter:   'No projects in this category yet.',
     emptyTitle: 'Projects coming soon',
     emptyDesc:  "I'm adding projects to the catalog. Come back soon.",
+  },
+  notFound: {
+    title:     'Page not found',
+    desc:      "The page you're looking for doesn't exist or has moved.",
+    home:      'Back to home',
+    projects:  'See projects',
   },
 } as const;

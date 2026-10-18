@@ -27,11 +27,11 @@ function formatDate(date: Date) {
   return date.toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 ---
-<Layout title={`${post.data.title} — Camilo Acosta`} description={post.data.excerpt}>
+<Layout title={`${post.data.title} — Camilo Acosta`} description={post.data.excerpt} lang="en">
   <article class="post-page">
     <div class="post-inner">
 
-      <a href="/en/blog" class="back-link">{tr.blogPage.back}</a>
+      <a href="/en/blog/" class="back-link">{tr.blogPage.back}</a>
 
       <header class="post-header">
         <span class={`badge ${badgeColors[post.data.badge]}`}>{post.data.badge}</span>
