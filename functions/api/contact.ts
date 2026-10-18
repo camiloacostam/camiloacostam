@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { NEEDS, NICHES, BUDGETS } from '../../src/data/lead';
+import { NEEDS, NICHES, TIMELINES } from '../../src/data/lead';
 
 interface Env {
   RESEND_API_KEY: string;
@@ -11,7 +11,7 @@ interface ContactData {
   need: string;
   niche: string;
   nicheOther: string;
-  budget: string;
+  timeline: string;
   name: string;
   email: string;
   phone: string;
@@ -56,7 +56,7 @@ async function readData(request: Request): Promise<ContactData> {
     need: field('need'),
     niche: field('niche'),
     nicheOther: field('nicheOther'),
-    budget: field('budget'),
+    timeline: field('timeline'),
     name: field('name'),
     email: field('email'),
     phone: field('phone'),
@@ -98,16 +98,16 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   // Bot detectado: respondemos como si todo hubiera salido bien
   if (data.website) return isForm ? back() : json({ ok: true });
 
-  const { need, niche, nicheOther, budget, name, email, phone, message } = data;
+  const { need, niche, nicheOther, timeline, name, email, phone, message } = data;
 
-  if (!need || !niche || !name || !email) {
+  if (!need || !niche || !timeline || !name || !email) {
     return json({ error: 'Faltan campos obligatorios.' }, 400);
   }
 
   if (
     !has(NEEDS, need) ||
     !has(NICHES, niche) ||
-    (budget && !has(BUDGETS, budget)) ||
+    !has(TIMELINES, timeline) ||
     (niche === 'other' && !nicheOther) ||
     name.length > LIMITS.name ||
     email.length > LIMITS.email ||
@@ -122,14 +122,14 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
 
   const needLabel   = NEEDS[need].es;
   const nicheLabel  = niche === 'other' ? `Otro: ${nicheOther}` : NICHES[niche].es;
-  const budgetLabel = budget && has(BUDGETS, budget) ? BUDGETS[budget].es : 'No indicó';
+  const timelineLabel = TIMELINES[timeline].es;
   const waNumber    = whatsappNumber(phone);
 
   // [etiqueta, texto plano, HTML]
   const rows: [string, string, string][] = [
     ['Necesita', needLabel, escapeHtml(needLabel)],
     ['Se dedica a', nicheLabel, escapeHtml(nicheLabel)],
-    ['Presupuesto', budgetLabel, escapeHtml(budgetLabel)],
+    ['Para cuándo', timelineLabel, escapeHtml(timelineLabel)],
     ['Nombre', name, escapeHtml(name)],
     ['Email', email, `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`],
     [
@@ -147,7 +147,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
       from: env.RESEND_FROM || 'Formulario Web <onboarding@resend.dev>',
       to: env.RESEND_TO,
       replyTo: email,
-      subject: `Nuevo lead: ${needLabel} · ${nicheLabel} — ${name}`.replace(/[\r\n]+/g, ' '),
+      subject: `Nuevo lead: ${needLabel} · ${nicheLabel} · ${timelineLabel} — ${name}`.replace(/[\r\n]+/g, ' '),
       text: [
         ...rows.map(([k, plain]) => `${k}: ${plain}`),
         waNumber ? `\nEscribirle por WhatsApp: https://wa.me/${waNumber}` : '',

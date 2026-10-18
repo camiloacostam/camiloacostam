@@ -13,7 +13,7 @@ Es la vitrina principal para conseguir clientes: cada decisión de diseño, copy
   - **Segundo nicho: dentistas** / consultorios odontológicos.
   - **Paraguas:** profesionales de la salud con consulta privada y, en general, marcas personales y profesionales independientes.
 - **Cómo hablarles:** en términos de resultados (más pacientes, citas agendadas sin perseguir mensajes, confianza desde el primer scroll), no de tecnologías. Wedding planners ya no son nicho objetivo.
-- **Paquetes de referencia (COP):** Esencial $1.200.000 · Profesional $2.200.000 · Premium $3.500.000. Pago 50% anticipo / 50% contra entrega.
+- **Paquetes (USD, en ES y EN):** Landing desde USD 200 · Sitio profesional desde USD 500 · Acompañamiento USD 25/mes. A clientes en Colombia se puede facturar en pesos a la TRM del día. Pago 50% anticipo / 50% contra entrega.
 - **Oferta de entrada:** auditoría de presencia digital gratuita (video Loom de 5 min).
 - **Embudo:** web / Instagram / DM → Calendly → llamada de descubrimiento → propuesta → cierre. Los leads se gestionan en **Fidelius** (CRM propio).
 

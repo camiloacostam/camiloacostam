@@ -60,7 +60,7 @@ Los `.dc.html` usan un formato de plantilla (`<x-dc>`, `{{hole}}`, `<sc-for>`, `
 | --- | --- | --- | --- | --- |
 | 1 | ¿Qué necesitas? | `need` | Chips de selección única: `Landing page`, `Sitio completo`, `Rediseño`, `Aún no lo sé`. Al tocar un chip avanza solo al paso 2. | Sí |
 | 2 | ¿A qué te dedicas? | `niche` | Chips: `Psicología`, `Coaching`, `Wedding planner`, `Salud / bienestar`, `Otro` (si elige "Otro", aparece un input de texto de una línea). | Sí |
-| 2 | Presupuesto aproximado | `budget` | Chips opcionales debajo del nicho: `Menos de $1.500.000`, `$1.500.000 – $3.000.000`, `Más de $3.000.000`, `Prefiero hablarlo` (COP). Botón "Continuar". | No |
+| 2 | ¿Para cuándo la necesitas? | `timeline` | Chips debajo del nicho: `Lo antes posible`, `Este mes`, `En 1–3 meses`, `Solo estoy explorando`. Botón "Continuar". **No se pregunta presupuesto en el formulario**: se habla en la llamada de descubrimiento, y los precios "desde" de la sección Paquetes ya sirven de referencia. | Sí |
 | 3 | Tus datos | `name`, `email`, `phone`, `message` | Inputs con `<label>` visible: Nombre, Email, WhatsApp (opcional, con prefijo +57) y "¿Algo más que deba saber?" (textarea opcional, 3 filas). Mantener el honeypot `website` oculto. Botón aqua "Enviar y elegir horario". | Nombre y email |
 
 Los chips son `<button type="button" aria-pressed>` dentro de un `role="group"` con `aria-labelledby`. Todo el flujo funciona con teclado.
@@ -68,15 +68,15 @@ Los chips son `<button type="button" aria-pressed>` dentro de un `role="group"` 
 ### Al enviar
 
 1. Estado de carga en el botón ("Enviando…"), deshabilitado.
-2. `POST /api/contact` en JSON con `{ need, niche, nicheOther, budget, name, email, phone, message, website }`.
+2. `POST /api/contact` en JSON con `{ need, niche, nicheOther, timeline, name, email, phone, message, website }`.
 3. **Éxito:** la tarjeta cambia a un estado de confirmación con un check aqua animado: "¡Listo, {nombre}! Ahora elige tu horario." y el botón "Elegir horario en Calendly". Ese botón abre el popup de Calendly **prellenado**: `https://calendly.com/hello-camiloacosta/30min?name={name}&email={email}&a1={need} · {niche}` (URL-encoded; `a1` es la primera pregunta personalizada del evento en Calendly). Abrirlo automáticamente 600 ms después del éxito, y dejar el botón por si el usuario lo cierra.
 4. Debajo de la confirmación, un enlace secundario: "¿Prefieres WhatsApp? Escríbeme" con el texto prellenado: `Hola Camilo, soy {name}. Me interesa {need} para mi marca de {niche}.`
 5. **Error:** mensaje en la tarjeta, "No se pudo enviar. Intenta de nuevo o escríbeme por WhatsApp.", con los datos conservados.
 
 ### Backend (`functions/api/contact.ts`)
 
-- Ampliar `ContactData` con `need`, `niche`, `nicheOther`, `budget` y `phone`. Validar `need` y `niche` contra las listas permitidas, `phone` con máximo 20 caracteres (solo dígitos, espacios, + y -), y `message` deja de ser obligatorio.
-- Asunto del correo: `Nuevo lead: {need} · {niche} — {name}`. Cuerpo en una tabla con todos los campos y un enlace directo a WhatsApp si dejó su número.
+- Ampliar `ContactData` con `need`, `niche`, `nicheOther`, `timeline` y `phone`. Validar `need`, `niche` y `timeline` contra las listas permitidas, `phone` con máximo 20 caracteres (solo dígitos, espacios, + y -), y `message` deja de ser obligatorio.
+- Asunto del correo: `Nuevo lead: {need} · {niche} · {timeline} — {name}`. Cuerpo en una tabla con todos los campos y un enlace directo a WhatsApp si dejó su número.
 - Mantener el escape de HTML, el honeypot, el `replyTo` y la respuesta 405 actuales.
 - Opcional, a futuro: enviar el lead también a Fidelius (CRM) si expone un webhook; dejar una función `sendToCrm()` vacía con un TODO.
 
@@ -100,12 +100,16 @@ Todos viven en `src/data/home.ts` (y su versión en inglés). Los valores de la 
 | `stats.projects` (hero, bento, barra del hero) | Webs entregadas | número + "+" | `15+` |
 | `stats.years` (bento, presentación, "Hola, soy Camilo") | Años de experiencia | número + "+" | `5+` |
 | `stats.slots` (píldora "Disponible", celda de disponibilidad) | Cupos libres este mes | número entero | `3` → se lee "3 cupos este mes" |
-| Paquete Landing `price` | Precio desde | "desde $X" en COP | `desde $1.200.000` |
-| Paquete Sitio profesional `price` | Precio desde | "desde $X" | `desde $2.800.000` |
+| Paquete Landing `price` | Precio desde (**definido**) | "desde USD X" | `desde USD 200` |
+| Paquete Sitio profesional `price` | Precio desde (**definido**) | "desde USD X" | `desde USD 500` |
 | Paquete Sitio profesional `note` | Páginas incluidas | "Hasta N páginas" | `Hasta 5 páginas y SEO básico →` |
-| Paquete Acompañamiento `price` | Mensualidad | "$X /mes" | `$250.000 /mes` |
-| FAQ "¿Cuánto cuesta…?" | Mismo precio de la landing | "desde $X" | `desde $1.200.000` |
-| FAQ "¿Incluye dominio y hosting?" | Qué incluye | una frase | `Sí: el primer año de dominio y hosting va incluido; desde el segundo año cuestan $X al año.` |
+| Paquete Acompañamiento `price` | Mensualidad (**definido**) | "USD X /mes" | `USD 25 /mes` |
+| FAQ "¿Cuánto cuesta…?" | Mismo precio de la landing (**definido**) | "desde USD X" | `desde USD 200` |
+| FAQ "¿Incluye dominio y hosting?" | Qué incluye | una frase | `Sí: el primer año de dominio y hosting va incluido; desde el segundo año cuestan USD X al año.` |
+
+**Precios definidos por Camilo:** Landing desde USD 200 · Sitio profesional desde USD 500 · Acompañamiento USD 25/mes. Úsalos tal cual en ES y EN (en inglés: `from USD 200`, `from USD 500`, `USD 25 /month`).
+
+**Moneda:** todos los precios del sitio van en **USD**, en ES y EN. Mostrar debajo de la sección Paquetes una nota pequeña en `ink-muted`: "Precios en dólares (USD). Para clientes en Colombia se puede facturar en pesos a la TRM del día."
 | Caso Nathalia `desc` (resultado) | Resultado medible | "N + métrica + periodo" | `12 consultas agendadas en el primer mes` |
 | Caso Maura `desc` (resultado) | Resultado medible | "N + métrica + periodo" | `8 solicitudes de cotización al mes` |
 | Bento, celda de caso real `eyebrow` | Nicho del caso | texto | `Caso real · Psicología` |

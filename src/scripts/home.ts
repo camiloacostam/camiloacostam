@@ -309,22 +309,20 @@ function initLeadForm() {
     chip.addEventListener('click', () => {
       const field = chip.dataset.field!;
       const group = form.querySelectorAll<HTMLButtonElement>(`[data-field="${field}"]`);
-      // El presupuesto es opcional: tocar el chip elegido lo desmarca
-      const toggleOff = field === 'budget' && picked[field]?.key === chip.dataset.value;
-      group.forEach((c) => c.setAttribute('aria-pressed', String(!toggleOff && c === chip)));
-      picked[field] = toggleOff ? undefined : { key: chip.dataset.value!, label: chip.dataset.label! };
+      group.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      picked[field] = { key: chip.dataset.value!, label: chip.dataset.label! };
 
       if (field === 'need') show(2);
       if (field === 'niche') {
         other.hidden = chip.dataset.value !== 'other';
         if (!other.hidden) otherIn.focus();
-        paneError.textContent = '';
       }
+      if (field === 'niche' || field === 'timeline') paneError.textContent = '';
     });
   });
 
   form.querySelector('[data-next]')!.addEventListener('click', () => {
-    if (!picked.niche) { paneError.textContent = d.pickOne!; return; }
+    if (!picked.niche || !picked.timeline) { paneError.textContent = d.pickOne!; return; }
     if (picked.niche.key === 'other' && !otherIn.value.trim()) {
       paneError.textContent = d.otherRequired!;
       otherIn.focus();
@@ -340,7 +338,7 @@ function initLeadForm() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!picked.need || !picked.niche || !form.reportValidity()) return;
+    if (!picked.need || !picked.niche || !picked.timeline || !form.reportValidity()) return;
 
     const fd = new FormData(form);
     const value = (k: string) => String(fd.get(k) ?? '').trim();
@@ -348,7 +346,7 @@ function initLeadForm() {
       need: picked.need.key,
       niche: picked.niche.key,
       nicheOther: picked.niche.key === 'other' ? otherIn.value.trim() : '',
-      budget: picked.budget?.key ?? '',
+      timeline: picked.timeline.key,
       name: value('name'),
       email: value('email'),
       phone: value('phone'),
@@ -360,7 +358,7 @@ function initLeadForm() {
     submit.disabled = true;
     submitTxt.textContent = d.submitting!;
     sendError.textContent = '';
-    track('form_submit', { need: payload.need, niche: payload.niche });
+    track('form_submit', { need: payload.need, niche: payload.niche, timeline: payload.timeline });
 
     try {
       const res = await fetch('/api/contact', {
@@ -376,7 +374,7 @@ function initLeadForm() {
       return;
     }
 
-    track('form_success', { need: payload.need, niche: payload.niche });
+    track('form_success', { need: payload.need, niche: payload.niche, timeline: payload.timeline });
 
     const firstName = payload.name.split(/\s+/)[0];
     const values = { name: firstName, need: picked.need.label, niche: nicheText() };
