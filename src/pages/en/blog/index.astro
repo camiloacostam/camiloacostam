@@ -20,7 +20,7 @@ function formatDate(date: Date) {
   return date.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 ---
-<Layout title={tr.blogPage.title} description={tr.blogPage.desc}>
+<Layout title={tr.blogPage.title} description={tr.blogPage.desc} lang="en">
   <section class="blog-page">
     <div class="blog-page-inner">
 
@@ -38,7 +38,7 @@ function formatDate(date: Date) {
       ) : (
         <div class="posts-grid">
           {posts.map(post => (
-            <a href={`/en/blog/${post.id.replace(/\.mdx?$/, '')}`} class="post-card">
+            <a href={`/en/blog/${post.id.replace(/\.mdx?$/, '')}/`} class="post-card">
               <div class="post-cover" style={post.data.cover ? `background-image:url('${post.data.cover}')` : ''}></div>
               <div class="post-body">
                 <span class={`badge ${badgeColors[post.data.badge]}`}>{post.data.badge}</span>

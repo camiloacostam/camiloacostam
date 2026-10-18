@@ -4,6 +4,7 @@ import { t, getLang } from '../../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
 const tr   = t(lang);
+const prefix = lang === 'en' ? '/en' : '';
 
 const featured = projects
   .filter(p => p.featured)
@@ -14,7 +15,7 @@ const featured = projects
 
     <div class="section-header">
       <h2 class="section-title">{tr.projects.title}</h2>
-      <a href="/proyectos" class="see-all">{tr.projects.seeAll}</a>
+      <a href={`${prefix}/proyectos/`} class="see-all">{tr.projects.seeAll}</a>
     </div>
 
     {featured.length === 0 ? (

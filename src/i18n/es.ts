@@ -92,6 +92,8 @@ export default {
   },
   projectsPage: {
     title:      'Proyectos',
+    heading:    'Proyectos',
+    sub:        'Sitios web, landing pages y aplicaciones que he diseñado y desarrollado.',
     desc:       'Sitios web, landing pages y aplicaciones que he diseñado y desarrollado.',
     cta:        'Agendar llamada gratis',
     filterAll:  'Todos',
@@ -100,5 +102,11 @@ export default {
     noFilter:   'No hay proyectos en esta categoría todavía.',
     emptyTitle: 'Proyectos en camino',
     emptyDesc:  'Estoy agregando los proyectos al catálogo. Vuelve pronto.',
+  },
+  notFound: {
+    title:     'Página no encontrada',
+    desc:      'La página que buscas no existe o cambió de dirección.',
+    home:      'Volver al inicio',
+    projects:  'Ver proyectos',
   },
 } as const;

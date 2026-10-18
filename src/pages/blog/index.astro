@@ -37,7 +37,7 @@ function formatDate(date: Date) {
       ) : (
         <div class="posts-grid">
           {posts.map(post => (
-            <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`} class="post-card">
+            <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}/`} class="post-card">
               <div class="post-cover" style={post.data.cover ? `background-image:url('${post.data.cover}')` : ''}></div>
               <div class="post-body">
                 <span class={`badge ${badgeColors[post.data.badge]}`}>{post.data.badge}</span>

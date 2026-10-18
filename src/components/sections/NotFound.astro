@@ -1,0 +1,63 @@
+---
+import { t, getLang } from '../../i18n/utils';
+
+const lang   = getLang(Astro.currentLocale);
+const tr     = t(lang);
+const prefix = lang === 'en' ? '/en' : '';
+---
+<section class="not-found">
+  <div class="not-found-inner">
+    <p class="not-found-code">404</p>
+    <h1 class="not-found-title">{tr.notFound.title}</h1>
+    <p class="not-found-desc">{tr.notFound.desc}</p>
+    <div class="not-found-actions">
+      <a href={`${prefix}/`} class="btn btn--primary">{tr.notFound.home}</a>
+      <a href={`${prefix}/proyectos/`} class="btn btn--ghost">{tr.notFound.projects}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .not-found { background: var(--bg-hero); }
+
+  .not-found-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 120px 24px;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .not-found-code {
+    font-size: clamp(72px, 12vw, 120px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--blue-primary);
+  }
+
+  .not-found-title { font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--text-primary); }
+  .not-found-desc  { font-size: 16px; color: var(--text-secondary); }
+
+  .not-found-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 16px; }
+
+  .btn {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+
+  .btn--primary { background: var(--blue-primary); color: #FFFFFF; }
+  .btn--primary:hover { opacity: 0.9; }
+
+  .btn--ghost { border: 1px solid var(--border-default); color: var(--text-primary); }
+  .btn--ghost:hover { border-color: var(--blue-primary); }
+
+  @media (max-width: 900px) {
+    .not-found-inner { padding: 80px 20px; }
+  }
+</style>

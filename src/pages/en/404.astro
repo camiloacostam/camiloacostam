@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NotFound from '../../components/sections/NotFound.astro';
+import { t } from '../../i18n/utils';
+
+const tr = t('en');
+---
+<Layout title={`${tr.notFound.title} — Camilo Acosta`} description={tr.notFound.desc} lang="en" noIndex>
+  <NotFound />
+</Layout>

@@ -31,7 +31,11 @@ const socialLinks = [
       <p class="cta-subline">{tr.contact.subline}</p>
     </div>
 
-    <form class="contact-form" id="contact-form">
+    <form class="contact-form" id="contact-form" method="post" action="/api/contact">
+      <div class="form-hp" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
       <div class="form-field">
         <label for="name">{tr.contact.nameLabel}</label>
         <input id="name" type="text" name="name" placeholder={tr.contact.namePh} required />
@@ -90,6 +94,7 @@ const socialLinks = [
       name:    (form.querySelector('#name') as HTMLInputElement).value,
       email:   (form.querySelector('#email') as HTMLInputElement).value,
       message: (form.querySelector('#message') as HTMLTextAreaElement).value,
+      website: (form.querySelector('#website') as HTMLInputElement).value,
     };
 
     try {
@@ -154,6 +159,9 @@ const socialLinks = [
   }
 
   .form-field { display: flex; flex-direction: column; gap: 8px; }
+
+  /* Honeypot anti-spam: fuera de pantalla, no display:none para que los bots lo llenen */
+  .form-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
   .form-field label { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); }
 
