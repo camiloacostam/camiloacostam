@@ -1,9 +1,10 @@
 # TODO — camiloacosta.dev
 
 Pendientes del sitio. Prioridad: 🔴 bloquea el lanzamiento · 🟠 importante · 🟡 pulido.
-Contexto general del proyecto en `CLAUDE.md`. Última actualización: 18 de octubre de 2026.
+Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octubre de 2026.
 
-> **Rediseño implementado** en la rama `redesign/funnel` (brief en `docs/rediseno/BRIEF-CLAUDE-CODE.md`), pendiente de revisión y merge.
+> **Rediseño implementado** en la rama `redesign/funnel`, subida a GitHub y pendiente de revisión y merge.
+> Brief: `docs/rediseno/BRIEF-CLAUDE-CODE.md` · Implementación: `docs/rediseno/IMPLEMENTACION.md`.
 > El nuevo home resuelve varios puntos de esta lista (marcados con 🎨). Se cierran cuando el rediseño llegue a `main`.
 > Lighthouse móvil en local: 99–100 performance, 100 accesibilidad, buenas prácticas y SEO.
 
