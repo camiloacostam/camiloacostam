@@ -56,7 +56,7 @@ Anclas de la home (en español también en /en/): `#inicio`, `#servicios`, `#pro
 
 ## Identidad visual
 
-- Rediseño (home): secciones alternas crema `#F7F1E8` y mar `#0A2342`, acento aqua `#2DD4BF`, azul Mediterráneo `#1D5FAE`. Tokens en `src/styles/home.css`; brief y referencias en `docs/rediseno/`.
+- Rediseño (home): secciones alternas crema `#F7F1E8` y mar `#0A2342`, acento aqua `#2DD4BF`, azul Mediterráneo `#1D5FAE`. Tokens en `src/styles/home.css`; brief y referencias en `docs/rediseno/`. Cómo quedó construido: `docs/rediseno/IMPLEMENTACION.md`.
 - Tipografía: Inter Tight en el home; Dancing Script solo para la firma y acentos. Las páginas clásicas aún usan Inter y el azul `#2563EB` con toggle claro/oscuro.
 - Todos los CTA de agendar usan `data-calendly` (abre el popup) y `data-track` (eventos de analítica).
 
@@ -72,6 +72,7 @@ Anclas de la home (en español también en /en/): `#inicio`, `#servicios`, `#pro
 - Los enlaces internos deben usar barra final (`/proyectos/`) para coincidir con las canonical y evitar redirecciones.
 - Las cifras de prueba social (proyectos, clientes, países, años) deben ser reales y respaldables.
 - Antes de publicar: `pnpm build` sin errores y revisar móvil (375px), español e inglés.
+- Commits y PRs sin ningún tipo de firmado: sin `Co-Authored-By`, sin atribución y sin firma GPG.
 
 ## Pendientes
 
