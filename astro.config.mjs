@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 import { rename, rm } from 'node:fs/promises';
 
 // Astro genera /en/404/index.html, pero Cloudflare Pages busca /en/404.html
@@ -22,6 +23,7 @@ export default defineConfig({
     sitemap({ filter: (page) => !/\/404\/?$/.test(new URL(page).pathname) }),
     enNotFound,
   ],
+  vite: { plugins: [tailwindcss()] },
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
