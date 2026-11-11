@@ -10,7 +10,8 @@ Lo pendiente vive en [`TODO.md`](../../TODO.md); el contexto del negocio, en [`C
 | | |
 |---|---|
 | Rama | `redesign/funnel` (sin merge a `main`) |
-| Páginas | `/` y `/en/` con el diseño nuevo. `/proyectos/`, `/blog/` y las 404 siguen con el diseño anterior. |
+| Páginas | Todo el sitio (`/`, `/proyectos/`, `/blog/`, posts y 404, en es y en) con el diseño final del canvas de Claude Design. |
+| Estilos | **Tailwind v4** (`@tailwindcss/vite`). Tokens de la marca en `src/styles/app.css`. Ver "Estilos". |
 | Build | `pnpm build` sin errores |
 | Lighthouse móvil (preview local) | Performance 99–100 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100 · LCP ≈ 1,2 s · CLS ≈ 0,002 |
 | Contenido | Textos completos en es y en. Cifras, capturas, testimonio y algunos datos siguen como `[corchetes]` (ver "Contenido pendiente"). |
@@ -38,14 +39,31 @@ src/
     Icon.astro        # íconos SVG compartidos
   data/home.ts        # TODOS los textos del home (es/en), enlaces y cifras
   data/lead.ts        # opciones del formulario (need, niche, timeline); lo usa también el backend
-  styles/home.css     # tokens de color, utilidades (glass, fill-btn, reveal...) y reduced motion
+  styles/app.css      # Tailwind v4: tokens de la marca (@theme), utilidades propias y reduced motion
+  components/site/    # SiteNav y SiteFooter de las páginas internas (proyectos, blog, 404)
+  components/projects/ # galería de proyectos
+  components/blog/    # índice del blog, post, CTA y 404
+  data/site.ts        # textos del nav y footer de páginas internas (es/en)
+  data/projects-page.ts, data/blog-page.ts  # textos de /proyectos/ y /blog/ (es/en)
   scripts/home.ts     # interacciones (JS vanilla, sin dependencias)
   assets/home/        # camilo-cutout.webp (hero) y camilo.webp (avatares), optimizadas con astro:assets
   layouts/Layout.astro  # prop variant="funnel": fuentes nuevas, sin Header/Footer clásicos
 functions/api/contact.ts  # endpoint del formulario (Cloudflare Pages Function)
 ```
 
-`Layout.astro` con `variant="classic"` (por defecto) sigue sirviendo a las páginas viejas sin cambios, y el CSS del home no se carga en ellas.
+`Layout.astro` es único: ya no hay variante clásica, ni Header/Footer viejos, ni `global.css`, ni toggle claro/oscuro.
+
+---
+
+## Estilos (Tailwind v4)
+
+- Todo el estilo va en clases de Tailwind en el markup. Los tokens viven en `@theme` dentro de `src/styles/app.css`.
+- **La paleta por defecto de Tailwind está desactivada.** Solo existen los colores de la marca: `mar`, `mar-raised`, `mar-line`, `crema`, `crema-raised`, `line`, `ink-muted`, `ink-muted-dark`, `aqua`, `aqua-light`, `aqua-soft`, `mediterraneo`, `cielo`, `cielo-soft`, `disponible`, `arena`, `error-light`, `white` y `black`.
+- Breakpoints: `max-sm:` (< 640 px) y `max-lg:` (< 960 px, porque `lg` = 60rem), igual que el diseño.
+- Utilidades propias (`@utility`): `wrap`, `script`, `eyebrow`, `h-section`, `glass`, `glass-light`, `btn`, `pill`, `fill-btn`, `circle-btn`, `link-u`, `magnet`, `pulse-dot`, `blob`, `reveal`, `scale-in`, `breathe`, `cta-label` e `is-glowing`.
+- Reglas: no se ponen hex ni `var()` dentro de `class`; para clases condicionales se usa `class:list` (`class={[...]}` une con comas y rompe las clases). Las animaciones del hero y sus keyframes están en `@theme` (`animate-phone`, `animate-callin`…).
+- Un `<style>` de componente solo se usa para lo que no cabe en una clase. Debe llevar `@reference "../../styles/app.css";`. Ejemplos: la prosa del post y los keyframes de la galería.
+- No se debe volver a importar CSS global sin capa: le gana a las utilidades de Tailwind, que viven en `@layer`.
 
 ---
 

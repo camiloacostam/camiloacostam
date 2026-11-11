@@ -3,7 +3,7 @@
 Pendientes del sitio. Prioridad: 🔴 bloquea el lanzamiento · 🟠 importante · 🟡 pulido.
 Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octubre de 2026.
 
-> **Rediseño implementado** en la rama `redesign/funnel`, subida a GitHub y pendiente de revisión y merge.
+> **Rediseño implementado en todo el sitio con Tailwind v4** en la rama `redesign/funnel` (home, proyectos, blog, 404). Pendiente: revisión visual a 375 px y 1440 px, push y merge.
 > Brief: `docs/rediseno/BRIEF-CLAUDE-CODE.md` · Implementación: `docs/rediseno/IMPLEMENTACION.md`.
 > El nuevo home resuelve varios puntos de esta lista (marcados con 🎨). Se cierran cuando el rediseño llegue a `main`.
 > Lighthouse móvil en local: 99–100 performance, 100 accesibilidad, buenas prácticas y SEO.
@@ -41,8 +41,8 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 ## 🔴 Bloqueantes
 
 ### Portafolio
-- [ ] Quitar Nathalia Acosta y Maura Tatis de `src/data/projects.ts` (siguen en `/proyectos/`; el nuevo home ya no las usa 🎨).
-- [ ] Agregar Prometálica y Atelier a `src/data/projects.ts`, con textos en es y en.
+- [x] Quitar Nathalia Acosta y Maura Tatis de `src/data/projects.ts`.
+- [x] Agregar Prometálica y Atelier a `src/data/projects.ts`, con textos en es y en (datos reales aún en `[corchetes]`).
 - [ ] Capturas reales en lugar de los placeholders.
 - [ ] Páginas de caso de estudio `/proyectos/[slug]/`: cliente, problema, estrategia, solución, automatizaciones, resultado con métricas, testimonio.
 - [ ] Revisar los filtros de `/proyectos/` según las categorías reales.
