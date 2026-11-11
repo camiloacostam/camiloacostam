@@ -204,3 +204,14 @@ Lo que sigue en `[corchetes]` o depende de una decisión (detalle en `TODO.md`):
 2. Reemplazar los placeholders con los datos reales.
 3. Conectar la analítica y verificar los eventos.
 4. Revisar la vista previa de Cloudflare Pages de la rama y hacer merge a `main`.
+
+---
+
+## /diagnostico/ (landing de las bios)
+
+- Página solo en español (`alternates={false}` en `Layout` para no anunciar un `/en/` que no existe). Textos en `src/data/diagnostico.ts`; script en `src/scripts/diagnostico.ts`.
+- Un solo objetivo: agendar. Header mínimo (logo + "Inicio"), sin precios.
+- Calendly **embebido** (`hello-camiloacosta/30min`, colores de la marca por parámetros). El script de Calendly se descarga solo cuando el bloque está a 600 px de la pantalla; la altura está reservada (720 px, 1000 px en móvil) para no mover la página.
+- Botón fijo en móvil que se oculta cuando hay otro CTA o el calendario a la vista.
+- Eventos: `schedule_click` y `whatsapp_click` con `place` = `hero`, `agenda`, `cierre` o `sticky`; `agendado` cuando Calendly confirma la cita. La analítica vive en `src/scripts/track.ts` (compartida con el home).
+- Lighthouse móvil (preview local): Performance 100 · Accesibilidad 95 · Buenas prácticas 100 · SEO 100. El 95 viene de contraste medido a mitad de la animación de entrada de bloques bajo el pliegue; los pares reales de colores pasan AA (mínimo 5,67:1).

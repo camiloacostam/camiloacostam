@@ -1,0 +1,201 @@
+---
+// /diagnostico/: landing de las bios. Un solo objetivo: agendar la llamada. Sin menú completo ni precios.
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
+import Icon from '../components/home/Icon.astro';
+import { diagnostico as c } from '../data/diagnostico';
+import { links } from '../data/home';
+import { projects, projectText } from '../data/projects';
+import cutout from '../assets/home/camilo-cutout.webp';
+import avatar from '../assets/home/camilo.webp';
+
+const cases = projects.map((p) => ({ ...p, text: projectText(p, 'es') }));
+const ctaClass = 'pill fill-btn inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full px-7 text-base font-semibold whitespace-nowrap no-underline max-sm:w-full';
+---
+<Layout title={c.meta.title} description={c.meta.description} lang="es" alternates={false}>
+  <header class="fixed inset-x-0 top-4 z-40 px-4">
+    <div class="glass mx-auto flex h-16 max-w-[1120px] items-center justify-between gap-4 rounded-full pr-2.5 pl-3 text-crema">
+      <a href="/" class="flex items-center gap-2.5 no-underline">
+        <span class="inline-flex size-10 items-center justify-center rounded-full bg-mar font-script text-xl font-bold text-aqua" aria-hidden="true">CA</span>
+        <span class="text-base font-semibold">Camilo Acosta</span>
+      </a>
+      <a href="/" class="inline-flex min-h-11 items-center px-4 text-sm font-medium no-underline opacity-80 transition-opacity hover:opacity-100">{c.nav.home}</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="relative overflow-hidden bg-mar text-crema" data-nav="dark">
+      <div class="blob top-[-120px] left-[-160px] size-[420px] bg-mediterraneo" aria-hidden="true"></div>
+      <div class="blob top-[-140px] right-[-140px] size-[380px] bg-aqua opacity-35 [animation-delay:-6s]" aria-hidden="true"></div>
+
+      <div class="wrap relative grid grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-end gap-12 pt-40 max-lg:grid-cols-1 max-lg:pt-32 max-sm:pt-28">
+        <div class="pb-24 max-lg:pb-14">
+          <p class="flex items-center gap-2.5 text-[13px] tracking-[.08em] text-ink-muted-dark uppercase"><span class="pulse-dot" aria-hidden="true"></span>{c.hero.eyebrow}</p>
+          <h1 class="mt-5 text-[64px] leading-[66px] tracking-[-0.04em] text-balance max-lg:text-[52px] max-lg:leading-[56px] max-sm:text-[38px] max-sm:leading-[42px]">
+            {c.hero.titleStart} <span class="script text-[1.15em] text-aqua">{c.hero.titleScript}</span>
+          </h1>
+          <p class="mt-6 max-w-[520px] text-xl leading-[30px] text-ink-muted-dark max-sm:text-[17px] max-sm:leading-[26px]">{c.hero.subtitle}</p>
+
+          <div class="mt-9 flex flex-wrap items-center gap-4 max-sm:mt-7" data-hide-sticky>
+            <a href="#agenda" class:list={[ctaClass, 'breathe bg-aqua text-mar']} data-track="schedule_click" data-track-place="hero">
+              {c.cta}<Icon name="arrow-right" />
+            </a>
+          </div>
+
+          <div class="mt-10 flex items-center gap-3 lg:hidden">
+            <Image src={avatar} alt="" width={88} height={88} class="size-11 rounded-full border border-white/25 bg-cielo object-cover object-[50%_12%]" />
+            <p class="text-[13px] leading-[18px] text-ink-muted-dark"><span class="script text-lg text-crema">{c.hero.signature}</span><br />{c.hero.role}</p>
+          </div>
+        </div>
+
+        <div class="relative h-[560px] max-lg:hidden">
+          <div class="absolute top-6 left-1/2 -ml-[210px] size-[420px] rounded-full bg-radial from-cielo/55 from-0% via-mediterraneo/35 via-45% to-mar/0 to-72%" aria-hidden="true"></div>
+          <div class="absolute top-[60px] left-1/2 -ml-[175px] size-[350px] rounded-full border border-aqua-light/35" aria-hidden="true"></div>
+          <Image
+            src={cutout}
+            alt={c.hero.photoAlt}
+            widths={[380, 649]}
+            sizes="380px"
+            class="absolute bottom-0 left-1/2 -ml-[190px] h-auto w-[380px] drop-shadow-[0_30px_40px_rgb(0_0_0/.35)]"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="absolute inset-x-0 bottom-0 h-[110px] bg-linear-to-t from-mar from-10% to-mar/0" aria-hidden="true"></div>
+          <p class="absolute bottom-6 left-0 text-sm leading-5 text-ink-muted-dark"><span class="script text-2xl text-crema">{c.hero.signature}</span><br />{c.hero.role}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Qué te llevas -->
+    <section class="py-32 max-sm:py-20" data-nav="light">
+      <div class="wrap">
+        <p class="eyebrow">{c.takeaways.eyebrow}</p>
+        <h2 class="reveal mt-4 text-[56px] leading-[60px] tracking-[-0.035em] max-sm:text-[36px] max-sm:leading-[40px]">
+          {c.takeaways.title} <span class="script text-mediterraneo">{c.takeaways.titleScript}</span>
+        </h2>
+        <ol class="reveal mt-14 grid list-none grid-cols-3 gap-10 max-lg:grid-cols-1 max-lg:gap-0 max-sm:mt-10">
+          {c.takeaways.items.map((item, i) => (
+            <li class="border-t border-line pt-5 max-lg:py-5">
+              <span class="text-[13px] text-ink-muted tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+              <p class="mt-2 text-lg leading-[27px] max-sm:text-[17px] max-sm:leading-[26px]">{item}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="reveal mt-16 max-w-[760px] text-xl leading-[30px] text-ink-muted max-sm:mt-10 max-sm:text-[17px] max-sm:leading-[26px]">{c.audience.text}</p>
+      </div>
+    </section>
+
+    <!-- Agenda -->
+    <section id="agenda" class="scroll-mt-24 pb-32 max-sm:pb-20" data-nav="light" data-hide-sticky>
+      <div class="wrap">
+        <div class="rounded-[32px] bg-mar p-12 text-crema max-lg:p-8 max-sm:-mx-1 max-sm:rounded-3xl max-sm:p-4 max-sm:pt-8">
+          <div class="max-sm:px-2">
+            <p class="text-[13px] tracking-[.08em] text-aqua-light uppercase">{c.schedule.eyebrow}</p>
+            <h2 class="mt-3 text-[48px] leading-[52px] tracking-[-0.04em] max-sm:text-[32px] max-sm:leading-[36px]">
+              {c.schedule.title} <span class="script text-aqua">{c.schedule.titleScript}</span>
+            </h2>
+            <p class="mt-3 text-base text-ink-muted-dark">{c.schedule.eventName}</p>
+          </div>
+
+          <!-- Calendly embebido: se carga al acercarse al bloque. La altura reservada evita saltos de layout -->
+          <div class="relative mt-8 h-[720px] overflow-hidden rounded-3xl bg-crema-raised max-sm:mt-6 max-sm:h-[1000px] max-sm:rounded-2xl">
+            <div class="absolute inset-0" data-calendly-inline data-url={c.calendlyEmbed}></div>
+            <p class="absolute inset-0 flex items-center justify-center text-ink-muted" data-calendly-loading aria-live="polite">{c.schedule.loading}</p>
+            <noscript>
+              <a href={links.calendly} class="absolute inset-0 flex items-center justify-center bg-crema-raised font-semibold text-mediterraneo underline">{c.schedule.noscript}</a>
+            </noscript>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center justify-between gap-4 max-sm:mt-6 max-sm:px-2 max-sm:pb-2">
+            <p class="text-base text-ink-muted-dark">{c.schedule.or}</p>
+            <a href={c.whatsappHref} target="_blank" rel="noopener noreferrer" class:list={[ctaClass, 'border border-mar-line text-crema']} data-track="whatsapp_click" data-track-place="agenda">
+              <Icon name="whatsapp" />{c.schedule.whatsapp}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prueba social -->
+    <section class="pb-32 max-sm:pb-20" data-nav="light">
+      <div class="wrap">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">{c.proof.eyebrow}</p>
+            <h2 class="reveal mt-4 text-[48px] leading-[52px] tracking-[-0.04em] max-sm:text-[32px] max-sm:leading-[36px]">{c.proof.title}</h2>
+          </div>
+          <a href="/proyectos/" class="link-u text-[15px] font-semibold text-mediterraneo">{c.proof.more}</a>
+        </div>
+
+        <div class="mt-10 grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+          {cases.map((p) => (
+            <article class="reveal rounded-[28px] bg-crema-raised p-3 transition-shadow duration-300 hover:shadow-lift">
+              <div
+                class="flex h-44 items-end rounded-[20px] p-5 max-sm:h-36"
+                class:list={[p.tone === 'mar' ? 'bg-linear-160 from-mediterraneo to-mar text-crema' : 'bg-linear-160 from-cielo to-mediterraneo text-mar']}
+                aria-hidden="true"
+              >
+                <span class="script text-4xl">{p.title}</span>
+              </div>
+              <div class="px-3 pt-5 pb-3">
+                <p class="text-[13px] tracking-[.04em] text-ink-muted uppercase">{p.text.kind} · {p.text.category}</p>
+                <h3 class="mt-1.5 text-2xl leading-8 tracking-[-0.02em]">{p.title}</h3>
+                <p class="mt-2 text-[15px] leading-[23px] text-ink-muted">{p.text.shortDesc}</p>
+                <figure class="mt-5 border-t border-line pt-4">
+                  <blockquote class="text-base leading-[25px]">“{c.proof.testimonial}”</blockquote>
+                  <figcaption class="mt-1.5 text-[13px] text-ink-muted">{c.proof.testimonialAuthor}</figcaption>
+                </figure>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Preguntas -->
+    <section class="pb-32 max-sm:pb-20" data-nav="light">
+      <div class="wrap grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-x-16 max-lg:grid-cols-1">
+        <h2 class="reveal text-[48px] leading-[52px] tracking-[-0.04em] max-sm:text-[32px] max-sm:leading-[36px]">{c.faq.title}</h2>
+        <div class="border-b border-line max-lg:mt-8">
+          {c.faq.items.map(([q, a], i) => (
+            <details class="group/faq border-t border-line" name="faq" open={i === 0}>
+              <summary class="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-xl leading-7 font-medium focus-visible:rounded-xl max-sm:min-h-16 max-sm:py-4 max-sm:text-[17px] max-sm:leading-6 [&::-webkit-details-marker]:hidden">
+                {q}<span class="flex size-10 shrink-0 items-center justify-center rounded-full border border-line transition-all duration-[350ms] group-open/faq:rotate-45 group-open/faq:border-mediterraneo group-open/faq:bg-mediterraneo group-open/faq:text-white max-sm:size-[34px]"><Icon name="plus" size={16} /></span>
+              </summary>
+              <p class="pr-12 pb-6 text-base leading-[26px] text-ink-muted max-sm:pr-9 max-sm:text-[15px] max-sm:leading-[23px]">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Cierre -->
+    <section class="relative overflow-hidden rounded-t-[48px] bg-mar pt-32 text-crema max-sm:rounded-t-[32px] max-sm:pt-20" data-nav="dark">
+      <div class="blob top-[-100px] right-[-120px] size-[360px] bg-mediterraneo" aria-hidden="true"></div>
+      <div class="wrap relative text-center">
+        <h2 class="reveal mx-auto max-w-[820px] text-[64px] leading-[66px] tracking-[-0.04em] text-balance max-sm:text-[38px] max-sm:leading-[42px]">
+          {c.closing.title} <span class="script text-[1.1em] text-aqua">{c.closing.titleScript}</span>
+        </h2>
+        <p class="mx-auto mt-5 max-w-[520px] text-lg leading-7 text-ink-muted-dark max-sm:text-base">{c.closing.text}</p>
+        <div class="mt-9 flex flex-wrap justify-center gap-3" data-hide-sticky>
+          <a href="#agenda" class:list={[ctaClass, 'bg-aqua text-mar']} data-track="schedule_click" data-track-place="cierre">{c.cta}<Icon name="arrow-right" /></a>
+          <a href={c.whatsappHref} target="_blank" rel="noopener noreferrer" class:list={[ctaClass, 'border border-mar-line text-crema']} data-track="whatsapp_click" data-track-place="cierre"><Icon name="whatsapp" />{c.schedule.whatsapp}</a>
+        </div>
+      </div>
+      <div class="mt-28 max-sm:mt-20">
+        <SiteFooter tone="dark" />
+      </div>
+    </section>
+  </main>
+
+  <!-- Botón fijo en móvil: se esconde cuando hay otro CTA o el calendario en pantalla -->
+  <div class="fixed inset-x-0 bottom-0 z-30 px-4 pb-[max(16px,env(safe-area-inset-bottom))] transition-[translate,opacity] duration-300 ease-brand data-[hidden]:pointer-events-none data-[hidden]:translate-y-full data-[hidden]:opacity-0 lg:hidden" data-sticky-cta data-hidden inert>
+    <a href="#agenda" class:list={[ctaClass, 'w-full bg-mediterraneo text-white shadow-float']} data-track="schedule_click" data-track-place="sticky">{c.cta}</a>
+  </div>
+</Layout>
+
+<script>
+  import '../scripts/diagnostico';
+</script>

@@ -1,4 +1,5 @@
 // Interacciones del home rediseñado. JS vanilla, sin dependencias.
+import { track, initTracking } from './track';
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer  = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -421,27 +422,6 @@ function initLeadForm() {
 
     // Abre Calendly prellenado; el botón queda por si el usuario lo cierra
     setTimeout(() => calBtn.click(), 600);
-  });
-}
-
-/* ── Analítica: se conecta a la herramienta que esté cargada ───────────────── */
-type Props = Record<string, string>;
-function track(event: string, props: Props = {}) {
-  const w = window as any;
-  w.plausible?.(event, { props });
-  w.umami?.track?.(event, props);
-  w.gtag?.('event', event, props);
-}
-
-function initTracking() {
-  document.addEventListener('click', (e) => {
-    const el = (e.target as Element).closest<HTMLElement>('[data-track]');
-    if (el) track(el.dataset.track!, { place: el.dataset.trackPlace || '' });
-  });
-
-  // Calendly avisa por postMessage cuando alguien agenda
-  addEventListener('message', (e) => {
-    if (e.origin === 'https://calendly.com' && e.data?.event === 'calendly.event_scheduled') track('agendado');
   });
 }
 
