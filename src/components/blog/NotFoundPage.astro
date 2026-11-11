@@ -1,0 +1,21 @@
+---
+import { blogPage } from '../../data/blog-page';
+import { links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const copy = blogPage[lang].notFound;
+const prefix = lang === 'en' ? '/en' : '';
+---
+<main class="flex min-h-[80vh] items-center pt-36 pb-24">
+  <div class="wrap">
+    <p class="script m-0 text-[44px] text-mediterraneo">{copy.code}</p>
+    <h1 class="mt-2 mb-0 max-w-[900px] text-[96px] leading-[92px] font-medium tracking-[-0.05em] text-balance max-lg:text-[64px] max-lg:leading-16 max-sm:text-[44px] max-sm:leading-12">{copy.title}</h1>
+    <p class="mt-6 mb-0 max-w-[560px] text-[17px] leading-[27px] text-ink-muted">{copy.desc}</p>
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <a href={`${prefix}/`} class="btn pill bg-mar text-crema">{copy.home}</a>
+      <a href={`${prefix}/proyectos/`} class="btn pill border border-line text-mar">{copy.projects}</a>
+      <a href={links.calendly} data-calendly data-track="agendar" data-track-place="blog" class="link-u inline-flex min-h-11 items-center text-[15px] font-semibold text-mediterraneo">{copy.cta}</a>
+    </div>
+  </div>
+</main>

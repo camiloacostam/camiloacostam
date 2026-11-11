@@ -1,10 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import NotFound from '../../components/sections/NotFound.astro';
-import { t } from '../../i18n/utils';
+import SiteNav from '../../components/site/SiteNav.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+import NotFoundPage from '../../components/blog/NotFoundPage.astro';
+import { blogPage } from '../../data/blog-page';
 
-const tr = t('en');
+const copy = blogPage.en.notFound;
 ---
-<Layout title={`${tr.notFound.title} — Camilo Acosta`} description={tr.notFound.desc} lang="en" noIndex>
-  <NotFound />
+<Layout title={`${copy.title} — Camilo Acosta`} description={copy.desc} lang="en" variant="funnel" noIndex>
+  <SiteNav tone="light" />
+  <NotFoundPage />
+  <SiteFooter tone="light" />
 </Layout>

@@ -9,6 +9,8 @@ const blog = defineCollection({
     date: z.coerce.date(),
     badge: z.enum(['IA', 'Marketing', 'Desarrollo']),
     cover: z.string().optional(),
+    category: z.string().optional(),
+    readingTime: z.number().int().positive().optional(),
   }),
 });
 

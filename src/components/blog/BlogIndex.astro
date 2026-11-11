@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+import { blogPage } from '../../data/blog-page';
+import { links } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+import BlogCta from './BlogCta.astro';
+
+const lang = getLang(Astro.currentLocale);
+const copy = blogPage[lang].index;
+const prefix = lang === 'en' ? '/en' : '';
+
+const posts = (await getCollection('blog').catch(() => [])).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const items = posts.map((post, i) => ({
+  href: `${prefix}/blog/${post.id.replace(/\.mdx?$/, '')}/`,
+  title: post.data.title,
+  excerpt: post.data.excerpt,
+  cat: post.data.category ?? post.data.badge,
+  read: post.data.readingTime ? `${post.data.readingTime} ${copy.readUnit} ${copy.readSuffix}` : '',
+  cover: post.data.cover,
+  date: post.data.date.toLocaleDateString(lang === 'en' ? 'en-US' : 'es-CO', { day: 'numeric', month: 'short', year: 'numeric' }),
+  tone: i % 4,
+}));
+const cats = [...new Set(items.map((p) => p.cat))];
+const featured = items[0];
+const countLabel = (n: number) => `${n} ${n === 1 ? copy.countOne : copy.countMany}`;
+
+const chip = 'min-h-11 cursor-pointer rounded-full border border-line bg-transparent px-4 text-sm font-medium text-mar transition-colors duration-300 hover:border-mar aria-pressed:border-mar aria-pressed:bg-mar aria-pressed:text-crema';
+const tones = [
+  'bg-linear-to-br from-cielo to-mediterraneo text-mar',
+  'bg-linear-to-br from-aqua to-mediterraneo text-mar',
+  'bg-linear-to-br from-mar to-mediterraneo text-cielo-soft',
+  'bg-linear-to-br from-cielo-soft to-cielo text-mediterraneo',
+];
+---
+<main id="blog-index" data-count-one={copy.countOne} data-count-many={copy.countMany}>
+  <section class="pt-44 max-sm:pt-36">
+    <div class="wrap grid grid-cols-[minmax(0,1fr)_340px] items-end gap-12 max-lg:grid-cols-1">
+      <div>
+        <p class="eyebrow m-0 tracking-[.14em]">{copy.eyebrow}</p>
+        <h1 class="mt-4 mb-0 text-[140px] leading-32 font-medium tracking-[-0.055em] max-lg:text-[88px] max-lg:leading-[84px] max-sm:text-[56px] max-sm:leading-14">
+          {copy.titleLead} <span class="script text-[110px] text-mediterraneo max-lg:text-[72px] max-sm:text-[44px]">{copy.titleScript}</span>
+        </h1>
+      </div>
+      <p class="m-0 pb-4 text-[17px] leading-[27px] text-ink-muted">{copy.intro}</p>
+    </div>
+
+    {cats.length > 0 && (
+      <div class="wrap mt-12 flex flex-wrap gap-2" role="group" aria-label={copy.filterLabel} id="blog-filters">
+        <button type="button" class={chip} aria-pressed="true" data-cat="">{copy.filterAll}</button>
+        {cats.map((c) => <button type="button" class={chip} aria-pressed="false" data-cat={c}>{c}</button>)}
+      </div>
+    )}
+  </section>
+
+  {featured ? (
+    <section class="pt-10">
+      <div class="wrap">
+        <a
+          href={featured.href}
+          data-post
+          data-cat={featured.cat}
+          class="reveal group grid min-h-[460px] grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] overflow-hidden rounded-card bg-mar text-crema no-underline max-lg:grid-cols-1"
+        >
+          <div class="relative min-h-[300px] overflow-hidden">
+            {featured.cover ? (
+              <img src={featured.cover} alt="" class="absolute inset-0 size-full object-cover transition-transform duration-[900ms] ease-brand motion-safe:group-hover:scale-[1.03]" loading="eager" />
+            ) : (
+              <div class="absolute inset-0 bg-linear-to-br from-mediterraneo to-mar transition-transform duration-[900ms] ease-brand motion-safe:group-hover:scale-[1.03]"></div>
+            )}
+            <span class="script absolute bottom-8 left-8 text-[44px] text-crema">{copy.featured}</span>
+          </div>
+          <div class="flex flex-col p-11 max-sm:p-6">
+            <p class="eyebrow m-0 text-xs tracking-[.14em] text-aqua-light">{featured.cat}{featured.read && ` · ${featured.read}`}</p>
+            <h2 class="mt-3.5 mb-0 text-[40px] leading-11 tracking-[-0.035em] max-sm:text-[28px] max-sm:leading-8">{featured.title}</h2>
+            <p class="mt-4 mb-0 text-base text-ink-muted-dark">{featured.excerpt}</p>
+            <div class="mt-auto flex items-center justify-between gap-4 pt-7">
+              <span class="text-[13px] text-ink-muted-dark">{copy.readPost} · {featured.date}</span>
+              <span class="inline-flex size-13 items-center justify-center rounded-full bg-crema text-mar" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="pt-30 max-sm:pt-20">
+      <div class="wrap">
+        <div class="flex items-end justify-between gap-4">
+          <h2 class="reveal m-0 text-5xl leading-[52px] tracking-[-0.04em] max-sm:text-[32px] max-sm:leading-9">{copy.allNotes}</h2>
+          <span class="text-sm text-ink-muted" id="blog-count" aria-live="polite">{countLabel(items.length)}</span>
+        </div>
+        <div id="blog-posts" class="group/list relative mt-8 border-b border-line">
+          {items.map((p, i) => (
+            <a
+              href={p.href}
+              data-post
+              data-cat={p.cat}
+              data-idx={i}
+              class="grid grid-cols-[70px_minmax(0,1fr)_170px_110px] items-center gap-5 border-t border-line py-7.5 text-mar no-underline transition-[opacity,padding] duration-[450ms] ease-brand hover:pl-4 [&[hidden]]:hidden motion-safe:group-hover/list:opacity-40 motion-safe:group-hover/list:hover:opacity-100 max-lg:grid-cols-[48px_minmax(0,1fr)] max-sm:grid-cols-1 max-sm:gap-2 min-h-11"
+            >
+              <span class="text-[13px] text-ink-muted tabular-nums max-sm:hidden" data-no>{String(i + 1).padStart(2, '0')}</span>
+              <span>
+                <span class="block text-[30px] leading-9 font-medium tracking-[-0.03em] max-sm:text-2xl max-sm:leading-[30px]">{p.title}</span>
+                <span class="mt-1.5 block text-[15px] leading-[23px] text-ink-muted">{p.excerpt}</span>
+              </span>
+              <span class="justify-self-start rounded-full bg-cielo-soft px-3 py-1 text-[13px] font-medium text-mediterraneo max-lg:hidden">{p.cat}</span>
+              <span class="text-right text-[13px] text-ink-muted max-lg:hidden">{p.read}</span>
+            </a>
+          ))}
+          <div
+            id="blog-preview"
+            aria-hidden="true"
+            class="pointer-events-none absolute z-5 hidden h-[200px] w-[300px] -mt-[100px] -ml-[150px] items-center justify-center rounded-2xl shadow-float transition-[left,top] duration-200 ease-brand"
+          >
+            {items.map((p, i) => (
+              <div data-tile={i} class:list={['absolute inset-0 items-center justify-center overflow-hidden rounded-2xl [&:not([hidden])]:flex', tones[p.tone]]} hidden>
+                {p.cover
+                  ? <img src={p.cover} alt="" class="absolute inset-0 size-full object-cover" />
+                  : <span class="script text-3xl">{p.cat}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="pt-10">
+      <div class="wrap">
+        <div class="reveal flex min-h-[360px] flex-col justify-between gap-10 rounded-card bg-mar p-11 text-crema max-sm:p-6">
+          <span class="script text-[44px] text-aqua">{copy.emptyLabel}</span>
+          <div>
+            <h2 class="m-0 max-w-[720px] text-[40px] leading-11 tracking-[-0.035em] max-sm:text-[28px] max-sm:leading-8">{copy.emptyTitle}</h2>
+            <p class="mt-4 mb-0 max-w-[560px] text-base text-ink-muted-dark">{copy.emptyDesc}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="pt-35 pb-24 max-sm:pt-20">
+    <div class="wrap">
+      <BlogCta copy={blogPage[lang].cta} />
+    </div>
+  </section>
+</main>
+
+<script>
+  const root = document.getElementById('blog-index');
+  if (root) {
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('#blog-filters button')];
+    const posts = [...root.querySelectorAll<HTMLAnchorElement>('[data-post]')];
+    const rows = [...root.querySelectorAll<HTMLAnchorElement>('#blog-posts [data-idx]')];
+    const count = root.querySelector<HTMLElement>('#blog-count');
+    const list = root.querySelector<HTMLElement>('#blog-posts');
+    const preview = root.querySelector<HTMLElement>('#blog-preview');
+    const tiles = [...root.querySelectorAll<HTMLElement>('[data-tile]')];
+
+    const apply = (cat: string) => {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.cat ?? '') === cat)));
+      posts.forEach((p) => { p.hidden = cat !== '' && p.dataset.cat !== cat; });
+      let n = 0;
+      rows.forEach((r) => {
+        if (r.hidden) return;
+        n += 1;
+        const no = r.querySelector('[data-no]');
+        if (no) no.textContent = String(n).padStart(2, '0');
+      });
+      if (count) count.textContent = `${n} ${n === 1 ? root.dataset.countOne : root.dataset.countMany}`;
+      hide();
+    };
+    buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.cat ?? '')));
+
+    // Hover preview that follows the cursor: fine pointers only, no motion when reduced.
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const hide = () => { preview?.classList.add('hidden'); preview?.classList.remove('flex'); };
+    if (fine && list && preview) {
+      rows.forEach((r) => r.addEventListener('mouseenter', () => {
+        tiles.forEach((t) => { t.hidden = t.dataset.tile !== r.dataset.idx; });
+        preview.classList.remove('hidden');
+        preview.classList.add('flex');
+      }));
+      list.addEventListener('mousemove', (e) => {
+        const rect = list.getBoundingClientRect();
+        if (reduce.matches) preview.style.transition = 'none';
+        preview.style.left = `${e.clientX - rect.left}px`;
+        preview.style.top = `${e.clientY - rect.top}px`;
+      });
+      list.addEventListener('mouseleave', hide);
+    }
+  }
+</script>
