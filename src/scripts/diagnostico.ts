@@ -70,6 +70,29 @@ function initStickyCta() {
   blockers.forEach((el) => io.observe(el));
 }
 
+/* ── Header: tono según la sección que tiene debajo (data-nav="dark|light") ── */
+function initHeaderTone() {
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-nav]')];
+  if (!header || !sections.length) return;
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const probe = 48; // altura aproximada del centro de la píldora
+    const current = sections.find((s) => {
+      const r = s.getBoundingClientRect();
+      return r.top <= probe && r.bottom > probe;
+    });
+    header.dataset.tone = current?.dataset.nav === 'light' ? 'light' : 'dark';
+  };
+  addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+}
+
+initHeaderTone();
 initCalendly();
 initStickyCta();
 initTracking();
