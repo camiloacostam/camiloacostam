@@ -14,34 +14,40 @@ const socials = [
 ].filter(Boolean) as { label: string; href: string }[];
 ---
 <header
-  class="nav on-dark"
+  class="on-dark group/nav fixed inset-x-0 top-4 z-40 px-4 max-sm:top-3 max-sm:px-3"
   id="nav"
   data-cta-default={c.cta}
   data-cta-map={JSON.stringify(c.ctaBySection)}
 >
-  <div class="nav-pill glass">
-    <div class="nav-progress" aria-hidden="true"><div class="nav-progress-bar" id="nav-progress"></div></div>
+  <div class="glass group-[.on-light]/nav:glass-light relative mx-auto flex h-16 max-w-[1120px] items-center justify-between gap-4 overflow-hidden rounded-full py-0 pr-2.5 pl-3 transition-[background,border-color,box-shadow] duration-[450ms] max-sm:h-14 max-sm:pr-1.5 max-sm:pl-2">
+    <div class="pointer-events-none absolute inset-x-8 bottom-0 h-0.5 rounded-full bg-cielo/18 max-sm:inset-x-6" aria-hidden="true"><div class="h-full w-full origin-left rounded-full bg-linear-to-r from-mediterraneo to-aqua transition-transform duration-150 ease-linear [transform:scaleX(0)]" id="nav-progress"></div></div>
 
-    <a class="brand" href="#inicio">
-      <span class="brand-mark">CA</span>
-      <span class="brand-name">Camilo Acosta</span>
+    <a class="flex items-center gap-2.5 text-white no-underline transition-colors duration-[450ms] group-[.on-light]/nav:text-mar max-sm:gap-2" href="#inicio">
+      <span class="inline-flex size-10 items-center justify-center rounded-full bg-mar font-script text-xl font-bold text-aqua">CA</span>
+      <span class="text-base font-semibold tracking-[-0.01em] max-sm:text-[15px]">Camilo Acosta</span>
     </a>
 
-    <nav class="nav-links" aria-label={c.label}>
-      {c.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+    <nav class="flex gap-7 text-[15px] font-medium max-lg:hidden" aria-label={c.label}>
+      {c.links.map((l) => (
+        <a
+          class="relative px-0.5 py-2 text-crema no-underline opacity-90 transition-[opacity,color] duration-[450ms] after:absolute after:bottom-0 after:left-1/2 after:size-1 after:-translate-x-1/2 after:translate-y-1.5 after:scale-0 after:rounded-full after:bg-aqua after:transition-transform after:duration-[350ms] after:ease-brand after:content-[''] hover:text-white hover:opacity-100 hover:after:scale-100 group-[.on-light]/nav:text-mar group-[.on-light]/nav:hover:text-mar"
+          href={l.href}
+        >{l.label}</a>
+      ))}
     </nav>
 
-    <div class="nav-actions">
-      <a class="nav-lang" href={altPath} hreflang={lang === 'es' ? 'en' : 'es'} aria-label={c.langAria}>{c.langLabel}</a>
+    <div class="flex items-center gap-2">
+      <a class="p-2.5 text-[13px] font-semibold text-white no-underline opacity-85 transition-colors duration-[450ms] group-[.on-light]/nav:text-mar max-sm:hidden" href={altPath} hreflang={lang === 'es' ? 'en' : 'es'} aria-label={c.langAria}>{c.langLabel}</a>
       <a
-        class="nav-cta pill fill-btn"
+        class="pill fill-btn inline-flex min-h-11 items-center rounded-full bg-mediterraneo px-[22px] text-[15px] font-semibold whitespace-nowrap text-white no-underline max-sm:hidden"
         href={links.calendly}
         data-calendly
+        data-nav-cta
         data-track="agendar"
         data-track-place="nav"
       ><span class="cta-label" data-cta-label>{c.cta}</span></a>
       <button
-        class="menu-btn"
+        class="hidden size-11 cursor-pointer items-center justify-center rounded-full border-0 bg-mediterraneo text-white active:scale-[.97] max-lg:inline-flex"
         type="button"
         aria-label={c.openMenu}
         aria-expanded="false"
@@ -52,129 +58,25 @@ const socials = [
   </div>
 </header>
 
-<div class="mobile-menu" id="mobile-menu" hidden>
-  <div class="mobile-menu-top">
-    <span class="script mobile-menu-brand">Camilo Acosta</span>
-    <button class="mobile-menu-close" type="button" aria-label={c.closeMenu} id="menu-close"><Icon name="close" /></button>
+<div class="fixed inset-0 z-[60] flex flex-col bg-mar/82 px-6 pt-6 pb-8 text-crema backdrop-blur-[24px] backdrop-saturate-[160%]" id="mobile-menu" hidden>
+  <div class="flex h-14 items-center justify-between">
+    <span class="script text-[26px] text-aqua">Camilo Acosta</span>
+    <button class="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-transparent text-white active:scale-[.97]" type="button" aria-label={c.closeMenu} id="menu-close"><Icon name="close" /></button>
   </div>
-  <nav class="mobile-menu-links" aria-label={c.label}>
-    {c.links.map((l, i) => (
-      <a class="mobile-menu-link" href={l.href} style={`animation-delay: ${0.05 * (i + 1)}s`} data-menu-close>{l.label}</a>
+  <nav class="mt-12 flex flex-col gap-1.5" aria-label={c.label}>
+    {c.links.map((l) => (
+      <a class="text-[40px] leading-[52px] font-medium tracking-[-0.03em] text-crema no-underline" href={l.href} data-menu-link data-menu-close>{l.label}</a>
     ))}
   </nav>
-  <div class="mobile-menu-bottom">
-    <a class="btn btn--aqua" href={links.calendly} data-calendly data-track="agendar" data-track-place="menu" data-menu-close>{c.menuCta}</a>
-    <div class="mobile-menu-meta">
+  <div class="mt-auto flex flex-col gap-3">
+    <a class="btn bg-aqua text-mar" href={links.calendly} data-calendly data-track="agendar" data-track-place="menu" data-menu-close>{c.menuCta}</a>
+    <div class="flex justify-between text-[13px] text-ink-muted-dark">
       <span>
         {socials.map((s, i) => (
-          <>{i > 0 && ' · '}<a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a></>
+          <>{i > 0 && ' · '}<a class="text-inherit no-underline" href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a></>
         ))}
       </span>
-      <a href={altPath} hreflang={lang === 'es' ? 'en' : 'es'}>ES / EN</a>
+      <a class="text-inherit no-underline" href={altPath} hreflang={lang === 'es' ? 'en' : 'es'}>ES / EN</a>
     </div>
   </div>
 </div>
-
-<style>
-  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 40; padding: 0 16px; }
-
-  .nav-pill {
-    position: relative; overflow: hidden; max-width: 1120px; margin: 0 auto; height: 64px;
-    border-radius: 9999px; display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; padding: 0 10px 0 12px;
-    transition: background .45s, border-color .45s, box-shadow .45s;
-  }
-
-  .nav-progress {
-    position: absolute; left: 32px; right: 32px; bottom: 0; height: 2px;
-    border-radius: 9999px; background: rgba(159,211,242,.18); pointer-events: none;
-  }
-  .nav-progress-bar {
-    height: 100%; width: 100%; border-radius: 9999px;
-    background: linear-gradient(90deg, var(--mediterraneo), var(--aqua));
-    transform-origin: left center; transform: scaleX(0); transition: transform .15s linear;
-  }
-
-  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #FFFFFF; transition: color .45s; }
-  .brand-mark {
-    width: 40px; height: 40px; border-radius: 9999px; background: var(--mar);
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: var(--font-script); font-size: 20px; font-weight: 700; color: var(--aqua);
-  }
-  .brand-name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-
-  .nav-links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; }
-  .nav-link {
-    position: relative; color: var(--crema); text-decoration: none; padding: 8px 2px; opacity: .9;
-    transition: opacity .3s, color .45s;
-  }
-  .nav-link::after {
-    content: ''; position: absolute; left: 50%; bottom: 0; width: 4px; height: 4px; border-radius: 9999px;
-    background: var(--aqua); transform: translate(-50%, 6px) scale(0); transition: transform .35s var(--ease);
-  }
-  .nav-link:hover { opacity: 1; color: #FFFFFF; }
-  .nav-link:hover::after { transform: translate(-50%, 6px) scale(1); }
-
-  .nav-actions { display: flex; align-items: center; gap: 8px; }
-  .nav-lang { font-size: 13px; font-weight: 600; text-decoration: none; padding: 10px; opacity: .85; color: #FFFFFF; transition: color .45s; }
-
-  .nav-cta {
-    display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; border-radius: 9999px;
-    background: var(--mediterraneo); color: #FFFFFF; font-weight: 600; font-size: 15px;
-    text-decoration: none; white-space: nowrap;
-  }
-
-  .menu-btn {
-    display: none; width: 44px; height: 44px; border-radius: 9999px; border: 0;
-    background: var(--mediterraneo); color: #FFFFFF; align-items: center; justify-content: center; cursor: pointer;
-  }
-  .menu-btn:active, .mobile-menu-close:active { transform: scale(.97); }
-
-  /* Sobre fondo claro */
-  .on-light .nav-pill {
-    background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.46));
-    border-color: rgba(10,35,66,.10);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 10px 40px -14px rgba(10,35,66,.25);
-  }
-  .on-light .nav-link, .on-light .nav-link:hover, .on-light .brand, .on-light .nav-lang { color: var(--mar); }
-
-  /* Menú móvil a pantalla completa */
-  .mobile-menu {
-    position: fixed; inset: 0; z-index: 60; background: rgba(10,35,66,.82);
-    backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
-    color: var(--crema); display: flex; flex-direction: column; padding: 24px 24px 32px;
-    animation: menuin .45s var(--ease);
-  }
-  .mobile-menu[hidden] { display: none; }
-  .mobile-menu-top { display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .mobile-menu-brand { font-size: 26px; color: var(--aqua); }
-  .mobile-menu-close {
-    width: 44px; height: 44px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.3);
-    background: transparent; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-  }
-  .mobile-menu-links { margin-top: 48px; display: flex; flex-direction: column; gap: 6px; }
-  .mobile-menu-link {
-    color: var(--crema); text-decoration: none; font-size: 40px; line-height: 52px; font-weight: 500;
-    letter-spacing: -0.03em; animation: linkin .5s var(--ease) both;
-  }
-  .mobile-menu-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
-  .mobile-menu-meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-muted-dark); }
-  .mobile-menu-meta a { color: inherit; text-decoration: none; }
-
-  @keyframes menuin { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
-  @keyframes linkin { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-
-  @media (max-width: 960px) {
-    .nav-links { display: none; }
-    .menu-btn { display: inline-flex; }
-  }
-
-  @media (max-width: 640px) {
-    .nav { top: 12px; padding: 0 12px; }
-    .nav-pill { height: 56px; padding: 0 6px 0 8px; }
-    .nav-progress { left: 24px; right: 24px; }
-    .brand { gap: 8px; }
-    .brand-name { font-size: 15px; }
-    .nav-cta, .nav-lang { display: none; }
-  }
-</style>

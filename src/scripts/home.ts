@@ -2,6 +2,13 @@
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer  = matchMedia('(hover: hover) and (pointer: fine)').matches;
+const EASE = 'cubic-bezier(.2, .8, .2, 1)';
+
+// Animaciones de entrada puntuales (Web Animations API): sin keyframes en CSS y sin efecto con reduced motion
+function enter(el: Element, from: Keyframe, options: KeyframeAnimationOptions = {}) {
+  if (reduceMotion) return;
+  el.animate([from, { opacity: 1, transform: 'none' }], { duration: 300, easing: EASE, ...options });
+}
 
 /* ── Entrada al hacer scroll ───────────────────────────────────────────────── */
 // .reveal usa animation-timeline cuando existe; .breathe siempre late una vez al entrar
@@ -30,7 +37,7 @@ function initNav() {
   const ctaMap: Record<string, string> = JSON.parse(nav.dataset.ctaMap || '{}');
   const navDefault = nav.dataset.ctaDefault || '';
   const labels   = [...document.querySelectorAll<HTMLElement>('[data-cta-label]')];
-  const navCta   = nav.querySelector<HTMLElement>('.nav-cta');
+  const navCta   = nav.querySelector<HTMLElement>('[data-nav-cta]');
   const progress = document.getElementById('nav-progress');
   const sections = [...document.querySelectorAll<HTMLElement>('[data-nav]')];
   const bar      = document.getElementById('mobile-bar');
@@ -114,6 +121,12 @@ function initMobileMenu() {
     open.setAttribute('aria-expanded', String(on));
     document.body.style.overflow = on ? 'hidden' : '';
     bar?.toggleAttribute('hidden', on);
+    if (on) {
+      enter(menu, { opacity: 0, transform: 'translateY(-8px)' }, { duration: 450 });
+      menu.querySelectorAll('[data-menu-link]').forEach((a, i) =>
+        enter(a, { opacity: 0, transform: 'translateY(16px)' }, { duration: 500, delay: 50 * (i + 1), fill: 'backwards' }),
+      );
+    }
     (on ? close : open).focus();
   };
 
@@ -214,7 +227,7 @@ function initCases() {
   if (cursor && finePointer) {
     root.addEventListener('mousemove', (e) => {
       const r = root.getBoundingClientRect();
-      const over = (e.target as Element).closest('.strip.is-open:not(.strip--cta)');
+      const over = (e.target as Element).closest('[data-strip].is-open:not([data-cta])');
       root.classList.toggle('show-cursor', !!over);
       cursor.style.left = `${e.clientX - r.left}px`;
       cursor.style.top = `${e.clientY - r.top}px`;
@@ -295,13 +308,12 @@ function initLeadForm() {
     panes.forEach((p) => {
       const on = Number(p.dataset.pane) === n;
       p.hidden = !on;
-      p.classList.remove('is-entering', 'is-entering-back');
-      if (on && !reduceMotion) p.classList.add(back ? 'is-entering-back' : 'is-entering');
+      if (on) enter(p, { opacity: 0, transform: `translateX(${back ? -12 : 12}px)` });
     });
     stepLabel.textContent = fill(d.stepTpl, { n: String(n), t: String(total) });
     bar.style.transform = `scaleX(${n / total})`;
     paneError.textContent = '';
-    panes[n - 1].querySelector<HTMLElement>('.lead-q')?.focus({ preventScroll: true });
+    panes[n - 1].querySelector<HTMLElement>('[data-q]')?.focus({ preventScroll: true });
     track('form_step', { step: String(n) });
   };
 
@@ -393,8 +405,18 @@ function initLeadForm() {
     title.textContent = fill(d.successTpl, values);
 
     form.hidden = true;
-    root.querySelector<HTMLElement>('.lead-top')!.hidden = true;
+    root.querySelector<HTMLElement>('[data-lead-top]')!.hidden = true;
     done.hidden = false;
+    enter(done, { opacity: 0, transform: 'translateX(12px)' });
+    if (!reduceMotion) {
+      // Trazo del check: el círculo y luego la marca
+      done.querySelectorAll<SVGGeometryElement>('[data-check] circle, [data-check] path').forEach((shape, i) => {
+        const len = i === 0 ? 151 : 36;
+        shape.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], {
+          duration: i === 0 ? 600 : 400, delay: i === 0 ? 0 : 450, easing: EASE, fill: 'backwards',
+        });
+      });
+    }
     title.focus({ preventScroll: true });
 
     // Abre Calendly prellenado; el botón queda por si el usuario lo cierra

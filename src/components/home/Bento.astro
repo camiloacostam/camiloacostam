@@ -8,174 +8,105 @@ const c    = getHome(lang).bento;
 const [num, plus] = c.experience.value.endsWith('+')
   ? [c.experience.value.slice(0, -1), '+']
   : [c.experience.value, ''];
+
+// Celdas: base compartida + variantes (el relleno va en cada variante para no pelear con el base)
+const cell  = 'flex flex-col rounded-3xl transition-transform duration-500 ease-brand hover:-translate-y-[3px] max-sm:min-h-[150px]';
+const light = `${cell} bg-crema-raised p-7 max-sm:p-[18px]`;
+const label = 'text-[13px] leading-5 text-ink-muted max-sm:text-xs';
+const stat  = 'text-[64px] leading-none font-medium tracking-[-0.04em] max-sm:text-[40px]';
+const note  = 'mt-2.5 text-[15px] leading-[23px] text-ink-muted max-sm:mt-1.5 max-sm:text-[13px] max-sm:leading-[18px]';
+const text  = 'mt-auto text-[22px] leading-[30px] tracking-[-0.015em] max-sm:text-[17px] max-sm:leading-[23px]';
 ---
-<section id="servicios" class="bento-sec" data-nav="light">
+<section id="servicios" class="pt-8 pb-40 max-sm:pt-0 max-sm:pb-20" data-nav="light">
   <div class="wrap">
-    <div class="bento-head">
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6 max-sm:mx-1 max-sm:mb-6">
       <h2 class="h-section reveal">{c.title}</h2>
-      <p class="bento-intro">{c.intro}</p>
+      <p class="max-w-[320px] text-[15px] leading-6 text-ink-muted max-sm:hidden">{c.intro}</p>
     </div>
 
-    <div class="bento" data-spotlight>
-      <div class="cell b-hero">
-        <p class="eyebrow cell-eyebrow">{c.case.eyebrow}</p>
-        <h3 class="cell-h">{c.case.title}</h3>
-        <p class="cell-desc">{c.case.desc}</p>
-        <div class="mockups" aria-hidden="true">
-          <div class="mock-desktop"><div>{c.case.desktop}</div></div>
-          <div class="mock-mobile"><div>{c.case.mobile}</div></div>
+    <!-- Spotlight: el degradado sigue al cursor (data-spotlight escribe --sx/--sy) y se ve entre celdas -->
+    <div
+      class="grid auto-rows-[minmax(240px,auto)] grid-cols-4 gap-2.5 rounded-[32px] bg-[rgb(231_227_218)] p-2.5 max-lg:grid-cols-2 max-sm:auto-rows-auto max-sm:gap-2 max-sm:bg-transparent max-sm:bg-none! max-sm:p-0"
+      style="--sx: -999px; --sy: -999px; background-image: radial-gradient(360px circle at var(--sx) var(--sy), rgb(45 212 191 / .85), rgb(29 95 174 / .25) 45%, transparent 70%);"
+      data-spotlight
+    >
+      <div class={`${cell} relative order-0 col-span-2 row-span-2 overflow-hidden bg-mar p-9 text-crema max-sm:order-[-3] max-sm:row-span-1 max-sm:p-[22px]`}>
+        <p class="eyebrow text-aqua-light! max-sm:text-[11px]">{c.case.eyebrow}</p>
+        <h3 class="mt-3 text-4xl leading-10 tracking-[-0.03em] max-sm:mt-2 max-sm:text-[26px] max-sm:leading-[30px]">{c.case.title}</h3>
+        <p class="mt-2.5 max-w-[400px] text-ink-muted-dark max-sm:hidden">{c.case.desc}</p>
+        <div class="relative mt-8 min-h-[240px] grow max-sm:mt-[18px] max-sm:h-[170px] max-sm:min-h-0 max-sm:grow-0" aria-hidden="true">
+          <div class="absolute top-0 right-[100px] bottom-5 left-0 rounded-[14px] border border-mar-line bg-mar-raised px-2.5 pt-2.5 max-sm:right-16 max-sm:bottom-2.5 max-sm:rounded-xl max-sm:px-[7px] max-sm:pt-[7px]">
+            <div class="flex h-full items-center justify-center rounded-t-lg bg-linear-160 from-mediterraneo to-mar-raised p-4 text-center text-sm text-ink-muted-dark max-sm:text-xs">{c.case.desktop}</div>
+          </div>
+          <div class="absolute right-2 bottom-0 h-[220px] w-[116px] rounded-[22px] border border-mar-line bg-mar-raised p-1.5 max-sm:right-1 max-sm:h-[148px] max-sm:w-[76px] max-sm:rounded-2xl max-sm:p-1">
+            <div class="flex h-full items-center justify-center rounded-2xl bg-linear-160 from-aqua to-mediterraneo p-2 text-center text-xs text-mar max-sm:text-[0px]">{c.case.mobile}</div>
+          </div>
         </div>
       </div>
 
-      <div class="cell cell--light cell-delivery">
-        <p class="cell-label">{c.delivery.label}</p>
-        <div class="cell-bottom">
-          <div class="stat">{c.delivery.value}</div>
-          <p class="cell-note">{c.delivery.desc}</p>
+      <div class={`${light} max-sm:order-[-2]`}>
+        <p class={label}>{c.delivery.label}</p>
+        <div class="mt-auto">
+          <div class={stat}>{c.delivery.value}</div>
+          <p class={note}>{c.delivery.desc}</p>
         </div>
       </div>
 
-      <figure class="cell b-tall cell--cielo">
-        <p class="cell-label">{c.testimonial.label}</p>
-        <blockquote class="quote">{c.testimonial.quote}</blockquote>
-        <figcaption class="person">
-          <span class="person-avatar"></span>
-          <span><strong>{c.testimonial.name}</strong>{c.testimonial.role}</span>
+      <figure class={`${cell} row-span-2 bg-cielo p-7 text-mar max-lg:row-span-1 max-sm:col-span-2 max-sm:p-[22px]`}>
+        <p class="text-[13px] leading-5 text-mar max-sm:text-xs">{c.testimonial.label}</p>
+        <blockquote class="mt-6 text-2xl leading-8 tracking-[-0.015em] max-sm:mt-3.5 max-sm:text-[19px] max-sm:leading-[27px]">{c.testimonial.quote}</blockquote>
+        <figcaption class="mt-auto flex items-center gap-3 pt-6 text-sm leading-5 max-sm:pt-4 max-sm:text-[13px] max-sm:leading-[18px]">
+          <span class="size-11 shrink-0 rounded-full bg-cielo-soft max-sm:size-9"></span>
+          <span><strong class="block font-semibold">{c.testimonial.name}</strong>{c.testimonial.role}</span>
         </figcaption>
       </figure>
 
-      <div class="cell cell--light cell-exp">
-        <p class="cell-label">{c.experience.label}</p>
-        <div class="cell-bottom">
-          <div class="stat">{num}<span class="stat-plus">{plus}</span></div>
-          <p class="cell-note">{c.experience.desc}</p>
+      <div class={`${light} max-sm:order-[-1]`}>
+        <p class={label}>{c.experience.label}</p>
+        <div class="mt-auto">
+          <div class={stat}>{num}<span class="text-mediterraneo">{plus}</span></div>
+          <p class={note}>{c.experience.desc}</p>
         </div>
       </div>
 
-      <div class="cell cell--light">
-        <p class="cell-label">{c.allInOne.label}</p>
-        <p class="cell-text">{c.allInOne.text}</p>
-        <p class="cell-stack">{c.allInOne.stack}</p>
+      <!-- Diferencial: asistente de WhatsApp con IA -->
+      <div class="col-span-2 grid grid-cols-2 items-center gap-6 overflow-hidden rounded-3xl bg-linear-150 from-mar from-0% via-mar-raised via-60% to-mediterraneo to-100% p-8 text-crema transition-transform duration-500 ease-brand hover:-translate-y-[3px] max-sm:grid-cols-1 max-sm:gap-4 max-sm:p-[22px]">
+        <div>
+          <p class="inline-flex items-center gap-2 text-xs uppercase tracking-[.08em] text-aqua-light"><span class="rounded-full bg-aqua/18 px-[9px] py-[3px]">{c.ai.badge}</span></p>
+          <h3 class="mt-3.5 text-[28px] leading-8 tracking-[-0.03em] max-sm:text-[22px] max-sm:leading-7">{c.ai.title}</h3>
+          <p class="mt-2.5 text-[15px] leading-[23px] text-ink-muted-dark max-sm:text-sm max-sm:leading-[21px]">{c.ai.desc}</p>
+        </div>
+        <div class="flex flex-col gap-2 text-[13px] leading-[18px]" aria-hidden="true">
+          {c.ai.chat.map((m, i) => (
+            <span
+              class:list={[
+                'max-w-[88%] px-3 py-[9px]',
+                m.from === 'me'
+                  ? 'self-end rounded-[14px_14px_4px_14px] bg-aqua text-mar'
+                  : 'self-start rounded-[14px_14px_14px_4px] bg-white/12 text-crema',
+                { 'max-sm:hidden': i === 2 },
+              ]}
+            >{m.text}</span>
+          ))}
+        </div>
       </div>
 
-      <div class="cell cell--light">
-        <p class="cell-label cell-label--dot"><span class="pulse"></span>{c.availability.label}</p>
-        <p class="cell-text">{c.availability.text}</p>
-        <p class="cell-note cell-note--sm">{c.availability.desc}</p>
+      <div class={light}>
+        <p class={label}>{c.allInOne.label}</p>
+        <p class={text}>{c.allInOne.text}</p>
+        <p class="mt-3 text-[13px] leading-5 text-ink-muted max-sm:hidden">{c.allInOne.stack}</p>
       </div>
 
-      <a class="cell b-wide cell--cta fill-btn" href={links.calendly} data-calendly data-track="agendar" data-track-place="bento">
-        <span class="cta-text">{c.cta}</span>
-        <Icon name="arrow-up-right" size={40} strokeWidth={1.5} />
+      <div class={light}>
+        <p class={`${label} flex items-center gap-2`}><span class="pulse-dot"></span>{c.availability.label}</p>
+        <p class={text}>{c.availability.text}</p>
+        <p class="mt-2 text-sm leading-[21px] text-ink-muted max-sm:hidden">{c.availability.desc}</p>
+      </div>
+
+      <a class="fill-btn col-[1/-1] flex items-end justify-between gap-5 rounded-3xl bg-mediterraneo p-8 text-white no-underline transition-transform duration-500 ease-brand hover:-translate-y-[3px] max-sm:p-[22px]" href={links.calendly} data-calendly data-track="agendar" data-track-place="bento">
+        <span class="max-w-[340px] text-4xl leading-10 font-medium tracking-[-0.03em] max-sm:text-[26px] max-sm:leading-[30px]">{c.cta}</span>
+        <Icon name="arrow-up-right" size={40} strokeWidth={1.5} class="max-sm:size-[30px]" />
       </a>
     </div>
   </div>
 </section>
-
-<style>
-  .bento-sec { padding: 32px 0 160px; }
-  .bento-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
-  .bento-intro { max-width: 320px; font-size: 15px; line-height: 24px; color: var(--ink-muted); }
-
-  /* Spotlight: el degradado sigue al cursor y se ve en los espacios entre celdas */
-  .bento {
-    --sx: -999px; --sy: -999px;
-    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(240px, auto); gap: 10px;
-    padding: 10px; border-radius: 32px;
-    background: radial-gradient(360px circle at var(--sx) var(--sy), rgba(45,212,191,.85), rgba(29,95,174,.25) 45%, transparent 70%), #E7E3DA;
-  }
-  .b-hero { grid-column: span 2; grid-row: span 2; }
-  .b-tall { grid-row: span 2; }
-  .b-wide { grid-column: span 2; }
-
-  .cell {
-    border-radius: 24px; padding: 28px; display: flex; flex-direction: column; margin: 0;
-    transition: transform .5s var(--ease);
-  }
-  .cell:hover { transform: translateY(-3px); }
-  .cell--light { background: var(--crema-raised); }
-  .cell--cielo { background: var(--cielo); color: var(--mar); }
-
-  .b-hero { background: var(--mar); color: var(--crema); padding: 36px; overflow: hidden; position: relative; }
-  .cell-eyebrow { color: var(--aqua-light); }
-  .cell-h { margin-top: 12px; font-size: 36px; line-height: 40px; letter-spacing: -0.03em; }
-  .cell-desc { margin-top: 10px; max-width: 400px; color: var(--ink-muted-dark); }
-
-  .mockups { flex-grow: 1; min-height: 240px; position: relative; margin-top: 32px; }
-  .mock-desktop {
-    position: absolute; left: 0; right: 100px; top: 0; bottom: 20px; border-radius: 14px;
-    background: var(--mar-raised); border: 1px solid var(--mar-line); padding: 10px 10px 0;
-  }
-  .mock-desktop > div {
-    height: 100%; border-radius: 8px 8px 0 0; background: linear-gradient(160deg, var(--mediterraneo), var(--mar-raised));
-    display: flex; align-items: center; justify-content: center; color: var(--ink-muted-dark); font-size: 14px; text-align: center; padding: 16px;
-  }
-  .mock-mobile {
-    position: absolute; right: 8px; bottom: 0; width: 116px; height: 220px; border-radius: 22px;
-    background: var(--mar-raised); border: 1px solid var(--mar-line); padding: 6px;
-  }
-  .mock-mobile > div {
-    height: 100%; border-radius: 16px; background: linear-gradient(160deg, var(--aqua), var(--mediterraneo));
-    display: flex; align-items: center; justify-content: center; color: var(--mar); font-size: 12px; text-align: center; padding: 8px;
-  }
-
-  .cell-label { font-size: 13px; line-height: 20px; color: var(--ink-muted); }
-  .cell--cielo .cell-label { color: var(--mar); }
-  .cell-label--dot { display: flex; align-items: center; gap: 8px; }
-  .cell-bottom { margin-top: auto; }
-  .stat { font-size: 64px; line-height: 64px; font-weight: 500; letter-spacing: -0.04em; }
-  .stat-plus { color: var(--mediterraneo); }
-  .cell-note { margin-top: 10px; font-size: 15px; line-height: 23px; color: var(--ink-muted); }
-  .cell-note--sm { margin-top: 8px; font-size: 14px; line-height: 21px; }
-  .cell-text { margin-top: auto; font-size: 22px; line-height: 30px; letter-spacing: -0.015em; }
-  .cell-stack { margin-top: 12px; font-size: 13px; line-height: 20px; color: var(--ink-muted); }
-
-  .quote { margin-top: 24px; font-size: 24px; line-height: 32px; letter-spacing: -0.015em; }
-  .person { margin-top: auto; padding-top: 24px; display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 20px; }
-  .person strong { display: block; font-weight: 600; }
-  .person-avatar { width: 44px; height: 44px; border-radius: 9999px; background: var(--cielo-soft); flex-shrink: 0; }
-
-  .cell--cta {
-    background: var(--mediterraneo); color: #FFFFFF; padding: 32px; flex-direction: row;
-    align-items: flex-end; justify-content: space-between; gap: 20px; text-decoration: none;
-  }
-  .cta-text { font-size: 36px; line-height: 40px; font-weight: 500; letter-spacing: -0.03em; max-width: 340px; }
-
-  @media (max-width: 960px) {
-    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .b-tall { grid-row: span 1; }
-  }
-
-  @media (max-width: 640px) {
-    .bento-sec { padding: 0 0 80px; }
-    .bento-head { margin: 0 4px 24px; }
-    .bento-intro { display: none; }
-    .bento { gap: 8px; padding: 0; background: none; grid-auto-rows: auto; }
-    .b-hero, .b-tall, .b-wide { grid-row: span 1; }
-    .b-hero, .b-wide, .b-tall { grid-column: span 2; }
-    /* Orden de la referencia móvil: caso, 7 días + experiencia, testimonio, resto */
-    .b-hero { order: -3; }
-    .cell-delivery { order: -2; }
-    .cell-exp { order: -1; }
-    .cell { padding: 18px; min-height: 150px; }
-    .b-hero, .b-tall, .cell--cta { padding: 22px; }
-    .cell-eyebrow { font-size: 11px; }
-    .cell-h { margin-top: 8px; font-size: 26px; line-height: 30px; }
-    .cell-desc { display: none; }
-    .mockups { min-height: 0; height: 170px; margin-top: 18px; flex-grow: 0; }
-    .mock-desktop { right: 64px; bottom: 10px; padding: 7px 7px 0; border-radius: 12px; }
-    .mock-desktop > div { font-size: 12px; }
-    .mock-mobile { right: 4px; width: 76px; height: 148px; border-radius: 16px; padding: 4px; }
-    .mock-mobile > div { font-size: 0; }
-    .cell-label { font-size: 12px; }
-    .stat { font-size: 40px; line-height: 40px; }
-    .cell-note { margin-top: 6px; font-size: 13px; line-height: 18px; }
-    .cell-text { font-size: 17px; line-height: 23px; }
-    .cell-stack, .cell-note--sm { display: none; }
-    .quote { margin-top: 14px; font-size: 19px; line-height: 27px; }
-    .person { padding-top: 16px; font-size: 13px; line-height: 18px; }
-    .person-avatar { width: 36px; height: 36px; }
-    .cta-text { font-size: 26px; line-height: 30px; }
-    .cell--cta :global(svg) { width: 30px; height: 30px; }
-  }
-</style>

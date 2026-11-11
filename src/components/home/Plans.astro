@@ -4,86 +4,77 @@ import { getLang } from '../../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
 const c    = getHome(lang).plans;
+
+const price = 'mt-5 text-[22px] leading-7 font-medium tracking-[-0.02em]';
+const cta   = 'inline-flex items-center justify-center rounded-full bg-aqua px-[22px] text-[15px] font-semibold text-mar';
 ---
-<section id="paquetes" class="plans-sec" data-nav="light">
-  <div class="wrap">
-    <h2 class="h-section reveal">{c.title}</h2>
-    <div class="plans" data-plans>
-      {c.items.map((p, i) => (
-        <a
-          class:list={['plan reveal', { 'plan--featured': p.featured }]}
-          href={links.calendly}
-          data-calendly
-          data-track="agendar"
-          data-track-place={`paquete-${i + 1}`}
-        >
-          <p class="plan-name">{p.name}{p.badge && <span class="plan-badge">{p.badge}</span>}</p>
-          <p class="plan-desc muted">{p.desc}</p>
-          <p class="plan-price">{p.price}{p.per && <span class="plan-per">{p.per}</span>}</p>
-          <p class="plan-note muted">{p.note}</p>
-        </a>
-      ))}
+<section id="paquetes" class="py-40 max-sm:pt-[88px] max-sm:pb-[72px]" data-nav="light">
+  <div class="wrap max-sm:px-0!">
+    <div class="flex flex-wrap items-end justify-between gap-6 max-sm:mx-5 max-sm:block">
+      <h2 class="h-section reveal">{c.title}</h2>
+      <p class="max-w-[380px] text-[15px] leading-6 text-ink-muted max-sm:mt-3 max-sm:max-w-none max-sm:text-sm max-sm:leading-[21px]">{c.intro}</p>
     </div>
-    <div class="plan-dots" aria-hidden="true" data-plan-dots>
-      {c.items.map((_, i) => <span class:list={['plan-dot', { 'is-active': i === 0 }]}></span>)}
+
+    <!-- Móvil: carrusel con snap y puntos -->
+    <div class="mt-14 grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-sm:mt-6 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:gap-2.5 max-sm:overflow-x-auto max-sm:px-5 max-sm:py-1 max-sm:[scrollbar-width:none] max-sm:[&::-webkit-scrollbar]:hidden" data-plans>
+      {c.items.map((p, i) => {
+        const muted = p.featured ? 'text-cielo-soft' : 'text-ink-muted';
+        return (
+          <a
+            class:list={[
+              'reveal group/plan flex min-h-[520px] flex-col rounded-3xl p-8 no-underline transition-[background,color] duration-[450ms] hover:bg-mar hover:text-crema max-sm:min-h-0 max-sm:shrink-0 max-sm:grow-0 max-sm:basis-[300px] max-sm:snap-center max-sm:p-6',
+              p.featured ? 'bg-mediterraneo text-white' : 'bg-crema-raised text-mar',
+            ]}
+            href={links.calendly}
+            data-calendly
+            data-track="agendar"
+            data-track-place={`paquete-${i + 1}`}
+          >
+            <p class="text-[22px] leading-[30px] font-medium max-sm:text-xl">{p.name}{p.badge && <span class="ml-1.5 rounded-full bg-white/18 px-2.5 py-1 align-middle text-xs leading-[18px] font-semibold max-sm:px-[9px] max-sm:py-[3px] max-sm:text-[11px]">{p.badge}</span>}</p>
+            <p class:list={['mt-2 text-[15px] leading-[23px] transition-colors duration-[450ms] group-hover/plan:text-ink-muted-dark max-sm:text-sm max-sm:leading-[21px]', muted]}>{p.desc}</p>
+            <p class:list={['mt-6 text-xs tracking-[.08em] uppercase transition-colors duration-[450ms] group-hover/plan:text-ink-muted-dark', muted]}>{c.includesLabel}</p>
+            <ul class="mt-2.5 flex flex-col gap-2 text-[15px] leading-[22px]">
+              {p.includes.map((item) => (
+                <li class="flex gap-2.5 max-sm:nth-4:hidden">
+                  <span class:list={['font-bold transition-colors duration-[450ms] group-hover/plan:text-aqua-light', p.featured ? 'text-aqua-light' : 'text-mediterraneo']} aria-hidden="true">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div class:list={['mt-auto grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 pt-6 text-sm leading-[21px] transition-colors duration-[450ms] group-hover/plan:text-ink-muted-dark', muted]}>
+              <span>{c.deliveryLabel}</span><strong class="font-semibold">{p.delivery}</strong>
+              <span>{c.resultLabel}</span><strong class="font-semibold">{p.result}</strong>
+            </div>
+            <p class={price}>{p.price}{p.per && <span class="text-base">{p.per}</span>}</p>
+            <span class={`${cta} mt-4 min-h-[52px]`}>{c.cta}</span>
+          </a>
+        );
+      })}
     </div>
-    <p class="plans-note">{c.currencyNote}</p>
+    <div class="mt-4 hidden justify-center gap-1.5 max-sm:flex" aria-hidden="true" data-plan-dots>
+      {c.items.map((_, i) => <span class:list={['size-1.5 rounded-full bg-line transition-all duration-300 [&.is-active]:w-5 [&.is-active]:bg-mediterraneo', { 'is-active': i === 0 }]}></span>)}
+    </div>
+
+    <!-- Complemento: asistente IA en WhatsApp -->
+    <a
+      class="reveal mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-6 rounded-3xl bg-linear-120 from-mar via-mar-raised via-70% to-mediterraneo px-8 py-7 text-crema no-underline max-sm:mx-5 max-sm:mt-6 max-sm:grid-cols-1 max-sm:p-6"
+      href={links.calendly}
+      data-calendly
+      data-track="agendar"
+      data-track-place="paquete-ia"
+    >
+      <div>
+        <p class="text-xs tracking-[.08em] text-aqua-light uppercase">{c.ai.eyebrow}</p>
+        <p class="mt-2 text-[26px] leading-8 font-medium tracking-[-0.02em] max-sm:text-[22px] max-sm:leading-7">{c.ai.name}</p>
+        <p class="mt-1.5 text-[15px] leading-[23px] text-ink-muted-dark max-sm:text-sm max-sm:leading-[21px]">{c.ai.desc}</p>
+        <p class="mt-2.5 text-sm leading-[21px] text-ink-muted-dark"><strong class="font-semibold text-crema">{c.deliveryLabel}:</strong> {c.ai.delivery} · <strong class="font-semibold text-crema">{c.resultLabel}:</strong> {c.ai.result}</p>
+      </div>
+      <div class="text-right max-sm:text-left">
+        <p class="text-[22px] leading-7 font-medium tracking-[-0.02em]">{c.ai.price}</p>
+        <span class={`${cta} mt-3 min-h-12 px-5`}>{c.cta}</span>
+      </div>
+    </a>
+
+    <p class="mt-6 text-sm leading-[21px] text-ink-muted max-sm:mx-5 max-sm:mt-5 max-sm:text-[13px] max-sm:leading-[19px]">{c.currencyNote}</p>
   </div>
 </section>
-
-<style>
-  .plans-sec { padding: 160px 0; }
-  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 56px; }
-
-  .plan {
-    background: var(--crema-raised); color: var(--mar); border-radius: 24px; padding: 32px; min-height: 380px;
-    display: flex; flex-direction: column; text-decoration: none; transition: background .45s, color .45s;
-  }
-  .plan .muted { color: var(--ink-muted); transition: color .45s; }
-  .plan--featured { background: var(--mediterraneo); color: #FFFFFF; }
-  .plan--featured .muted { color: var(--cielo-soft); }
-  .plan:hover { background: var(--mar); color: var(--crema); }
-  .plan:hover .muted { color: var(--ink-muted-dark); }
-  .plan:focus-visible { border-radius: 24px; }
-
-  .plan-name { font-size: 22px; line-height: 30px; font-weight: 500; }
-  .plan-badge {
-    font-size: 12px; line-height: 18px; font-weight: 600; padding: 4px 10px; border-radius: 9999px;
-    background: rgba(10,35,66,.32); vertical-align: middle; margin-left: 6px;
-  }
-  .plan-desc { margin-top: 8px; font-size: 15px; line-height: 23px; }
-  .plan-price { margin-top: auto; font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em; }
-  .plan-per { font-size: 18px; }
-  .plan-note { margin-top: 16px; font-size: 14px; line-height: 21px; }
-
-  .plan-dots { display: none; }
-  .plans-note { margin-top: 24px; font-size: 14px; line-height: 21px; color: var(--ink-muted); }
-
-  @media (max-width: 960px) {
-    .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-
-  /* Móvil: carrusel con snap y puntos */
-  @media (max-width: 640px) {
-    .plans-sec { padding: 88px 0 72px; }
-    .wrap { padding: 0; }
-    .wrap > h2 { margin: 0 20px; }
-    .plans {
-      display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
-      padding: 4px 20px; margin-top: 24px; scrollbar-width: none;
-    }
-    .plans::-webkit-scrollbar { display: none; }
-    .plan { flex: 0 0 300px; scroll-snap-align: center; min-height: 340px; padding: 24px; }
-    .plan-name { font-size: 20px; }
-    .plan-badge { font-size: 11px; padding: 3px 9px; }
-    .plan-desc { font-size: 14px; line-height: 21px; }
-    .plan-price { font-size: 36px; line-height: 40px; }
-    .plan-per { font-size: 16px; }
-    .plan-note { margin-top: 12px; font-size: 13px; }
-
-    .plan-dots { display: flex; justify-content: center; gap: 6px; margin-top: 16px; }
-    .plans-note { margin: 20px 20px 0; font-size: 13px; line-height: 19px; }
-    .plan-dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--line); transition: all .3s; }
-    .plan-dot.is-active { width: 20px; background: var(--mediterraneo); }
-  }
-</style>

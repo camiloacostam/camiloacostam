@@ -28,6 +28,23 @@ export interface CaseItem {
   cta?: boolean;
 }
 
+export interface PlanItem {
+  name: string;
+  badge?: string;
+  desc: string;
+  includes: string[];
+  delivery: string;
+  result: string;
+  price: string;
+  per?: string;
+  featured?: boolean;
+}
+
+export interface ChatLine {
+  from: 'them' | 'me';
+  text: string;
+}
+
 const es = {
   meta: {
     title: 'Camilo Acosta — Webs para psicólogos y profesionales de la salud',
@@ -43,25 +60,25 @@ const es = {
       { href: '#paquetes',  label: 'Paquetes' },
       { href: '#preguntas', label: 'Preguntas' },
     ],
-    cta: 'Agenda una llamada',
+    cta: 'Agenda tu diagnóstico',
     ctaBySection: {
       proyectos: 'Quiero una web así',
       proceso:   'Empezar en 7 días',
-      paquetes:  'Elegir mi paquete',
+      paquetes:  'Pedir mi propuesta',
     } as Record<string, string>,
     langLabel: 'EN',
     langAria: 'Read in English',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',
-    menuCta: 'Agenda tu llamada gratis',
+    menuCta: 'Agenda tu diagnóstico gratis',
   },
   hero: {
     availability: `Disponible · ${stats.slots} cupos este mes`,
-    titleStart: 'Tu talento ya tiene seguidores. Hagamos que te',
+    titleStart: 'Tu talento ya existe. Hagamos que te',
     titleScript: 'elijan.',
     subline:
-      'Diseño y desarrollo webs para psicólogos, dentistas y profesionales independientes. Listas en 7 días y pensadas, pieza por pieza, para convertir.',
-    cta: 'Agenda tu llamada gratis',
+      'Una web pensada para convertir y una IA que responde y agenda por ti en WhatsApp. Para psicólogos, odontólogos, coaches y profesionales independientes. Lista en 7 días.',
+    cta: 'Agenda tu diagnóstico gratis',
     secondary: 'Ver trabajos',
     hello: 'Hola, soy Camilo',
     role: `Diseñador y desarrollador web · ${stats.years} años`,
@@ -71,28 +88,30 @@ const es = {
     delivered: `[ ${stats.projects} webs entregadas ]`,
     callouts: [
       { title: 'Mensaje claro',       desc: 'Se entiende en 5 segundos' },
-      { title: 'Agenda integrada',    desc: 'Citas sin ir y venir por DMs' },
-      { title: 'WhatsApp a un toque', desc: 'Para quien prefiere escribir' },
+      { title: 'Agenda integrada',    desc: 'Citas sin ir y venir por mensajes' },
+      { title: 'IA en WhatsApp',      desc: 'Responde y agenda por ti' },
     ],
+    // Ejemplo ilustrativo del mockup, no es un cliente ni un testimonio real
     phone: {
-      brand: 'Dra. Nombre',
-      title: 'Terapia que te acompaña a tu ritmo.',
-      desc: 'Psicóloga clínica · sesiones online y presenciales.',
+      brand: 'Tu consultorio',
+      title: 'Atención cercana, a tu ritmo.',
+      desc: 'Consulta privada · citas presenciales y en línea.',
       cta: 'Agenda tu primera cita',
-      review: '“Me sentí escuchada desde la primera sesión.”', // ejemplo ilustrativo del mockup, no es un testimonio real
+      aiLabel: 'Asistente IA',
+      aiMessage: '¡Hola! Tengo cupo el jueves a las 3:00 p. m. ¿Te lo agendo?',
     },
   },
   statement: {
-    textStart: 'Ayudo a psicólogos, dentistas y profesionales independientes a convertir su audiencia de Instagram en',
+    textStart: 'Ayudo a profesionales independientes, como psicólogos, odontólogos y coaches, a convertir su talento en',
     highlight: 'clientes agendados',
     textEnd: '. Sin tecnicismos, sin intermediarios.',
     pains: [
-      'Tu link en bio no explica qué haces ni por qué elegirte.',
-      'Todo pasa por DMs y muchos se enfrían antes de agendar.',
+      'Te recomiendan, pero quien te busca en Google no encuentra una web que lo convenza.',
+      'Respondes los mismos mensajes de WhatsApp todo el día y muchos se enfrían antes de agendar.',
       'Tu trabajo es excelente, pero tu presencia digital no lo transmite.',
     ],
-    aside: `Diseño, código y lanzamiento en las mismas manos. ${stats.years} años y ${stats.projects} webs entregadas.`,
-    button: ['Agenda tu', 'llamada gratis'],
+    aside: `Diseño, código, IA y lanzamiento en las mismas manos. ${stats.years} años y ${stats.projects} webs entregadas.`,
+    button: ['Agenda tu', 'diagnóstico gratis'],
   },
   bento: {
     title: 'Lo que recibes',
@@ -112,6 +131,17 @@ const es = {
       role: '[Profesión]',
     },
     experience: { label: 'Experiencia', value: stats.projects, desc: `webs entregadas en ${stats.years} años.` },
+    ai: {
+      badge: 'Mi diferencial',
+      title: 'WhatsApp con IA que responde y agenda por ti',
+      desc: 'Atiende las preguntas de siempre y deja la cita lista, incluso cuando estás ocupado.',
+      chat: [
+        { from: 'them', text: 'Hola, ¿tienes cita esta semana?' },
+        { from: 'me',   text: '¡Hola! Tengo jueves 3:00 p. m. o viernes 10:00 a. m. ¿Cuál te sirve?' },
+        { from: 'them', text: 'El jueves' },
+        { from: 'me',   text: 'Listo, quedaste agendado ✓' },
+      ] as ChatLine[],
+    },
     allInOne: { label: 'Todo en uno', text: 'Diseño y código con la misma persona.', stack: 'Figma · Astro · React · Tailwind' },
     availability: { label: 'Disponible', text: `${stats.slots} cupos este mes`, desc: 'Pocos proyectos, dedicación real.' },
     cta: 'Hablemos 30 minutos, gratis.',
@@ -136,15 +166,15 @@ const es = {
       },
       {
         name: '¿El próximo eres tú?', title: 'Tu marca podría estar aquí.', cat: 'Cupos este mes',
-        desc: 'Agenda 30 minutos gratis y diseñemos la web que convierte a tu audiencia en clientes.',
+        desc: 'Agenda 30 minutos gratis y diseñemos la web que convierte a tus visitantes en clientes.',
         media: '', href: links.calendly, tone: 'aqua', cta: true,
       },
     ] as CaseItem[],
     actionCase: 'Ver caso →',
-    actionCta: 'Agenda tu llamada →',
+    actionCta: 'Agenda tu diagnóstico →',
     barText: '¿Quieres una web así para tu marca?',
     barAll: 'Ver todos los proyectos',
-    barCta: 'Agenda tu llamada',
+    barCta: 'Agenda tu diagnóstico',
   },
   process: {
     title: 'Cuatro pasos. Siete días.',
@@ -161,13 +191,47 @@ const es = {
   },
   plans: {
     title: 'Paquetes',
+    intro: 'Cada negocio es distinto. En una llamada de diagnóstico gratis de 30 minutos entiendo lo que necesitas y te doy una propuesta clara, sin compromiso.',
     currencyNote: 'Precios en dólares (USD). Para clientes en Colombia se puede facturar en pesos a la TRM del día.',
     dotsLabel: 'Paquete',
+    includesLabel: 'Incluye',
+    deliveryLabel: 'Entrega',
+    resultLabel: 'Resultado',
+    cta: 'Agenda tu diagnóstico gratis →',
     items: [
-      { name: 'Landing page', desc: 'Una página enfocada en convertir tus visitas en citas. Lista en 7 días.', price: 'desde USD 200', note: 'Agenda y WhatsApp integrados →' },
-      { name: 'Sitio profesional', badge: 'Más elegido', desc: 'Tu marca completa: servicios, sobre ti, blog y contacto.', price: 'desde USD 500', note: 'Hasta [N] páginas y SEO básico →', featured: true },
-      { name: 'Acompañamiento', desc: 'Cambios, hosting y mantenimiento para que tu web crezca contigo.', price: 'USD 25', per: ' /mes', note: 'Reporte mensual de visitas →' },
-    ],
+      {
+        name: 'Landing page',
+        desc: 'Una página clara que explica qué haces y lleva a tus visitas a agendar contigo.',
+        includes: ['Diseño a medida de tu marca', 'Agenda en línea y botón de WhatsApp', 'Textos pensados para convertir', 'Lista para Google y para celular'],
+        delivery: '7 días',
+        result: 'Más consultas agendadas, sin ir y venir por mensajes',
+        price: 'desde USD 200',
+      },
+      {
+        name: 'Sitio profesional', badge: 'Más elegido',
+        desc: 'Tu marca completa en internet: servicios, sobre ti, blog y contacto.',
+        includes: ['Todo lo de la landing page', 'Varias páginas para tus servicios', 'Blog que tú mismo puedes editar', 'SEO básico para aparecer en Google'],
+        delivery: '[TIEMPO DE ENTREGA]',
+        result: 'Una presencia que genera confianza y te trae clientes desde Google',
+        price: 'desde USD 500', featured: true,
+      },
+      {
+        name: 'Acompañamiento',
+        desc: 'Para que tu web siga funcionando y creciendo contigo, sin preocuparte por nada técnico.',
+        includes: ['Cambios y actualizaciones', 'Hosting, seguridad y respaldos', 'Reporte mensual de visitas y citas', 'Puedes sumarle el asistente IA'],
+        delivery: 'Mes a mes',
+        result: 'Una web siempre al día mientras tú atiendes a tus clientes',
+        price: 'USD 25', per: ' /mes',
+      },
+    ] as PlanItem[],
+    ai: {
+      eyebrow: 'Complemento para cualquier paquete',
+      name: 'Asistente IA en WhatsApp',
+      desc: 'Responde las preguntas de siempre (precios, horarios, ubicación) y agenda citas por ti, a cualquier hora. Tú decides qué puede responder.',
+      delivery: '[TIEMPO DE ENTREGA]',
+      result: 'no pierdes clientes mientras atiendes',
+      price: 'Precio según tu proyecto',
+    },
   },
   faq: {
     title: 'Preguntas frecuentes',
@@ -177,6 +241,7 @@ const es = {
     whatsappText: 'Hola Camilo, vi tu web y tengo una pregunta: ',
     items: [
       ['¿Cuánto cuesta una web?', 'Depende de lo que necesites. Las landing pages empiezan desde USD 200 y en la llamada gratis te doy un valor exacto.'],
+      ['¿Qué hace la IA en mi negocio?', 'Funciona como una asistente en tu WhatsApp: responde las preguntas de siempre (precios, horarios, ubicación), ofrece horarios disponibles y deja la cita agendada. Tú decides qué puede responder y revisas todo. Así no pierdes clientes mientras estás atendiendo.'],
       ['¿De verdad está lista en 7 días?', 'Sí, para una landing page. Te pido textos, fotos y logo antes de empezar; si no los tienes, te ayudo a prepararlos.'],
       ['¿Qué necesito tener listo?', 'Tu logo (o tu nombre), algunas fotos tuyas y una idea de tus servicios. Lo demás lo construimos juntos.'],
       ['¿Incluye dominio y hosting?', '[Define aquí qué incluye: dominio, hosting y correo, o si se pagan aparte.]'],
@@ -186,7 +251,7 @@ const es = {
   },
   closing: {
     title: 'Trabajemos juntos',
-    button: ['Agenda tu', 'llamada'],
+    button: ['Agenda tu', 'diagnóstico'],
     whatsappText: 'Hola Camilo, quiero una web para mi marca',
     emailSubject: 'Quiero una web para mi marca',
     // Formulario por pasos. {n}, {t}, {name}, {need} y {niche} se reemplazan en el navegador.
@@ -224,7 +289,7 @@ const es = {
     socialLabel: 'Redes',
   },
   mobileBar: {
-    cta: 'Agenda tu llamada gratis',
+    cta: 'Agenda tu diagnóstico gratis',
     whatsappAria: 'Escríbeme por WhatsApp',
   },
   locale: 'es-CO',
@@ -247,25 +312,25 @@ const en: HomeContent = {
       { href: '#paquetes',  label: 'Packages' },
       { href: '#preguntas', label: 'FAQ' },
     ],
-    cta: 'Book a call',
+    cta: 'Book your assessment',
     ctaBySection: {
       proyectos: 'I want a site like this',
       proceso:   'Start in 7 days',
-      paquetes:  'Choose my package',
+      paquetes:  'Get my proposal',
     },
     langLabel: 'ES',
     langAria: 'Leer en español',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
-    menuCta: 'Book your free call',
+    menuCta: 'Book your free assessment',
   },
   hero: {
     availability: `Available · ${stats.slots} spots this month`,
-    titleStart: 'Your talent already has followers. Let’s make them',
+    titleStart: 'Your talent already exists. Let’s make them',
     titleScript: 'choose you.',
     subline:
-      'I design and build websites for psychologists, dentists and independent professionals. Ready in 7 days and crafted, piece by piece, to convert.',
-    cta: 'Book your free call',
+      'A website built to convert and an AI that answers and books for you on WhatsApp. For psychologists, dentists, coaches and independent professionals. Ready in 7 days.',
+    cta: 'Book your free assessment',
     secondary: 'See my work',
     hello: 'Hi, I’m Camilo',
     role: `Web designer & developer · ${stats.years} years`,
@@ -275,28 +340,29 @@ const en: HomeContent = {
     delivered: `[ ${stats.projects} websites delivered ]`,
     callouts: [
       { title: 'Clear message',       desc: 'Understood in 5 seconds' },
-      { title: 'Built-in booking',    desc: 'Appointments without DM ping-pong' },
-      { title: 'WhatsApp in one tap', desc: 'For those who prefer to text' },
+      { title: 'Built-in booking',    desc: 'Appointments without message ping-pong' },
+      { title: 'AI on WhatsApp',      desc: 'Answers and books for you' },
     ],
     phone: {
-      brand: 'Dr. Name',
-      title: 'Therapy that moves at your pace.',
-      desc: 'Clinical psychologist · online and in-person sessions.',
+      brand: 'Your practice',
+      title: 'Caring support, at your pace.',
+      desc: 'Private practice · in-person and online sessions.',
       cta: 'Book your first session',
-      review: '“I felt heard from the very first session.”',
+      aiLabel: 'AI assistant',
+      aiMessage: 'Hi! I have a slot on Thursday at 3:00 p.m. Shall I book it for you?',
     },
   },
   statement: {
-    textStart: 'I help psychologists, dentists and independent professionals turn their Instagram audience into',
+    textStart: 'I help independent professionals, like psychologists, dentists and coaches, turn their talent into',
     highlight: 'booked clients',
     textEnd: '. No jargon, no middlemen.',
     pains: [
-      'Your link in bio doesn’t explain what you do or why to choose you.',
-      'Everything happens in DMs and many leads go cold before booking.',
+      'People recommend you, but anyone who searches for you on Google doesn’t find a website that convinces them.',
+      'You answer the same WhatsApp messages all day and many leads go cold before booking.',
       'Your work is excellent, but your online presence doesn’t show it.',
     ],
-    aside: `Design, code and launch in the same hands. ${stats.years} years and ${stats.projects} websites delivered.`,
-    button: ['Book your', 'free call'],
+    aside: `Design, code, AI and launch in the same hands. ${stats.years} years and ${stats.projects} websites delivered.`,
+    button: ['Book your', 'free assessment'],
   },
   bento: {
     title: 'What you get',
@@ -316,6 +382,17 @@ const en: HomeContent = {
       role: '[Profession]',
     },
     experience: { label: 'Experience', value: stats.projects, desc: `websites delivered over ${stats.years} years.` },
+    ai: {
+      badge: 'My edge',
+      title: 'WhatsApp with AI that answers and books for you',
+      desc: 'It handles the usual questions and leaves the appointment ready, even when you’re busy.',
+      chat: [
+        { from: 'them', text: 'Hi, do you have an appointment this week?' },
+        { from: 'me',   text: 'Hi! I have Thursday 3:00 p.m. or Friday 10:00 a.m. Which works for you?' },
+        { from: 'them', text: 'Thursday' },
+        { from: 'me',   text: 'Done, you’re booked ✓' },
+      ],
+    },
     allInOne: { label: 'All in one', text: 'Design and code by the same person.', stack: 'Figma · Astro · React · Tailwind' },
     availability: { label: 'Available', text: `${stats.slots} spots this month`, desc: 'Few projects, real dedication.' },
     cta: 'Let’s talk for 30 minutes, free.',
@@ -340,15 +417,15 @@ const en: HomeContent = {
       },
       {
         name: 'Are you next?', title: 'Your brand could be here.', cat: 'Spots this month',
-        desc: 'Book a free 30-minute call and let’s design the website that turns your audience into clients.',
+        desc: 'Book a free 30-minute call and let’s design the website that turns your visitors into clients.',
         media: '', href: links.calendly, tone: 'aqua', cta: true,
       },
     ],
     actionCase: 'View case →',
-    actionCta: 'Book your call →',
+    actionCta: 'Book your assessment →',
     barText: 'Want a website like this for your brand?',
     barAll: 'See all projects',
-    barCta: 'Book your call',
+    barCta: 'Book your assessment',
   },
   process: {
     title: 'Four steps. Seven days.',
@@ -365,13 +442,47 @@ const en: HomeContent = {
   },
   plans: {
     title: 'Packages',
+    intro: 'Every business is different. On a free 30-minute assessment call I learn what you need and give you a clear proposal, no strings attached.',
     currencyNote: 'Prices in US dollars (USD). Clients in Colombia can be invoiced in pesos at the day’s exchange rate (TRM).',
     dotsLabel: 'Package',
+    includesLabel: 'Includes',
+    deliveryLabel: 'Delivery',
+    resultLabel: 'Result',
+    cta: 'Book your free assessment →',
     items: [
-      { name: 'Landing page', desc: 'A single page focused on turning visits into appointments. Ready in 7 days.', price: 'from USD 200', note: 'Booking and WhatsApp built in →' },
-      { name: 'Professional site', badge: 'Most popular', desc: 'Your full brand: services, about you, blog and contact.', price: 'from USD 500', note: 'Up to [N] pages and basic SEO →', featured: true },
-      { name: 'Ongoing care', desc: 'Changes, hosting and maintenance so your website grows with you.', price: 'USD 25', per: ' /month', note: 'Monthly traffic report →' },
+      {
+        name: 'Landing page',
+        desc: 'A clear page that explains what you do and leads your visitors to book with you.',
+        includes: ['Custom design for your brand', 'Online booking and WhatsApp button', 'Copy written to convert', 'Ready for Google and mobile'],
+        delivery: '7 days',
+        result: 'More booked appointments, no message ping-pong',
+        price: 'from USD 200',
+      },
+      {
+        name: 'Professional site', badge: 'Most popular',
+        desc: 'Your full brand online: services, about you, blog and contact.',
+        includes: ['Everything in the landing page', 'Several pages for your services', 'A blog you can edit yourself', 'Basic SEO to show up on Google'],
+        delivery: '[DELIVERY TIME]',
+        result: 'A presence that builds trust and brings you clients from Google',
+        price: 'from USD 500', featured: true,
+      },
+      {
+        name: 'Ongoing care',
+        desc: 'So your website keeps working and growing with you, with nothing technical to worry about.',
+        includes: ['Changes and updates', 'Hosting, security and backups', 'Monthly report on visits and bookings', 'You can add the AI assistant'],
+        delivery: 'Month to month',
+        result: 'A website that’s always up to date while you take care of your clients',
+        price: 'USD 25', per: ' /month',
+      },
     ],
+    ai: {
+      eyebrow: 'Add-on for any package',
+      name: 'AI assistant on WhatsApp',
+      desc: 'Answers the usual questions (prices, hours, location) and books appointments for you, at any hour. You decide what it can answer.',
+      delivery: '[DELIVERY TIME]',
+      result: 'you don’t lose clients while you’re with others',
+      price: 'Price depends on your project',
+    },
   },
   faq: {
     title: 'Frequently asked questions',
@@ -381,6 +492,7 @@ const en: HomeContent = {
     whatsappText: 'Hi Camilo, I saw your website and I have a question: ',
     items: [
       ['How much does a website cost?', 'It depends on what you need. Landing pages start from USD 200, and on the free call I’ll give you an exact quote.'],
+      ['What does AI do for my business?', 'It works like an assistant on your WhatsApp: it answers the usual questions (prices, hours, location), offers available times and leaves the appointment booked. You decide what it can answer and you review everything. That way you don’t lose clients while you’re with others.'],
       ['Is it really ready in 7 days?', 'Yes, for a landing page. I’ll ask for your copy, photos and logo before we start; if you don’t have them, I’ll help you prepare them.'],
       ['What do I need to have ready?', 'Your logo (or your name), a few photos of you and an idea of your services. We build the rest together.'],
       ['Are domain and hosting included?', '[Define what’s included: domain, hosting and email, or whether they’re billed separately.]'],
@@ -390,7 +502,7 @@ const en: HomeContent = {
   },
   closing: {
     title: 'Let’s work together',
-    button: ['Book your', 'call'],
+    button: ['Book your', 'assessment'],
     whatsappText: 'Hi Camilo, I want a website for my brand',
     emailSubject: 'I want a website for my brand',
     form: {
@@ -427,7 +539,7 @@ const en: HomeContent = {
     socialLabel: 'Social',
   },
   mobileBar: {
-    cta: 'Book your free call',
+    cta: 'Book your free assessment',
     whatsappAria: 'Message me on WhatsApp',
   },
   locale: 'en-US',

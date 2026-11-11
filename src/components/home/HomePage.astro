@@ -12,7 +12,6 @@ import Closing from './Closing.astro';
 import MobileBar from './MobileBar.astro';
 import { getHome } from '../../data/home';
 import { getLang } from '../../i18n/utils';
-import '../../styles/home.css';
 
 const lang = getLang(Astro.currentLocale);
 const { meta } = getHome(lang);
