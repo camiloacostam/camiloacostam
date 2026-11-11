@@ -1,0 +1,28 @@
+---
+// /proyectos/ (es) and /en/proyectos/ (en): the page language comes from the locale.
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../site/SiteNav.astro';
+import SiteFooter from '../site/SiteFooter.astro';
+import Gallery from './Gallery.astro';
+import ProjectIndex from './ProjectIndex.astro';
+import ProjectsClosing from './ProjectsClosing.astro';
+import { getProjectsPage } from '../../data/projects-page';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const { meta } = getProjectsPage(lang);
+---
+<Layout title={meta.title} description={meta.description} lang={lang} variant="funnel">
+  <SiteNav current="projects" tone="dark" />
+  <div class="relative overflow-hidden bg-mar text-crema">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-[radial-gradient(rgb(255_255_255/.9)_1px,transparent_1px)] bg-size-[3px_3px] opacity-[.06]"></div>
+    <span aria-hidden="true" class="pointer-events-none absolute top-24 left-5 size-3.5 before:absolute before:top-0 before:left-1.5 before:h-3.5 before:w-px before:bg-crema/45 after:absolute after:top-1.5 after:left-0 after:h-px after:w-3.5 after:bg-crema/45"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute top-24 right-5 size-3.5 before:absolute before:top-0 before:left-1.5 before:h-3.5 before:w-px before:bg-crema/45 after:absolute after:top-1.5 after:left-0 after:h-px after:w-3.5 after:bg-crema/45"></span>
+    <main>
+      <Gallery />
+      <ProjectIndex />
+      <ProjectsClosing />
+    </main>
+    <SiteFooter tone="dark" />
+  </div>
+</Layout>

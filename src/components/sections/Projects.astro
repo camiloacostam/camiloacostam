@@ -1,5 +1,5 @@
 ---
-import { projects } from '../../data/projects';
+import { projects, projectText } from '../../data/projects';
 import { t, getLang } from '../../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -8,7 +8,7 @@ const prefix = lang === 'en' ? '/en' : '';
 
 const featured = projects
   .filter(p => p.featured)
-  .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+  .map(p => ({ ...p, ...projectText(p, lang) }));
 ---
 <section class="projects-section" id="proyectos">
   <div class="projects-inner">

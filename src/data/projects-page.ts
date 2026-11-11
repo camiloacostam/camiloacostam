@@ -1,0 +1,106 @@
+// Copy for /proyectos/ (es) and /en/proyectos/ (en). [brackets] = pending content.
+const es = {
+  meta: {
+    title: 'Proyectos — La galería | Camilo Acosta',
+    description:
+      'Webs hechas a medida para profesionales independientes: mira los proyectos de Camilo Acosta y cómo ayudan a conseguir clientes.',
+  },
+  hero: {
+    eyebrow: 'Proyectos · Casos reales · 2025 →',
+    eyebrowScript: 'hoy',
+    title: 'La galería',
+    intro:
+      'Cada proyecto es una web hecha a medida para un profesional independiente. Usa las flechas para verlos y mira cómo le ayudan a conseguir clientes.',
+  },
+  gallery: {
+    label: 'Galería de proyectos',
+    prev: 'Proyecto anterior',
+    next: 'Proyecto siguiente',
+    view: 'Ver',
+    media: 'Captura',
+    tools: 'Herramientas',
+    client: 'Cliente',
+    result: 'Resultado',
+    soon: 'Caso completo próximamente',
+    fullCase: 'Ver caso completo →',
+  },
+  own: {
+    title: 'Tu proyecto aquí',
+    kind: 'Tu web',
+    client: 'Tu negocio',
+    tools: 'Diseño web + IA a medida',
+    result: 'Lista en 7 días',
+    media: 'Este espacio puede ser para tu web',
+    action: 'Agenda tu diagnóstico →',
+  },
+  index: {
+    title: 'Todos los proyectos',
+    count: (n: number) => `${n} ${n === 1 ? 'proyecto' : 'proyectos'} + un espacio para el tuyo`,
+    cols: { no: 'Nº', project: 'Proyecto', tools: 'Herramientas', year: 'Año' },
+  },
+  closing: {
+    eyebrow: 'Tu proyecto aquí',
+    titleStart: 'Tu web puede ser el',
+    titleScript: 'próximo',
+    titleEnd: 'proyecto.',
+    cta: 'Agenda tu diagnóstico gratis',
+    whatsapp: 'Escríbeme por WhatsApp',
+    brand: 'Tu marca',
+    spots: 'Cupos disponibles: [N] este mes',
+  },
+};
+
+const en: typeof es = {
+  meta: {
+    title: 'Work — The gallery | Camilo Acosta',
+    description:
+      'Custom websites for independent professionals: see Camilo Acosta’s projects and how they help win clients.',
+  },
+  hero: {
+    eyebrow: 'Work · Real cases · 2025 →',
+    eyebrowScript: 'today',
+    title: 'The gallery',
+    intro:
+      'Every project is a custom website built for an independent professional. Use the arrows to browse them and see how each one helps win clients.',
+  },
+  gallery: {
+    label: 'Project gallery',
+    prev: 'Previous project',
+    next: 'Next project',
+    view: 'View',
+    media: 'Screenshot',
+    tools: 'Tools',
+    client: 'Client',
+    result: 'Result',
+    soon: 'Full case study coming soon',
+    fullCase: 'See the full case →',
+  },
+  own: {
+    title: 'Your project here',
+    kind: 'Your website',
+    client: 'Your business',
+    tools: 'Web design + custom AI',
+    result: 'Ready in 7 days',
+    media: 'This space could be your website',
+    action: 'Book your audit →',
+  },
+  index: {
+    title: 'All projects',
+    count: (n: number) => `${n} ${n === 1 ? 'project' : 'projects'} + a spot for yours`,
+    cols: { no: 'No.', project: 'Project', tools: 'Tools', year: 'Year' },
+  },
+  closing: {
+    eyebrow: 'Your project here',
+    titleStart: 'Your website could be the',
+    titleScript: 'next',
+    titleEnd: 'project.',
+    cta: 'Book your free audit',
+    whatsapp: 'Message me on WhatsApp',
+    brand: 'Your brand',
+    spots: 'Spots available: [N] this month',
+  },
+};
+
+export function getProjectsPage(lang: 'es' | 'en') {
+  return lang === 'en' ? en : es;
+}

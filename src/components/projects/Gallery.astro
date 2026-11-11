@@ -1,0 +1,179 @@
+---
+// Hero + 3D ring gallery. Frames are positioned server-side; the script only rotates the ring.
+import { links } from '../../data/home';
+import { projects, projectText } from '../../data/projects';
+import { getProjectsPage } from '../../data/projects-page';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const c = getProjectsPage(lang);
+const { gallery: g, own } = c;
+
+const STEP = 38; // degrees between frames
+const R = 820;   // ring radius in px
+
+const pad = (i: number) => String(i + 1).padStart(2, '0');
+
+const items = [
+  ...projects.map((p) => {
+    const x = projectText(p, lang);
+    return {
+      title: p.title, kind: x.kind, year: p.year, tech: p.tech.join(' · '), client: x.client, result: x.result,
+      media: `[${g.media} — ${p.title}]`, tone: p.tone, href: p.link ?? '', action: p.link ? g.fullCase : g.soon, own: false,
+    };
+  }),
+  {
+    title: own.title, kind: own.kind, year: String(new Date().getFullYear()), tech: own.tools, client: own.client, result: own.result,
+    media: own.media, tone: 'own' as const, href: links.calendly, action: own.action, own: true,
+  },
+];
+const n = items.length;
+
+const toneClass = {
+  mar: 'bg-linear-160 from-mediterraneo to-mar text-ink-muted-dark',
+  cielo: 'bg-linear-160 from-cielo-soft to-cielo text-mediterraneo',
+  own: 'bg-crema-raised text-mediterraneo',
+};
+const frameStyle = (i: number) =>
+  `transform: rotateY(${i * STEP}deg) translateZ(${R}px); filter: ${i === 0 ? 'none' : 'brightness(.45) saturate(.6)'}; opacity: ${i > 2 ? 0 : 1};`;
+---
+<section class="relative pt-42 max-sm:pt-36" data-gallery data-step={STEP} data-radius={R}>
+  <div class="wrap grid grid-cols-[minmax(0,1fr)_auto] items-end gap-8 max-lg:grid-cols-1">
+    <div>
+      <p class="m-0 flex items-center gap-3.5 text-[13px] tracking-[.14em] text-ink-muted-dark uppercase">
+        <span class="inline-block size-2 bg-aqua" aria-hidden="true"></span>
+        <span>{c.hero.eyebrow} <span class="script text-2xl tracking-normal text-aqua normal-case">{c.hero.eyebrowScript}</span></span>
+      </p>
+      <h1 class="mt-4.5 text-[150px] leading-[136px] font-medium tracking-[-0.055em] max-lg:text-[96px] max-lg:leading-[90px] max-sm:text-[64px] max-sm:leading-[62px]">{c.hero.title}</h1>
+    </div>
+    <p class="m-0 max-w-90 pb-3.5 text-[17px] leading-[27px] text-ink-muted-dark max-lg:max-w-none">{c.hero.intro}</p>
+  </div>
+
+  <div
+    class="relative mt-14 h-[560px] [perspective:1900px] [perspective-origin:50%_40%] max-lg:origin-top max-lg:scale-[.72] max-lg:-mb-[150px] max-sm:scale-50 max-sm:-mb-[260px]"
+    role="group"
+    aria-roledescription="carousel"
+    aria-label={g.label}
+  >
+    <div aria-hidden="true" class="gallery-flick pointer-events-none absolute -top-15 left-1/2 -ml-[380px] h-[560px] w-[760px] bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,rgb(159_211_242/.30),rgb(29_95_174/.10)_55%,rgb(10_35_66/0)_75%)]"></div>
+    <div
+      data-ring
+      class="absolute top-0 left-1/2 size-0 transition-transform duration-1000 ease-brand [transform-style:preserve-3d]"
+      style={`transform: translateZ(-${R}px) rotateY(0deg);`}
+    >
+      {items.map((it, i) => (
+        <button
+          type="button"
+          data-frame={i}
+          aria-label={`${g.view} ${it.title}`}
+          class="absolute top-0 -left-[230px] h-[330px] w-[460px] cursor-pointer border-0 bg-transparent p-0 transition-[filter,opacity] duration-700 [transform-style:preserve-3d] hover:[&_.art]:scale-[1.015]"
+          style={frameStyle(i)}
+        >
+          <div class="art size-full border border-white/12 bg-black/40 p-3.5 shadow-[0_40px_80px_-30px_rgb(0_0_0/.8)] transition-transform duration-600 ease-brand">
+            <div class="size-full bg-crema p-5.5">
+              <div class:list={['flex size-full items-center justify-center p-4 text-center text-sm', toneClass[it.tone]]}>{it.media}</div>
+            </div>
+          </div>
+        </button>
+      ))}
+    </div>
+    <div aria-hidden="true" class="absolute top-[372px] left-1/2 -ml-[260px] h-10 w-[520px] rounded-[50%] bg-[radial-gradient(ellipse,rgb(0_0_0/.45),rgb(0_0_0/0)_70%)]"></div>
+  </div>
+
+  <div class="wrap relative -mt-10 grid grid-cols-[auto_minmax(0,1fr)_auto] items-end gap-8 max-sm:grid-cols-1 max-sm:gap-6">
+    <div class="max-sm:hidden" aria-hidden="true">
+      {items.map((_, i) => (
+        <span data-numeral={i} hidden={i !== 0} class="gallery-in block text-[200px] leading-[.8] font-semibold tracking-[-0.06em] text-crema max-lg:text-[140px]">{pad(i)}</span>
+      ))}
+    </div>
+    <div aria-live="polite">
+      {items.map((it, i) => (
+        <div data-placard={i} hidden={i !== 0} class="gallery-in mx-auto max-w-105 rounded-sm bg-crema px-5.5 py-4.5 text-mar shadow-[0_20px_40px_-20px_rgb(0_0_0/.6)]">
+          <p class="m-0 text-[11px] tracking-[.14em] text-ink-muted uppercase">Nº {pad(i)} · {it.kind}, {it.year}</p>
+          <p class="mt-1.5 mb-0 text-[22px] leading-7 font-semibold tracking-[-0.02em]">{it.title}</p>
+          <p class="mt-1.5 mb-0 text-sm leading-[21px] text-ink-muted">
+            <em>{g.tools}:</em> {it.tech}<br />
+            <em>{g.client}:</em> {it.client}<br />
+            <em>{g.result}:</em> {it.result}
+          </p>
+          {it.href ? (
+            <a
+              href={it.href}
+              {...(it.own ? { 'data-calendly': '', 'data-track': 'agendar', 'data-track-place': 'proyectos' } : {})}
+              class="mt-2.5 inline-flex min-h-11 items-center text-sm font-semibold text-mediterraneo no-underline"
+            >{it.action}</a>
+          ) : (
+            <span class="mt-2.5 inline-flex min-h-11 items-center text-sm font-semibold text-ink-muted">{it.action}</span>
+          )}
+        </div>
+      ))}
+    </div>
+    <div class="flex gap-2.5 pb-2" class:list={[n < 2 && 'hidden']}>
+      <button type="button" data-prev aria-label={g.prev} class="fill-btn inline-flex size-14 cursor-pointer items-center justify-center rounded-full border border-crema/35 bg-transparent text-crema">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5" /><path d="m11 18-6-6 6-6" /></svg>
+      </button>
+      <button type="button" data-next aria-label={g.next} class="fill-btn inline-flex size-14 cursor-pointer items-center justify-center rounded-full border border-crema/35 bg-transparent text-crema">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="wrap mt-10 flex items-center gap-5">
+    <div class="relative h-[18px] grow bg-[repeating-linear-gradient(90deg,rgb(247_241_232/.35)_0_1px,transparent_1px_12px)] bg-size-[100%_8px] bg-bottom bg-no-repeat" aria-hidden="true">
+      <span data-marker class="absolute bottom-0 left-0 h-[18px] w-0.5 bg-aqua transition-[left] duration-700 ease-brand"></span>
+    </div>
+    <span data-counter class="text-[13px] tracking-[.12em] text-ink-muted-dark tabular-nums">{pad(0)} / {String(n).padStart(2, '0')}</span>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-gallery]');
+  if (root) {
+    const step = Number(root.dataset.step);
+    const radius = Number(root.dataset.radius);
+    const ring = root.querySelector<HTMLElement>('[data-ring]')!;
+    const frames = [...root.querySelectorAll<HTMLElement>('[data-frame]')];
+    const placards = [...root.querySelectorAll<HTMLElement>('[data-placard]')];
+    const numerals = [...root.querySelectorAll<HTMLElement>('[data-numeral]')];
+    const marker = root.querySelector<HTMLElement>('[data-marker]')!;
+    const counter = root.querySelector<HTMLElement>('[data-counter]')!;
+    const n = frames.length;
+    const pad = (i: number) => String(i + 1).padStart(2, '0');
+    let act = 0;
+
+    const render = () => {
+      ring.style.transform = `translateZ(-${radius}px) rotateY(${-act * step}deg)`;
+      frames.forEach((f, i) => {
+        const d = Math.abs(i - act);
+        f.style.filter = d === 0 ? 'none' : 'brightness(.45) saturate(.6)';
+        f.style.opacity = d > 2 ? '0' : '1';
+        f.setAttribute('aria-current', String(d === 0));
+      });
+      placards.forEach((el, i) => { el.hidden = i !== act; });
+      numerals.forEach((el, i) => { el.hidden = i !== act; });
+      marker.style.left = `${n > 1 ? (act / (n - 1)) * 100 : 0}%`;
+      counter.textContent = `${pad(act)} / ${String(n).padStart(2, '0')}`;
+    };
+    const go = (i: number) => { act = (i + n) % n; render(); };
+
+    frames.forEach((f, i) => f.addEventListener('click', () => go(i)));
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(act - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(act + 1));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(act - 1);
+      if (e.key === 'ArrowRight') go(act + 1);
+    });
+    render();
+  }
+</script>
+
+<style>
+  @reference "../../styles/app.css";
+  @keyframes gallery-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes gallery-flick { 0%, 100%, 48% { opacity: .9; } 50% { opacity: .6; } 52% { opacity: .95; } }
+  .gallery-in { animation: gallery-in .6s var(--ease-brand); }
+  .gallery-flick { animation: gallery-flick 6s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-in, .gallery-flick { animation: none; }
+  }
+</style>

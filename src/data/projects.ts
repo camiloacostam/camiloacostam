@@ -1,52 +1,84 @@
-export interface Project {
-  title: string;
-  category: 'Sitio Web' | 'Landing Page' | 'E-commerce' | 'App Web';
+// Portfolio: only Prometálica and Atelier are shown (see CLAUDE.md).
+// [brackets] = pending content: never replace them with invented facts.
+import type { Lang } from '../i18n/utils';
+
+export interface ProjectText {
+  category: string;
+  kind: string;      // project type, e.g. "Landing page"
+  client: string;
+  result: string;
   description: string;
   shortDesc: string;
+}
+
+export interface Project {
+  slug: string;
+  title: string;
+  year: string;       // '[año]' until confirmed
   tech: string[];
-  cover?: string;
-  link?: string;
-  date: string;       // formato: 'YYYY-MM-DD'
-  featured?: boolean; // true = aparece en la sección destacada del home
+  tone: 'mar' | 'cielo'; // placeholder cover gradient until a real screenshot exists
+  cover?: string;     // real screenshot (use astro:assets / src/assets/projects/)
+  link?: string;      // empty = case study not published yet
+  featured?: boolean; // true = appears in the home featured section
+  es: ProjectText;
+  en: ProjectText;
 }
 
 export const projects: Project[] = [
   {
-    title: 'Maura Tatis',
-    category: 'Sitio Web',
-    description:
-      'Diseño y desarrollo de un sitio web profesional que refleja la marca personal y conecta con su audiencia. Solución completa desde el concepto visual hasta el deploy.',
-    shortDesc:
-      'Diseño y desarrollo de una landing page profesional que atrae y convierte novias desde Instagram.',
-    tech: ['Astro', 'Tailwind', 'Figma'],
-    cover: '',         // reemplaza con: '/images/projects/maura.jpg'
-    link: '#',
-    date: '2025-02-09',
+    slug: 'prometalica',
+    title: 'Prometálica',
+    year: '[año]',
+    tech: ['[Herramientas]'],
+    tone: 'mar',
+    cover: '',
+    link: '',
     featured: true,
+    es: {
+      category: '[Categoría]',
+      kind: '[Tipo de proyecto]',
+      client: '[Cliente]',
+      result: '[Resultado]',
+      description: '[Descripción del proyecto Prometálica]',
+      shortDesc: '[Descripción corta del proyecto Prometálica]',
+    },
+    en: {
+      category: '[Category]',
+      kind: '[Project type]',
+      client: '[Client]',
+      result: '[Result]',
+      description: '[Prometálica project description]',
+      shortDesc: '[Prometálica short description]',
+    },
   },
   {
-    title: 'Nathalia Acosta',
-    category: 'Landing Page',
-    description:
-      'Landing page diseñada para una psicóloga independiente que busca atraer nuevos pacientes desde redes sociales. Enfoque en transmitir confianza, calidez y profesionalismo desde el primer scroll.',
-    shortDesc:
-      'Landing page para psicóloga independiente que convierte visitas de Instagram en consultas agendadas.',
-    tech: ['Astro', 'Tailwind', 'Figma'],
-    cover: '',        // reemplaza con: '/images/projects/nathalia.jpg'
-    link: '#',
-    date: '2025-04-01',
+    slug: 'atelier',
+    title: 'Atelier',
+    year: '[año]',
+    tech: ['[Herramientas]'],
+    tone: 'cielo',
+    cover: '',
+    link: '',
     featured: true,
+    es: {
+      category: '[Categoría]',
+      kind: '[Tipo de proyecto]',
+      client: '[Cliente]',
+      result: '[Resultado]',
+      description: '[Descripción del proyecto Atelier]',
+      shortDesc: '[Descripción corta del proyecto Atelier]',
+    },
+    en: {
+      category: '[Category]',
+      kind: '[Project type]',
+      client: '[Client]',
+      result: '[Result]',
+      description: '[Atelier project description]',
+      shortDesc: '[Atelier short description]',
+    },
   },
-  // ── Agrega aquí más proyectos ──────────────────────────────────────────────
-  // {
-  //   title: 'Nombre del proyecto',
-  //   category: 'Landing Page',
-  //   description: 'Descripción larga para la página de proyectos.',
-  //   shortDesc: 'Descripción corta para la tarjeta.',
-  //   tech: ['React', 'Next.js'],
-  //   cover: '/images/projects/proyecto.jpg',
-  //   link: 'https://...',
-  //   date: '2025-06-01',
-  //   featured: false,
-  // },
 ];
+
+export function projectText(p: Project, lang: Lang): ProjectText {
+  return lang === 'en' ? p.en : p.es;
+}
