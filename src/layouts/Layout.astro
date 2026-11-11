@@ -1,8 +1,5 @@
 ---
-import '../styles/global.css';
 import '../styles/app.css';
-import Header from '../components/layout/Header.astro';
-import Footer from '../components/layout/Footer.astro';
 
 interface Props {
   title?: string;
@@ -10,8 +7,6 @@ interface Props {
   lang?: string;
   ogImage?: string;
   noIndex?: boolean;
-  /** 'funnel' = home rediseñado: fuentes nuevas y sin Header/Footer clásicos */
-  variant?: 'classic' | 'funnel';
 }
 
 const {
@@ -20,13 +15,9 @@ const {
   lang = 'es',
   ogImage = '/og-image.jpg',
   noIndex = false,
-  variant = 'classic',
 } = Astro.props;
 
-const isFunnel = variant === 'funnel';
-const fontsURL = isFunnel
-  ? 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap'
-  : 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap';
+const fontsURL = 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
@@ -97,41 +88,16 @@ const jsonLd = {
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {isFunnel ? (
-      <>
-        <!-- Fuentes sin bloquear el render (display=swap muestra la fuente de sistema mientras cargan) -->
-        <link rel="preload" as="style" href={fontsURL} />
-        <link rel="stylesheet" href={fontsURL} media="print" onload="this.media='all'" />
-        <noscript><link rel="stylesheet" href={fontsURL} /></noscript>
-      </>
-    ) : (
-      <link href={fontsURL} rel="stylesheet" />
-    )}
+    <!-- Fuentes sin bloquear el render (display=swap muestra la fuente de sistema mientras cargan) -->
+    <link rel="preload" as="style" href={fontsURL} />
+    <link rel="stylesheet" href={fontsURL} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontsURL} /></noscript>
 
     <!-- Schema.org JSON-LD -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class:list={{ funnel: isFunnel }}>
-    {isFunnel ? (
-      <slot />
-    ) : (
-      <>
-        <!-- Runs synchronously before first paint to avoid flash -->
-        <script is:inline>
-          (function () {
-            const saved = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = saved ?? (prefersDark ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
-          })();
-        </script>
-        <Header />
-        <main>
-          <slot />
-        </main>
-        <Footer />
-      </>
-    )}
+  <body class="funnel">
+    <slot />
 
     <!-- Calendly: se carga con el primer clic en un botón [data-calendly] -->
     <script>

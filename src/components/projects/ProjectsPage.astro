@@ -12,7 +12,7 @@ import { getLang } from '../../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const { meta } = getProjectsPage(lang);
 ---
-<Layout title={meta.title} description={meta.description} lang={lang} variant="funnel">
+<Layout title={meta.title} description={meta.description} lang={lang}>
   <SiteNav current="projects" tone="dark" />
   <div class="relative overflow-hidden bg-mar text-crema">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-[radial-gradient(rgb(255_255_255/.9)_1px,transparent_1px)] bg-size-[3px_3px] opacity-[.06]"></div>

@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const copy = blogPage.en.post;
 ---
-<Layout title={`${post.data.title} — ${copy.titleSuffix}`} description={post.data.excerpt} lang="en" variant="funnel">
+<Layout title={`${post.data.title} — ${copy.titleSuffix}`} description={post.data.excerpt} lang="en">
   <SiteNav current="blog" tone="light" />
   <PostPage post={post} />
   <SiteFooter tone="light" />

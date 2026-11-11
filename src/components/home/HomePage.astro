@@ -16,7 +16,7 @@ import { getLang } from '../../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const { meta } = getHome(lang);
 ---
-<Layout title={meta.title} description={meta.description} lang={lang} variant="funnel">
+<Layout title={meta.title} description={meta.description} lang={lang}>
   <Nav />
   <main>
     <Hero />
