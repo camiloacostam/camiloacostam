@@ -1,6 +1,6 @@
 ---
 // Closing CTA: book a call or write on WhatsApp.
-import { links } from '../../data/home';
+import { isPending, links } from '../../data/home';
 import { getProjectsPage } from '../../data/projects-page';
 import { getLang } from '../../i18n/utils';
 
@@ -40,7 +40,7 @@ const c = getProjectsPage(getLang(Astro.currentLocale)).closing;
       <div class="bg-crema p-5.5">
         <div class="flex aspect-[4/3] flex-col items-center justify-center gap-1.5 border border-dashed border-ink-muted-dark p-4 text-center text-ink-muted">
           <span class="script text-[30px] text-mediterraneo">{c.brand}</span>
-          <span class="text-xs tracking-[.14em] uppercase">{c.spots}</span>
+          {!isPending(c.spots) && <span class="text-xs tracking-[.14em] uppercase">{c.spots}</span>}
         </div>
       </div>
     </div>

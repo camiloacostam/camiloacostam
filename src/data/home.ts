@@ -1,5 +1,10 @@
 // Contenido del home (rediseño "funnel").
 // Todo lo que está entre [corchetes] es contenido pendiente: reemplázalo por el dato real.
+import type { ImageMetadata } from 'astro';
+import prometalicaDesktop from '../assets/projects/prometalica-desktop.jpg';
+import atelierDesktop from '../assets/projects/atelier-desktop.jpg';
+import prometalicaMobile from '../assets/projects/prometalica-mobile.jpg';
+import atelierMobile from '../assets/projects/atelier-mobile.jpg';
 
 export const links = {
   booking:   'https://cal.com/camiloacostam/cafecito-para-conocernos', // Cal.com
@@ -25,7 +30,9 @@ export interface CaseItem {
   title: string;
   cat: string;
   desc: string;
-  media: string;     // placeholder hasta tener la captura
+  media: string;     // texto alternativo de la captura (o placeholder si no hay imagen)
+  image?: ImageMetadata;       // captura de escritorio
+  imageMobile?: ImageMetadata; // captura de celular (franjas en móvil)
   href: string;
   tone: 'mar' | 'cielo' | 'crema' | 'aqua';
   cta?: boolean;
@@ -124,7 +131,7 @@ const es = {
     intro: 'Todo lo que tu marca necesita para vender en línea, en un solo lugar.',
     case: {
       eyebrow: 'Caso real · Metalmecánica industrial',
-      title: 'Prometálica',
+      title: 'Prometálicas Solutions',
       desc: 'Su web explica en segundos qué hacen y lleva a cada visitante a pedir su cotización en 4 preguntas.',
       href: 'https://prometalica.com.co',
       linkLabel: 'Ver el sitio en vivo',
@@ -169,14 +176,14 @@ const es = {
     hint: 'Toca una franja para abrirla',
     items: [
       {
-        name: 'Prometálica', title: 'Prometálica', cat: '[Tipo] · [Sector]',
-        desc: '[Qué se hizo y resultado: X solicitudes al mes]',
-        media: '[Captura — Prometálica]', href: '/proyectos/', tone: 'mar',
+        name: 'Prometálicas', title: 'Prometálicas Solutions', cat: 'Sitio corporativo · Metalmecánica industrial',
+        desc: 'Web corporativa que explica sus servicios en segundos y lleva a cada visitante a cotizar en 4 preguntas.',
+        media: 'Página de inicio de prometalica.com.co', image: prometalicaDesktop, imageMobile: prometalicaMobile, href: '/proyectos/', tone: 'mar',
       },
       {
-        name: 'Atelier', title: 'Atelier', cat: '[Tipo] · [Sector]',
-        desc: '[Qué se hizo y resultado: X solicitudes al mes]',
-        media: '[Captura — Atelier]', href: '/proyectos/', tone: 'cielo',
+        name: 'Atelier', title: 'Atelier', cat: 'Tienda en línea · Mobiliario de lujo',
+        desc: 'Tienda en línea de mobiliario de lujo hecho en Colombia, con colección, carrito y proyectos a medida.',
+        media: 'Página de inicio de atelier.prometalica.com.co', image: atelierDesktop, imageMobile: atelierMobile, href: '/proyectos/', tone: 'cielo',
       },
       {
         name: '¿El próximo eres tú?', title: 'Tu marca podría estar aquí.', cat: 'Cupos este mes',
@@ -378,7 +385,7 @@ const en: HomeContent = {
     intro: 'Everything your brand needs to sell online, in one place.',
     case: {
       eyebrow: 'Real case · Industrial metalworking',
-      title: 'Prometálica',
+      title: 'Prometálicas Solutions',
       desc: 'Their website explains what they do in seconds and walks every visitor to a quote in 4 questions.',
       href: 'https://prometalica.com.co',
       linkLabel: 'See the live site',
@@ -421,14 +428,14 @@ const en: HomeContent = {
     hint: 'Tap a strip to open it',
     items: [
       {
-        name: 'Prometálica', title: 'Prometálica', cat: '[Type] · [Industry]',
-        desc: '[What was built and the result: X requests per month]',
-        media: '[Screenshot — Prometálica]', href: '/en/proyectos/', tone: 'mar',
+        name: 'Prometálicas', title: 'Prometálicas Solutions', cat: 'Corporate website · Industrial metalworking',
+        desc: 'A corporate website that explains its services in seconds and walks every visitor to a quote in 4 questions.',
+        media: 'Home page of prometalica.com.co', image: prometalicaDesktop, imageMobile: prometalicaMobile, href: '/en/proyectos/', tone: 'mar',
       },
       {
-        name: 'Atelier', title: 'Atelier', cat: '[Type] · [Industry]',
-        desc: '[What was built and the result: X requests per month]',
-        media: '[Screenshot — Atelier]', href: '/en/proyectos/', tone: 'cielo',
+        name: 'Atelier', title: 'Atelier', cat: 'Online store · Luxury furniture',
+        desc: 'An online store for luxury furniture made in Colombia, with a collection, cart and custom projects.',
+        media: 'Home page of atelier.prometalica.com.co', image: atelierDesktop, imageMobile: atelierMobile, href: '/en/proyectos/', tone: 'cielo',
       },
       {
         name: 'Are you next?', title: 'Your brand could be here.', cat: 'Spots this month',

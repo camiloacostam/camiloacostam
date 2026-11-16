@@ -22,7 +22,7 @@ const es = {
     client: 'Cliente',
     result: 'Resultado',
     soon: 'Caso completo próximamente',
-    fullCase: 'Ver caso completo →',
+    fullCase: 'Ver el sitio en vivo ↗',
   },
   own: {
     title: 'Tu proyecto aquí',
@@ -73,7 +73,7 @@ const en: typeof es = {
     client: 'Client',
     result: 'Result',
     soon: 'Full case study coming soon',
-    fullCase: 'See the full case →',
+    fullCase: 'See the live site ↗',
   },
   own: {
     title: 'Your project here',

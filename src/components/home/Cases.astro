@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { getHome, links } from '../../data/home';
 import { getLang } from '../../i18n/utils';
@@ -63,10 +64,16 @@ const tones = {
                     'absolute flex items-center justify-center text-center transition-transform duration-[900ms] ease-brand group-hover/strip:scale-[1.03]',
                     p.cta
                       ? 'top-[-60px] right-[-60px] size-80 rounded-full bg-white/35 text-[0px] max-sm:top-[-50px] max-sm:right-[-50px] max-sm:size-[220px]'
-                      : 'inset-x-6 top-6 bottom-[150px] rounded-[18px] p-4 text-sm max-sm:inset-x-3.5 max-sm:top-3.5 max-sm:bottom-[186px] max-sm:rounded-[14px] max-sm:p-3 max-sm:text-xs',
+                      : 'inset-x-6 top-6 bottom-[190px] rounded-[18px] p-4 text-sm max-sm:inset-x-3.5 max-sm:top-3.5 max-sm:bottom-[236px] max-sm:rounded-[14px] max-sm:p-3 max-sm:text-xs',
                     tone.media,
+                    { 'overflow-hidden p-0!': p.image },
                   ]}
-                >{p.media}</div>
+                >{p.image ? (
+                  <>
+                    <Image src={p.image} alt={p.media} widths={[720, 1440]} sizes="720px" class="size-full object-cover object-top max-sm:hidden" />
+                    {p.imageMobile && <Image src={p.imageMobile} alt={p.media} widths={[320, 640]} sizes="320px" class="hidden size-full object-cover object-top max-sm:block" />}
+                  </>
+                ) : p.media}</div>
                 <div class="relative flex flex-wrap items-end justify-between gap-6 p-8 max-sm:block max-sm:p-[18px]">
                   <div class="max-w-[420px]">
                     <p class="text-xs leading-[18px] tracking-[.08em] uppercase opacity-75 max-sm:text-[11px]">{num} · {p.cat}</p>

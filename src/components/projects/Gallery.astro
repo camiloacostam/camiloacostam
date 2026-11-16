@@ -1,6 +1,7 @@
 ---
 // Hero + 3D ring gallery. Frames are positioned server-side; the script only rotates the ring.
-import { links } from '../../data/home';
+import { Image } from 'astro:assets';
+import { isPending, links } from '../../data/home';
 import { projects, projectText } from '../../data/projects';
 import { getProjectsPage } from '../../data/projects-page';
 import { getLang } from '../../i18n/utils';
@@ -19,12 +20,12 @@ const items = [
     const x = projectText(p, lang);
     return {
       title: p.title, kind: x.kind, year: p.year, tech: p.tech.join(' · '), client: x.client, result: x.result,
-      media: `[${g.media} — ${p.title}]`, tone: p.tone, href: p.link ?? '', action: p.link ? g.fullCase : g.soon, own: false,
+      media: `${g.media} — ${p.title}`, image: p.screens?.desktop, tone: p.tone, href: p.link ?? '', action: p.link ? g.fullCase : g.soon, own: false,
     };
   }),
   {
     title: own.title, kind: own.kind, year: String(new Date().getFullYear()), tech: own.tools, client: own.client, result: own.result,
-    media: own.media, tone: 'own' as const, href: links.booking, action: own.action, own: true,
+    media: own.media, image: undefined, tone: 'own' as const, href: links.booking, action: own.action, own: true,
   },
 ];
 const n = items.length;
@@ -71,7 +72,9 @@ const frameStyle = (i: number) =>
         >
           <div class="art size-full border border-white/12 bg-black/40 p-3.5 shadow-[0_40px_80px_-30px_rgb(0_0_0/.8)] transition-transform duration-600 ease-brand">
             <div class="size-full bg-crema p-5.5">
-              <div class:list={['flex size-full items-center justify-center p-4 text-center text-sm', toneClass[it.tone]]}>{it.media}</div>
+              {it.image
+                ? <Image src={it.image} alt={it.media} widths={[420, 840]} sizes="420px" class="size-full object-cover object-top" />
+                : <div class:list={['flex size-full items-center justify-center p-4 text-center text-sm', toneClass[it.tone]]}>{it.media}</div>}
             </div>
           </div>
         </button>
@@ -89,17 +92,19 @@ const frameStyle = (i: number) =>
     <div aria-live="polite">
       {items.map((it, i) => (
         <div data-placard={i} hidden={i !== 0} class="gallery-in mx-auto max-w-105 rounded-sm bg-crema px-5.5 py-4.5 text-mar shadow-[0_20px_40px_-20px_rgb(0_0_0/.6)]">
-          <p class="m-0 text-[11px] tracking-[.14em] text-ink-muted uppercase">Nº {pad(i)} · {it.kind}, {it.year}</p>
+          <p class="m-0 text-[11px] tracking-[.14em] text-ink-muted uppercase">Nº {pad(i)} · {it.kind}{!isPending(it.year) && `, ${it.year}`}</p>
           <p class="mt-1.5 mb-0 text-[22px] leading-7 font-semibold tracking-[-0.02em]">{it.title}</p>
           <p class="mt-1.5 mb-0 text-sm leading-[21px] text-ink-muted">
-            <em>{g.tools}:</em> {it.tech}<br />
-            <em>{g.client}:</em> {it.client}<br />
-            <em>{g.result}:</em> {it.result}
+            {!isPending(it.tech) && <><em>{g.tools}:</em> {it.tech}<br /></>}
+            <em>{g.client}:</em> {it.client}
+            {!isPending(it.result) && <><br /><em>{g.result}:</em> {it.result}</>}
           </p>
           {it.href ? (
             <a
               href={it.href}
-              {...(it.own ? { 'data-booking': '', 'data-track': 'agendar', 'data-track-place': 'proyectos' } : {})}
+              {...(it.own
+                ? { 'data-booking': '', 'data-track': 'agendar', 'data-track-place': 'proyectos' }
+                : { target: '_blank', rel: 'noopener', 'data-track': 'case_site', 'data-track-place': 'galeria' })}
               class="mt-2.5 inline-flex min-h-11 items-center text-sm font-semibold text-mediterraneo no-underline"
             >{it.action}</a>
           ) : (
