@@ -66,9 +66,9 @@ export interface ChatLine {
 
 const es = {
   meta: {
-    title: 'Camilo Acosta — Webs para psicólogos y profesionales de la salud',
+    title: 'Camilo Acosta — Webs estratégicas para profesionales independientes',
     description:
-      'Diseño y desarrollo webs para psicólogos, dentistas y profesionales independientes en Cartagena y Colombia. Listas en 7 días, con agenda en línea y WhatsApp integrados.',
+      'Diseño y desarrollo webs para profesionales independientes y negocios en Cartagena y Colombia. Listas en 7 días, con agenda en línea y botón de WhatsApp.',
   },
   nav: {
     label: 'Principal',
@@ -321,9 +321,9 @@ export type HomeContent = typeof es;
 
 const en: HomeContent = {
   meta: {
-    title: 'Camilo Acosta — Websites for psychologists and health professionals',
+    title: 'Camilo Acosta — Strategic websites for independent professionals',
     description:
-      'I design and build websites for psychologists, dentists and independent professionals. Ready in 7 days, with online booking and WhatsApp built in.',
+      'I design and build websites for independent professionals and businesses. Ready in 7 days, with online booking and a WhatsApp button.',
   },
   nav: {
     label: 'Main',
