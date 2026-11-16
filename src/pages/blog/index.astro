@@ -3,11 +3,14 @@ import Layout from '../../layouts/Layout.astro';
 import SiteNav from '../../components/site/SiteNav.astro';
 import SiteFooter from '../../components/site/SiteFooter.astro';
 import BlogIndex from '../../components/blog/BlogIndex.astro';
+import { getCollection } from 'astro:content';
 import { blogPage } from '../../data/blog-page';
 
 const copy = blogPage.es.index;
+// Sin artículos el blog no se enlaza ni se indexa (ver astro.config.mjs → sitemap)
+const hasPosts = (await getCollection('blog').catch(() => [])).length > 0;
 ---
-<Layout title={copy.metaTitle} description={copy.metaDescription}>
+<Layout title={copy.metaTitle} description={copy.metaDescription} noIndex={!hasPosts}>
   <SiteNav current="blog" tone="light" />
   <BlogIndex />
   <SiteFooter tone="light" />

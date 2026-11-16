@@ -10,7 +10,8 @@ export const links = {
   booking:   'https://cal.com/camiloacostam/cafecito-para-conocernos', // Cal.com
   whatsapp:  'https://wa.me/573104327497',
   email:     'hola@camiloacosta.dev',
-  instagram: '', // [URL de Instagram] — vacío = no se muestra
+  instagram: 'https://www.instagram.com/camiloacosta.dev/',
+  x:         'https://x.com/camiloacostam',
   linkedin:  'https://www.linkedin.com/in/camilo-acosta-m/',
   github:    'https://github.com/camiloacostam',
 };
@@ -213,7 +214,6 @@ const es = {
   plans: {
     title: 'Paquetes',
     intro: 'Cada negocio es distinto. En una llamada de diagnóstico gratis de 30 minutos entiendo lo que necesitas y te doy una propuesta clara, sin compromiso.',
-    currencyNote: 'Precios en dólares (USD). Para clientes en Colombia se puede facturar en pesos a la TRM del día.',
     dotsLabel: 'Paquete',
     includesLabel: 'Incluye',
     deliveryLabel: 'Entrega',
@@ -226,15 +226,15 @@ const es = {
         includes: ['Diseño a medida de tu marca', 'Agenda en línea y botón de WhatsApp', 'Textos pensados para convertir', 'Lista para Google y para celular'],
         delivery: '7 días',
         result: 'Más consultas agendadas, sin ir y venir por mensajes',
-        price: 'desde USD 200',
+        price: 'Precio según tu proyecto',
       },
       {
         name: 'Sitio profesional', badge: 'Más elegido',
         desc: 'Tu marca completa en internet: servicios, sobre ti, blog y contacto.',
         includes: ['Todo lo de la landing page', 'Varias páginas para tus servicios', 'Blog que tú mismo puedes editar', 'SEO básico para aparecer en Google'],
-        delivery: '[TIEMPO DE ENTREGA]',
+        delivery: '2 a 3 semanas',
         result: 'Una presencia que genera confianza y te trae clientes desde Google',
-        price: 'desde USD 500', featured: true,
+        price: 'Precio según tu proyecto', featured: true,
       },
       {
         name: 'Acompañamiento',
@@ -242,7 +242,7 @@ const es = {
         includes: ['Cambios y actualizaciones', 'Hosting, seguridad y respaldos', 'Reporte mensual de visitas y citas', 'Ajustes para que te agenden más'],
         delivery: 'Mes a mes',
         result: 'Una web siempre al día mientras tú atiendes a tus clientes',
-        price: 'USD 25', per: ' /mes',
+        price: 'Precio según tu proyecto',
       },
     ] as PlanItem[],
   },
@@ -253,7 +253,7 @@ const es = {
     moreCta: 'Escríbeme por WhatsApp',
     whatsappText: 'Hola Camilo, vi tu web y tengo una pregunta: ',
     items: [
-      ['¿Cuánto cuesta una web?', 'Depende de lo que necesites. Las landing pages empiezan desde USD 200 y en la llamada gratis te doy un valor exacto.'],
+      ['¿Cuánto cuesta una web?', 'Depende de lo que necesites. En la llamada de diagnóstico gratis entiendo tu caso y te doy una propuesta con un valor exacto, sin compromiso.'],
       ['¿Cómo me llegan las citas?', 'Tus clientes eligen día y hora en tu agenda en línea y te llega la confirmación. Si prefieren escribir, tienen tu WhatsApp a un clic.'],
       ['¿De verdad está lista en 7 días?', 'Sí, para una landing page. Te pido textos, fotos y logo antes de empezar; si no los tienes, te ayudo a prepararlos.'],
       ['¿Qué necesito tener listo?', 'Tu logo (o tu nombre), algunas fotos tuyas y una idea de tus servicios. Lo demás lo construimos juntos.'],
@@ -465,7 +465,6 @@ const en: HomeContent = {
   plans: {
     title: 'Packages',
     intro: 'Every business is different. On a free 30-minute assessment call I learn what you need and give you a clear proposal, no strings attached.',
-    currencyNote: 'Prices in US dollars (USD). Clients in Colombia can be invoiced in pesos at the day’s exchange rate (TRM).',
     dotsLabel: 'Package',
     includesLabel: 'Includes',
     deliveryLabel: 'Delivery',
@@ -478,15 +477,15 @@ const en: HomeContent = {
         includes: ['Custom design for your brand', 'Online booking and WhatsApp button', 'Copy written to convert', 'Ready for Google and mobile'],
         delivery: '7 days',
         result: 'More booked appointments, no message ping-pong',
-        price: 'from USD 200',
+        price: 'Price based on your project',
       },
       {
         name: 'Professional site', badge: 'Most popular',
         desc: 'Your full brand online: services, about you, blog and contact.',
         includes: ['Everything in the landing page', 'Several pages for your services', 'A blog you can edit yourself', 'Basic SEO to show up on Google'],
-        delivery: '[DELIVERY TIME]',
+        delivery: '2 to 3 weeks',
         result: 'A presence that builds trust and brings you clients from Google',
-        price: 'from USD 500', featured: true,
+        price: 'Price based on your project', featured: true,
       },
       {
         name: 'Ongoing care',
@@ -494,7 +493,7 @@ const en: HomeContent = {
         includes: ['Changes and updates', 'Hosting, security and backups', 'Monthly report on visits and bookings', 'Tweaks so you get more bookings'],
         delivery: 'Month to month',
         result: 'A website that’s always up to date while you take care of your clients',
-        price: 'USD 25', per: ' /month',
+        price: 'Price based on your project',
       },
     ],
   },
@@ -505,7 +504,7 @@ const en: HomeContent = {
     moreCta: 'Message me on WhatsApp',
     whatsappText: 'Hi Camilo, I saw your website and I have a question: ',
     items: [
-      ['How much does a website cost?', 'It depends on what you need. Landing pages start from USD 200, and on the free call I’ll give you an exact quote.'],
+      ['How much does a website cost?', 'It depends on what you need. On the free assessment call I get to know your case and send you a proposal with an exact price, no strings attached.'],
       ['How do appointments reach me?', 'Your clients pick a day and time in your online calendar and you get the confirmation. If they’d rather write, your WhatsApp is one tap away.'],
       ['Is it really ready in 7 days?', 'Yes, for a landing page. I’ll ask for your copy, photos and logo before we start; if you don’t have them, I’ll help you prepare them.'],
       ['What do I need to have ready?', 'Your logo (or your name), a few photos of you and an idea of your services. We build the rest together.'],

@@ -54,8 +54,5 @@ const cta   = 'inline-flex items-center justify-center rounded-full bg-aqua px-[
     <div class="mt-4 hidden justify-center gap-1.5 max-sm:flex" aria-hidden="true" data-plan-dots>
       {c.items.map((_, i) => <span class:list={['size-1.5 rounded-full bg-line transition-all duration-300 [&.is-active]:w-5 [&.is-active]:bg-mediterraneo', { 'is-active': i === 0 }]}></span>)}
     </div>
-
-
-    <p class="mt-6 text-sm leading-[21px] text-ink-muted max-sm:mx-5 max-sm:mt-5 max-sm:text-[13px] max-sm:leading-[19px]">{c.currencyNote}</p>
   </div>
 </section>

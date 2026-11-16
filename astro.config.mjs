@@ -3,6 +3,10 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { rename, rm } from 'node:fs/promises';
+import { readdirSync } from 'node:fs';
+
+// Mientras no haya artículos, /blog/ queda fuera del sitemap (y con noindex en la página)
+const hasPosts = readdirSync(new URL('./src/content/blog/', import.meta.url)).some((f) => /\.mdx?$/.test(f));
 
 // Astro genera /en/404/index.html, pero Cloudflare Pages busca /en/404.html
 const enNotFound = {
@@ -20,7 +24,13 @@ export default defineConfig({
   // CSS dentro del HTML: evita peticiones que bloquean el primer render
   build: { inlineStylesheets: 'always' },
   integrations: [
-    sitemap({ filter: (page) => !/\/404\/?$/.test(new URL(page).pathname) }),
+    sitemap({
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        if (/\/404\/?$/.test(path)) return false;
+        return hasPosts || !/^(\/en)?\/blog\//.test(path);
+      },
+    }),
     enNotFound,
   ],
   vite: { plugins: [tailwindcss()] },

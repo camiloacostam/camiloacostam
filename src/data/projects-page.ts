@@ -10,7 +10,7 @@ const es = {
     eyebrowScript: 'hoy',
     title: 'La galería',
     intro:
-      'Cada proyecto es una web hecha a medida para un profesional independiente. Usa las flechas para verlos y mira cómo le ayudan a conseguir clientes.',
+      'Webs para profesionales y negocios independientes que quieren que los elijan. Usa las flechas para recorrer los proyectos.',
   },
   gallery: {
     label: 'Galería de proyectos',
@@ -61,7 +61,7 @@ const en: typeof es = {
     eyebrowScript: 'today',
     title: 'The gallery',
     intro:
-      'Every project is a custom website built for an independent professional. Use the arrows to browse them and see how each one helps win clients.',
+      'Websites for independent professionals and businesses that want to be chosen. Use the arrows to browse the projects.',
   },
   gallery: {
     label: 'Project gallery',

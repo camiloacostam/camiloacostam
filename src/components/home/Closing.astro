@@ -14,6 +14,7 @@ const mailHref = `mailto:${links.email}?subject=${encodeURIComponent(c.emailSubj
 
 const socials = [
   links.instagram && { label: 'Instagram', href: links.instagram },
+  { label: 'X',        href: links.x },
   { label: 'LinkedIn', href: links.linkedin },
   { label: 'GitHub',   href: links.github },
 ].filter(Boolean) as { label: string; href: string }[];

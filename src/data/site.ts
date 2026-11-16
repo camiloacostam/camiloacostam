@@ -11,7 +11,7 @@ const es = {
     links: [
       { id: 'home',     href: '/',           label: 'Inicio' },
       { id: 'projects', href: '/proyectos/', label: 'Proyectos' },
-      { id: 'blog',     href: '/blog/',      label: 'Blog' },
+      // Blog oculto del menú hasta que haya artículos (la ruta /blog/ sigue existiendo)
       { id: 'contact',  href: '/#contacto',  label: 'Contacto' },
     ] as { id: SitePage; href: string; label: string }[],
     cta: 'Agenda tu diagnóstico',
@@ -32,7 +32,6 @@ const en: typeof es = {
     links: [
       { id: 'home',     href: '/en/',           label: 'Home' },
       { id: 'projects', href: '/en/proyectos/', label: 'Work' },
-      { id: 'blog',     href: '/en/blog/',      label: 'Blog' },
       { id: 'contact',  href: '/en/#contacto',  label: 'Contact' },
     ],
     cta: 'Book your free audit',

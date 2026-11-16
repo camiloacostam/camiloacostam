@@ -1,5 +1,6 @@
 ---
 import '../styles/app.css';
+import { links } from '../data/home';
 
 interface Props {
   title?: string;
@@ -13,7 +14,7 @@ interface Props {
 
 const {
   title = 'Camilo Acosta — Diseño & Desarrollo Web en Cartagena',
-  description = 'Diseñador y desarrollador web Full Stack en Cartagena, Colombia. Landing pages para psicólogos, wedding planners, coaches y emprendedores. Diseño + desarrollo + copy en un solo lugar.',
+  description = 'Diseñador y desarrollador web en Cartagena, Colombia. Webs y landing pages para profesionales independientes: psicólogos, odontólogos, coaches y más. Diseño, desarrollo y textos en un solo lugar.',
   lang = 'es',
   ogImage = '/og-image.jpg',
   noIndex = false,
@@ -21,6 +22,9 @@ const {
 } = Astro.props;
 
 const fontsURL = 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap';
+
+// Umami: solo se carga si existe PUBLIC_UMAMI_WEBSITE_ID (en .env y en Cloudflare Pages)
+const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
@@ -34,18 +38,17 @@ const jsonLd = {
   '@type': 'Person',
   name: 'Camilo Acosta',
   url: 'https://camiloacosta.dev',
-  jobTitle: isEnglish ? 'Full Stack Web Designer & Developer' : 'Diseñador y Desarrollador Web Full Stack',
+  jobTitle: isEnglish ? 'Web Designer & Developer' : 'Diseñador y desarrollador web',
+  description: isEnglish
+    ? 'Websites and landing pages for independent professionals that want to get booked.'
+    : 'Webs y landing pages para profesionales independientes que quieren que los agenden.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Cartagena',
     addressRegion: 'Bolívar',
     addressCountry: 'CO',
   },
-  sameAs: [
-    'https://www.linkedin.com/in/camiloacostam',
-    'https://github.com/camiloacostam',
-    'https://twitter.com/camiloacostam',
-  ],
+  sameAs: [links.linkedin, links.instagram, links.x, links.github],
 };
 ---
 <!doctype html>
@@ -58,7 +61,7 @@ const jsonLd = {
     <!-- SEO básico -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="diseñador web Cartagena, landing page Colombia, desarrollo web Cartagena, landing page para psicólogos, landing page para wedding planners, diseño web freelance Colombia, Camilo Acosta" />
+    <meta name="keywords" content="diseñador web Cartagena, landing page Colombia, desarrollo web Cartagena, web para profesionales independientes, landing page para psicólogos, web para odontólogos, diseño web freelance Colombia, Camilo Acosta" />
     <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonicalURL} />
 
@@ -99,6 +102,9 @@ const jsonLd = {
     <link rel="preload" as="style" href={fontsURL} />
     <link rel="stylesheet" href={fontsURL} media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href={fontsURL} /></noscript>
+
+    <!-- Analítica (Umami): sin la variable de entorno no se carga nada -->
+    {umamiId && <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id={umamiId}></script>}
 
     <!-- Schema.org JSON-LD -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
