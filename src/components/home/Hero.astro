@@ -16,7 +16,7 @@ const calloutPos = [
   'top-[500px] right-4 max-sm:top-[330px]',
 ];
 ---
-<section id="inicio" class="relative flex min-h-[920px] flex-col overflow-hidden bg-mar text-crema max-lg:min-h-0" data-nav="dark">
+<section id="inicio" class="relative flex min-h-[max(920px,100svh)] flex-col overflow-hidden bg-mar text-crema max-lg:min-h-0" data-nav="dark">
   <div class="blob top-[-120px] right-[4%] size-[620px] bg-mediterraneo" aria-hidden="true"></div>
   <div class="blob right-[30%] -bottom-20 size-[420px] bg-aqua opacity-30! [animation-delay:-6s]" aria-hidden="true"></div>
 
@@ -50,11 +50,10 @@ const calloutPos = [
         alt={c.photoAlt}
         widths={[320, 430, 649]}
         sizes="(max-width: 640px) 310px, 430px"
-        class="absolute bottom-0 left-[125px] h-auto w-[430px] drop-shadow-[0_30px_40px_rgb(0_0_0/.35)] max-sm:left-1/2 max-sm:-ml-[140px] max-sm:w-[310px]"
+        class="absolute bottom-0 left-[125px] h-auto w-[430px] drop-shadow-[0_30px_40px_rgb(0_0_0/.35)] [mask-image:linear-gradient(to_bottom,black_72%,transparent)] max-sm:left-1/2 max-sm:-ml-[140px] max-sm:w-[310px]"
         loading="eager"
         fetchpriority="high"
       />
-      <div class="absolute right-0 bottom-0 left-[60px] h-[130px] bg-linear-to-t from-mar from-10% to-mar/0 max-sm:left-0 max-sm:h-[90px]" aria-hidden="true"></div>
 
       <!-- Mockup de una web de ejemplo (consultorio) con su agenda en línea -->
       <div class="absolute top-[318px] left-0 h-[580px] w-[280px] origin-top-left scale-60 max-sm:top-[196px] max-sm:left-3.5 max-sm:scale-[.42]" aria-hidden="true">
