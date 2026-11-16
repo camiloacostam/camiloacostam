@@ -218,3 +218,14 @@ Lo que sigue en `[corchetes]` o depende de una decisión (detalle en `TODO.md`):
 - Botón fijo en móvil que se oculta cuando hay otro CTA o el calendario a la vista.
 - Eventos: `schedule_click` y `whatsapp_click` con `place` = `hero`, `agenda`, `cierre` o `sticky`; `agendado` cuando Cal.com confirma la reserva. La analítica vive en `src/scripts/track.ts` y se inicializa una sola vez en `Layout.astro` para todas las páginas.
 - Lighthouse móvil (preview local): Performance 100 · Accesibilidad 95 · Buenas prácticas 100 · SEO 100. El 95 viene de contraste medido a mitad de la animación de entrada de bloques bajo el pliegue; los pares reales de colores pasan AA (mínimo 5,67:1).
+
+---
+
+## Ajustes de noviembre 2026
+
+- **Precios:** el home no muestra precios; cada paquete dice "Precio según tu proyecto". Sitio profesional: entrega en 2 a 3 semanas.
+- **Blog oculto:** fuera del menú y del sitemap, con `noindex`, mientras `src/content/blog/` no tenga artículos. Al publicar el primero, vuelve al sitemap solo; el enlace del menú se agrega de nuevo en `src/data/site.ts`.
+- **Redes:** Instagram y X (`links` en `src/data/home.ts`) aparecen en el menú móvil, el cierre del home y el footer, y en el `sameAs` del JSON-LD.
+- **Umami:** el script (`https://cloud.umami.is/script.js`) se carga solo si existe `PUBLIC_UMAMI_WEBSITE_ID` en el build (en `.env` local y en las variables de Cloudflare Pages). Los eventos `data-track` le llegan con `umami.track()`.
+- **Contenido oculto hasta tener datos reales:** cifras (`stats`), testimonios, y año/herramientas/resultado de los proyectos (`isPending()`).
+

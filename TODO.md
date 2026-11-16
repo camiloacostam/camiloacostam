@@ -15,14 +15,14 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 - [ ] **Cifras reales**: proyectos entregados, años de experiencia, clientes, países y cupos por mes. Hoy son `[N]` en `src/data/home.ts`.
 - [ ] **Prometálica y Atelier**: tipo, sector, qué se hizo, URL en vivo, resultado con métricas, capturas desktop + móvil y testimonio.
 - [x] **Precios** definidos en USD: Landing desde USD 200 · Sitio profesional desde USD 500 · Acompañamiento USD 25/mes.
-- [ ] **Sitio profesional**: cuántas páginas incluye (hoy dice "Hasta [N] páginas").
+- [ ] **Sitio profesional**: cuántas páginas incluye. Entrega definida: 2 a 3 semanas.
 - [ ] **FAQ**: qué incluye dominio, hosting y correo.
 - [ ] **Testimonio** con nombre, profesión y foto.
-- [ ] **URL de Instagram**.
+- [x] **URL de Instagram** y X agregadas.
 - [x] Formulario en el home: decidido en el brief (formulario por pasos en el cierre que alimenta a Cal.com).
 - [ ] Confirmar las opciones de nicho del formulario: el brief pide `Wedding planner`; se puso `Odontología` siguiendo `CLAUDE.md` (se cambia en `src/data/lead.ts`).
 - [ ] Confirmar los valores de la tabla "Valores a definir" del brief (cifras, precios, dominio/hosting, resultados de Prometálica y Atelier, testimonio).
-- [ ] Decidir el blog: publicar 2 o 3 artículos o quitarlo del menú hasta tener contenido.
+- [x] Blog oculto del menú (y con `noindex`) hasta publicar 2 o 3 artículos.
 - [ ] Decidir el inglés: completar o quitar temporalmente.
 
 ## Configuración fuera del código
@@ -55,8 +55,8 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 - [ ] 🎨 Hero con el diferenciador y beneficio concreto.
 - [ ] 🎨 Servicios en términos de resultados.
 - [ ] 🎨 Cifras honestas (pendiente de los datos reales).
-- [ ] Actualizar `meta description`, `og:description` y JSON-LD con el nicho (psicólogos y dentistas, Cartagena). Hoy aún mencionan wedding planners.
-- [ ] Corregir el LinkedIn del JSON-LD (`/in/camiloacostam` → `/in/camilo-acosta-m/`).
+- [x] `meta description` y JSON-LD actualizados para profesionales independientes.
+- [x] LinkedIn del JSON-LD corregido.
 
 ### Versión en inglés
 - [ ] Traducir descripciones y etiquetas de proyectos, fechas con locale `en`, filtros y estados vacíos de `/en/proyectos/`.
@@ -77,7 +77,7 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 - [ ] Enlace a la política en el footer.
 
 ### Medición
-- [ ] Elegir herramienta (Plausible, Umami o GA4) y conectar los eventos `data-track` del rediseño: clic en Agendar, reserva en Cal.com, clic en WhatsApp/email, envío del formulario.
+- [ ] Umami: crear la cuenta y poner `PUBLIC_UMAMI_WEBSITE_ID` en Cloudflare Pages (el sitio ya está preparado; los eventos `data-track` ya se envían).
 
 ### Secciones que faltan para vender
 - [ ] 🎨 Proceso de trabajo.
