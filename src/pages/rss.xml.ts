@@ -12,7 +12,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Camilo Acosta — Blog',
-    description: 'Diseño, desarrollo e IA para negocios que quieren crecer en digital.',
+    description: 'Diseño y desarrollo web para negocios que quieren crecer en digital.',
     site: context.site!.toString(),
     items: sorted.map(post => ({
       title:       post.data.title,

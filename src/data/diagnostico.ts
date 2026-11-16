@@ -20,7 +20,7 @@ export const diagnostico = {
     titleScript: 'elijan.',
     subtitle: 'Una llamada gratis y sin compromiso: entiendo tu negocio y te llevas una propuesta clara de qué hacer.',
     signature: 'Camilo Acosta',
-    role: 'Diseño web, marketing e IA para profesionales independientes',
+    role: 'Diseño web y marketing para profesionales independientes',
     photoAlt: 'Camilo Acosta, diseñador web en Cartagena',
   },
   takeaways: {
@@ -30,7 +30,7 @@ export const diagnostico = {
     items: [
       'Un diagnóstico de tu presencia digital: web, Instagram, Google y WhatsApp.',
       'Ideas concretas para conseguir más clientes agendados.',
-      'Una propuesta clara de web + IA para tu caso, sin compromiso.',
+      'Una propuesta clara para tu web, sin compromiso.',
     ],
   },
   schedule: {

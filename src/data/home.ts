@@ -80,7 +80,7 @@ const es = {
     titleStart: 'Tu talento ya existe. Hagamos que te',
     titleScript: 'elijan.',
     subline:
-      'Una web pensada para convertir y una IA que responde y agenda por ti en WhatsApp. Para psicólogos, odontólogos, coaches y profesionales independientes. Lista en 7 días.',
+      'Una web pensada para que te agenden, con tu agenda en línea y tu WhatsApp a un clic. Para psicólogos, odontólogos, coaches y profesionales independientes. Lista en 7 días.',
     cta: 'Agenda tu diagnóstico gratis',
     secondary: 'Ver trabajos',
     hello: 'Hola, soy Camilo',
@@ -93,7 +93,7 @@ const es = {
     callouts: [
       { title: 'Mensaje claro',       desc: 'Se entiende en 5 segundos' },
       { title: 'Agenda integrada',    desc: 'Citas sin ir y venir por mensajes' },
-      { title: 'IA en WhatsApp',      desc: 'Responde y agenda por ti' },
+      { title: 'Agenda en línea',     desc: 'Reservan sin escribirte' },
     ],
     // Ejemplo ilustrativo del mockup, no es un cliente ni un testimonio real
     phone: {
@@ -101,8 +101,9 @@ const es = {
       title: 'Atención cercana, a tu ritmo.',
       desc: 'Consulta privada · citas presenciales y en línea.',
       cta: 'Agenda tu primera cita',
-      aiLabel: 'Asistente IA',
-      aiMessage: '¡Hola! Tengo cupo el jueves a las 3:00 p. m. ¿Te lo agendo?',
+      bookingLabel: 'Agenda en línea',
+      bookingSlot: 'Jueves · 3:00 p. m.',
+      bookingCta: 'Reservar',
     },
   },
   statement: {
@@ -114,7 +115,7 @@ const es = {
       'Respondes los mismos mensajes de WhatsApp todo el día y muchos se enfrían antes de agendar.',
       'Tu trabajo es excelente, pero tu presencia digital no lo transmite.',
     ],
-    aside: 'Diseño, código, IA y lanzamiento en las mismas manos.',
+    aside: 'Diseño, código y lanzamiento en las mismas manos.',
     asideStats: `${stats.years} años y ${stats.projects} webs entregadas.`,
     button: ['Agenda tu', 'diagnóstico gratis'],
   },
@@ -231,20 +232,12 @@ const es = {
       {
         name: 'Acompañamiento',
         desc: 'Para que tu web siga funcionando y creciendo contigo, sin preocuparte por nada técnico.',
-        includes: ['Cambios y actualizaciones', 'Hosting, seguridad y respaldos', 'Reporte mensual de visitas y citas', 'Puedes sumarle el asistente IA'],
+        includes: ['Cambios y actualizaciones', 'Hosting, seguridad y respaldos', 'Reporte mensual de visitas y citas', 'Ajustes para que te agenden más'],
         delivery: 'Mes a mes',
         result: 'Una web siempre al día mientras tú atiendes a tus clientes',
         price: 'USD 25', per: ' /mes',
       },
     ] as PlanItem[],
-    ai: {
-      eyebrow: 'Complemento para cualquier paquete',
-      name: 'Asistente IA en WhatsApp',
-      desc: 'Responde las preguntas de siempre (precios, horarios, ubicación) y agenda citas por ti, a cualquier hora. Tú decides qué puede responder.',
-      delivery: '[TIEMPO DE ENTREGA]',
-      result: 'no pierdes clientes mientras atiendes',
-      price: 'Precio según tu proyecto',
-    },
   },
   faq: {
     title: 'Preguntas frecuentes',
@@ -254,7 +247,7 @@ const es = {
     whatsappText: 'Hola Camilo, vi tu web y tengo una pregunta: ',
     items: [
       ['¿Cuánto cuesta una web?', 'Depende de lo que necesites. Las landing pages empiezan desde USD 200 y en la llamada gratis te doy un valor exacto.'],
-      ['¿Qué hace la IA en mi negocio?', 'Funciona como una asistente en tu WhatsApp: responde las preguntas de siempre (precios, horarios, ubicación), ofrece horarios disponibles y deja la cita agendada. Tú decides qué puede responder y revisas todo. Así no pierdes clientes mientras estás atendiendo.'],
+      ['¿Cómo me llegan las citas?', 'Tus clientes eligen día y hora en tu agenda en línea y te llega la confirmación. Si prefieren escribir, tienen tu WhatsApp a un clic.'],
       ['¿De verdad está lista en 7 días?', 'Sí, para una landing page. Te pido textos, fotos y logo antes de empezar; si no los tienes, te ayudo a prepararlos.'],
       ['¿Qué necesito tener listo?', 'Tu logo (o tu nombre), algunas fotos tuyas y una idea de tus servicios. Lo demás lo construimos juntos.'],
       ['¿Incluye dominio y hosting?', '[Define aquí qué incluye: dominio, hosting y correo, o si se pagan aparte.]'],
@@ -342,7 +335,7 @@ const en: HomeContent = {
     titleStart: 'Your talent already exists. Let’s make them',
     titleScript: 'choose you.',
     subline:
-      'A website built to convert and an AI that answers and books for you on WhatsApp. For psychologists, dentists, coaches and independent professionals. Ready in 7 days.',
+      'A website built to get you booked, with your online calendar and your WhatsApp one tap away. For psychologists, dentists, coaches and independent professionals. Ready in 7 days.',
     cta: 'Book your free assessment',
     secondary: 'See my work',
     hello: 'Hi, I’m Camilo',
@@ -355,15 +348,16 @@ const en: HomeContent = {
     callouts: [
       { title: 'Clear message',       desc: 'Understood in 5 seconds' },
       { title: 'Built-in booking',    desc: 'Appointments without message ping-pong' },
-      { title: 'AI on WhatsApp',      desc: 'Answers and books for you' },
+      { title: 'Online booking',      desc: 'They book without messaging you' },
     ],
     phone: {
       brand: 'Your practice',
       title: 'Caring support, at your pace.',
       desc: 'Private practice · in-person and online sessions.',
       cta: 'Book your first session',
-      aiLabel: 'AI assistant',
-      aiMessage: 'Hi! I have a slot on Thursday at 3:00 p.m. Shall I book it for you?',
+      bookingLabel: 'Online booking',
+      bookingSlot: 'Thursday · 3:00 p.m.',
+      bookingCta: 'Book',
     },
   },
   statement: {
@@ -375,7 +369,7 @@ const en: HomeContent = {
       'You answer the same WhatsApp messages all day and many leads go cold before booking.',
       'Your work is excellent, but your online presence doesn’t show it.',
     ],
-    aside: 'Design, code, AI and launch in the same hands.',
+    aside: 'Design, code and launch in the same hands.',
     asideStats: `${stats.years} years and ${stats.projects} websites delivered.`,
     button: ['Book your', 'free assessment'],
   },
@@ -490,20 +484,12 @@ const en: HomeContent = {
       {
         name: 'Ongoing care',
         desc: 'So your website keeps working and growing with you, with nothing technical to worry about.',
-        includes: ['Changes and updates', 'Hosting, security and backups', 'Monthly report on visits and bookings', 'You can add the AI assistant'],
+        includes: ['Changes and updates', 'Hosting, security and backups', 'Monthly report on visits and bookings', 'Tweaks so you get more bookings'],
         delivery: 'Month to month',
         result: 'A website that’s always up to date while you take care of your clients',
         price: 'USD 25', per: ' /month',
       },
     ],
-    ai: {
-      eyebrow: 'Add-on for any package',
-      name: 'AI assistant on WhatsApp',
-      desc: 'Answers the usual questions (prices, hours, location) and books appointments for you, at any hour. You decide what it can answer.',
-      delivery: '[DELIVERY TIME]',
-      result: 'you don’t lose clients while you’re with others',
-      price: 'Price depends on your project',
-    },
   },
   faq: {
     title: 'Frequently asked questions',
@@ -513,7 +499,7 @@ const en: HomeContent = {
     whatsappText: 'Hi Camilo, I saw your website and I have a question: ',
     items: [
       ['How much does a website cost?', 'It depends on what you need. Landing pages start from USD 200, and on the free call I’ll give you an exact quote.'],
-      ['What does AI do for my business?', 'It works like an assistant on your WhatsApp: it answers the usual questions (prices, hours, location), offers available times and leaves the appointment booked. You decide what it can answer and you review everything. That way you don’t lose clients while you’re with others.'],
+      ['How do appointments reach me?', 'Your clients pick a day and time in your online calendar and you get the confirmation. If they’d rather write, your WhatsApp is one tap away.'],
       ['Is it really ready in 7 days?', 'Yes, for a landing page. I’ll ask for your copy, photos and logo before we start; if you don’t have them, I’ll help you prepare them.'],
       ['What do I need to have ready?', 'Your logo (or your name), a few photos of you and an idea of your services. We build the rest together.'],
       ['Are domain and hosting included?', '[Define what’s included: domain, hosting and email, or whether they’re billed separately.]'],
