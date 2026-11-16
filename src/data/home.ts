@@ -17,14 +17,21 @@ export const links = {
 };
 
 // Cifras: deben ser reales y respaldables (ver CLAUDE.md). Si no se puede respaldar, se quita.
-const stats = {
-  projects: '[N]', // webs entregadas, con "+": '15+'
-  years:    '[N]', // años de experiencia, con "+": '5+'
-  slots:    '[N]', // cupos libres este mes, entero: '3'
+export const stats = {
+  projects: '+10', // proyectos digitales desarrollados
+  years:    '5+',  // años de experiencia (desde 2020)
+  slots:    '3',   // cupos libres este mes
 };
 
 /** true si el texto aún tiene contenido pendiente entre [corchetes]: esa pieza no se muestra */
 export const isPending = (text: string) => /\[[^\]]+\]/.test(text);
+
+// Testimonio del cliente de Prometálicas Solutions y Atelier (es el mismo cliente, un solo testimonio).
+// Pendiente de aprobación: mientras tenga [corchetes] no se muestra en /diagnostico.
+export const clientTestimonial = {
+  quote:  '[TESTIMONIO REAL]',
+  author: '[Nombre, cargo]',
+};
 
 export interface CaseItem {
   name: string;      // texto vertical de la franja cerrada
@@ -97,7 +104,7 @@ const es = {
     photoAlt: 'Camilo Acosta, diseñador y desarrollador web',
     location: '[ Cartagena, CO — GMT−5 ]',
     scroll: 'Desliza para explorar',
-    delivered: `[ ${stats.projects} webs entregadas ]`,
+    delivered: isPending(stats.projects) ? '' : `[ ${stats.projects} proyectos digitales desarrollados ]`,
     callouts: [
       { title: 'Mensaje claro',       desc: 'Se entiende en 5 segundos' },
       { title: 'Agenda integrada',    desc: 'Citas sin ir y venir por mensajes' },
@@ -124,7 +131,7 @@ const es = {
       'Tu trabajo es excelente, pero tu presencia digital no lo transmite.',
     ],
     aside: 'Diseño, código y lanzamiento en las mismas manos.',
-    asideStats: `${stats.years} años y ${stats.projects} webs entregadas.`,
+    asideStats: `${stats.years} años y ${stats.projects} proyectos digitales desarrollados.`,
     button: ['Agenda tu', 'diagnóstico gratis'],
   },
   bento: {
@@ -138,13 +145,15 @@ const es = {
       linkLabel: 'Ver el sitio en vivo',
     },
     delivery: { label: 'Entrega', value: '7 días', desc: 'De la primera llamada a tu web en línea.' },
+    // Tarjeta de la frase destacada. Cuando el cliente apruebe su testimonio, cámbialo aquí
+    // (label 'Testimonio', su frase, su nombre y su cargo).
     testimonial: {
-      label: 'Testimonio',
-      quote: '“[Qué cambió en el negocio del cliente después de tener su web.]”',
-      name: '[Nombre]',
-      role: '[Profesión]',
+      label: 'Mi compromiso',
+      quote: '“Si en 7 días tu web no está lista, seguimos trabajando sin costo extra hasta entregarla.”',
+      name: 'Camilo Acosta',
+      role: 'Diseñador y desarrollador web',
     },
-    experience: { label: 'Experiencia', value: stats.projects, desc: `webs entregadas en ${stats.years} años.` },
+    experience: { label: 'Experiencia', value: stats.projects, desc: 'proyectos digitales desarrollados desde 2020.' },
     // Inactivo: el asistente de WhatsApp con IA aún no es un servicio (ver AiChatCard.astro)
     ai: {
       badge: 'Mi diferencial',
@@ -231,7 +240,7 @@ const es = {
       {
         name: 'Sitio profesional', badge: 'Más elegido',
         desc: 'Tu marca completa en internet: servicios, sobre ti, blog y contacto.',
-        includes: ['Todo lo de la landing page', 'Varias páginas para tus servicios', 'Blog que tú mismo puedes editar', 'SEO básico para aparecer en Google'],
+        includes: ['Todo lo de la landing page', 'Hasta 5 páginas: Inicio, Sobre mí, Servicios, Casos y Contacto', 'Blog que tú mismo puedes editar', 'SEO básico para aparecer en Google'],
         delivery: '2 a 3 semanas',
         result: 'Una presencia que genera confianza y te trae clientes desde Google',
         price: 'Precio según tu proyecto', featured: true,
@@ -351,7 +360,7 @@ const en: HomeContent = {
     photoAlt: 'Camilo Acosta, web designer and developer',
     location: '[ Cartagena, CO — GMT−5 ]',
     scroll: 'Scroll to explore',
-    delivered: `[ ${stats.projects} websites delivered ]`,
+    delivered: isPending(stats.projects) ? '' : `[ ${stats.projects} digital projects built ]`,
     callouts: [
       { title: 'Clear message',       desc: 'Understood in 5 seconds' },
       { title: 'Built-in booking',    desc: 'Appointments without message ping-pong' },
@@ -377,7 +386,7 @@ const en: HomeContent = {
       'Your work is excellent, but your online presence doesn’t show it.',
     ],
     aside: 'Design, code and launch in the same hands.',
-    asideStats: `${stats.years} years and ${stats.projects} websites delivered.`,
+    asideStats: `${stats.years} years and ${stats.projects} digital projects built.`,
     button: ['Book your', 'free assessment'],
   },
   bento: {
@@ -392,12 +401,12 @@ const en: HomeContent = {
     },
     delivery: { label: 'Delivery', value: '7 days', desc: 'From our first call to your site going live.' },
     testimonial: {
-      label: 'Testimonial',
-      quote: '“[What changed in the client’s business after launching their website.]”',
-      name: '[Name]',
-      role: '[Profession]',
+      label: 'My promise',
+      quote: '“If your website isn’t ready in 7 days, I keep working at no extra cost until it’s delivered.”',
+      name: 'Camilo Acosta',
+      role: 'Web designer & developer',
     },
-    experience: { label: 'Experience', value: stats.projects, desc: `websites delivered over ${stats.years} years.` },
+    experience: { label: 'Experience', value: stats.projects, desc: 'digital projects built since 2020.' },
     ai: {
       badge: 'My edge',
       title: 'WhatsApp with AI that answers and books for you',
@@ -482,7 +491,7 @@ const en: HomeContent = {
       {
         name: 'Professional site', badge: 'Most popular',
         desc: 'Your full brand online: services, about you, blog and contact.',
-        includes: ['Everything in the landing page', 'Several pages for your services', 'A blog you can edit yourself', 'Basic SEO to show up on Google'],
+        includes: ['Everything in the landing page', 'Up to 5 pages: Home, About, Services, Cases and Contact', 'A blog you can edit yourself', 'Basic SEO to show up on Google'],
         delivery: '2 to 3 weeks',
         result: 'A presence that builds trust and brings you clients from Google',
         price: 'Price based on your project', featured: true,

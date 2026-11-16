@@ -49,8 +49,6 @@ export const diagnostico = {
   proof: {
     eyebrow: 'Trabajo real',
     title: 'Algunos proyectos',
-    testimonial: '[TESTIMONIO REAL]',
-    testimonialAuthor: '[Nombre, cargo]',
     more: 'Ver todos los proyectos',
   },
   faq: {

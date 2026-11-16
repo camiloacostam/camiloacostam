@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import caseDesktop from '../../assets/projects/prometalica-desktop.jpg';
 import caseMobile from '../../assets/projects/prometalica-mobile.jpg';
+import avatar from '../../assets/home/camilo.webp';
 import { getHome, isPending, links } from '../../data/home';
 import { getLang } from '../../i18n/utils';
 
@@ -13,9 +14,11 @@ const c    = getHome(lang).bento;
 const showTestimonial  = !isPending(c.testimonial.quote) && !isPending(c.testimonial.name);
 const showExperience   = !isPending(c.experience.value);
 const showAvailability = !isPending(c.availability.text);
-const [num, plus] = c.experience.value.endsWith('+')
-  ? [c.experience.value.slice(0, -1), '+']
-  : [c.experience.value, ''];
+// The "+" is highlighted whether it leads ("+10") or trails ("15+")
+const value = c.experience.value;
+const plusFirst = value.startsWith('+');
+const num = value.replace(/^\+|\+$/g, '');
+const plus = value !== num ? '+' : '';
 
 // Celdas: base compartida + variantes (el relleno va en cada variante para no pelear con el base)
 const cell  = 'flex flex-col rounded-3xl transition-transform duration-500 ease-brand hover:-translate-y-[3px] max-sm:min-h-[150px]';
@@ -66,7 +69,7 @@ const text  = 'mt-auto text-[22px] leading-[30px] tracking-[-0.015em] max-sm:tex
         <p class="text-[13px] leading-5 text-mar max-sm:text-xs">{c.testimonial.label}</p>
         <blockquote class="mt-6 text-2xl leading-8 tracking-[-0.015em] max-sm:mt-3.5 max-sm:text-[19px] max-sm:leading-[27px]">{c.testimonial.quote}</blockquote>
         <figcaption class="mt-auto flex items-center gap-3 pt-6 text-sm leading-5 max-sm:pt-4 max-sm:text-[13px] max-sm:leading-[18px]">
-          <span class="size-11 shrink-0 rounded-full bg-cielo-soft max-sm:size-9"></span>
+          <Image src={avatar} alt="" width={88} height={88} class="size-11 shrink-0 rounded-full bg-cielo-soft object-cover object-[50%_12%] max-sm:size-9" />
           <span><strong class="block font-semibold">{c.testimonial.name}</strong>{c.testimonial.role}</span>
         </figcaption>
       </figure>
@@ -76,7 +79,7 @@ const text  = 'mt-auto text-[22px] leading-[30px] tracking-[-0.015em] max-sm:tex
       <div class={`${light} max-sm:order-[-1]`}>
         <p class={label}>{c.experience.label}</p>
         <div class="mt-auto">
-          <div class={stat}>{num}<span class="text-mediterraneo">{plus}</span></div>
+          <div class={stat}>{plusFirst && <span class="text-mediterraneo">{plus}</span>}{num}{!plusFirst && <span class="text-mediterraneo">{plus}</span>}</div>
           <p class={note}>{c.experience.desc}</p>
         </div>
       </div>

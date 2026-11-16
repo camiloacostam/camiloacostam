@@ -1,4 +1,6 @@
 // Copy for /proyectos/ (es) and /en/proyectos/ (en). [brackets] = pending content.
+import { stats } from './home';
+
 const es = {
   meta: {
     title: 'Proyectos — La galería | Camilo Acosta',
@@ -46,7 +48,7 @@ const es = {
     cta: 'Agenda tu diagnóstico gratis',
     whatsapp: 'Escríbeme por WhatsApp',
     brand: 'Tu marca',
-    spots: 'Cupos disponibles: [N] este mes',
+    spots: `Cupos disponibles: ${stats.slots} este mes`,
   },
 };
 
@@ -97,7 +99,7 @@ const en: typeof es = {
     cta: 'Book your free audit',
     whatsapp: 'Message me on WhatsApp',
     brand: 'Your brand',
-    spots: 'Spots available: [N] this month',
+    spots: `Spots available: ${stats.slots} this month`,
   },
 };
 

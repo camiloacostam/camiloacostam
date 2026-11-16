@@ -93,7 +93,7 @@ const calloutPos = [
   <div class="wrap relative flex w-full items-end justify-between gap-4 pb-7 text-[11px] leading-4 tracking-[.12em] text-ink-muted-dark uppercase max-sm:hidden">
     <span>{c.location}</span>
     <span class="flex flex-col items-center gap-2.5">{c.scroll}<span class="block h-8 w-px origin-top animate-scrollline bg-aqua"></span></span>
-    {isPending(c.delivered) ? <span aria-hidden="true"></span> : <span>{c.delivered}</span>}
+    {c.delivered ? <span>{c.delivered}</span> : <span aria-hidden="true"></span>}
   </div>
 </section>
 
