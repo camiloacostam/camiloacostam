@@ -123,11 +123,11 @@ const es = {
     title: 'Lo que recibes',
     intro: 'Todo lo que tu marca necesita para vender en línea, en un solo lugar.',
     case: {
-      eyebrow: 'Caso real · [Nicho]',
-      title: 'Tu web en acción',
-      desc: '[Qué logra la web de Prometálica o Atelier para su negocio.]',
-      desktop: '[Captura escritorio — Prometálica]',
-      mobile: '[Móvil]',
+      eyebrow: 'Caso real · Metalmecánica industrial',
+      title: 'Prometálica',
+      desc: 'Su web explica en segundos qué hacen y lleva a cada visitante a pedir su cotización en 4 preguntas.',
+      href: 'https://prometalica.com.co',
+      linkLabel: 'Ver el sitio en vivo',
     },
     delivery: { label: 'Entrega', value: '7 días', desc: 'De la primera llamada a tu web en línea.' },
     testimonial: {
@@ -377,11 +377,11 @@ const en: HomeContent = {
     title: 'What you get',
     intro: 'Everything your brand needs to sell online, in one place.',
     case: {
-      eyebrow: 'Real case · [Niche]',
-      title: 'Your website in action',
-      desc: '[What the Prometálica or Atelier website achieves for their business.]',
-      desktop: '[Desktop screenshot — Prometálica]',
-      mobile: '[Mobile]',
+      eyebrow: 'Real case · Industrial metalworking',
+      title: 'Prometálica',
+      desc: 'Their website explains what they do in seconds and walks every visitor to a quote in 4 questions.',
+      href: 'https://prometalica.com.co',
+      linkLabel: 'See the live site',
     },
     delivery: { label: 'Delivery', value: '7 days', desc: 'From our first call to your site going live.' },
     testimonial: {
