@@ -24,7 +24,7 @@ const items = [
   }),
   {
     title: own.title, kind: own.kind, year: String(new Date().getFullYear()), tech: own.tools, client: own.client, result: own.result,
-    media: own.media, tone: 'own' as const, href: links.calendly, action: own.action, own: true,
+    media: own.media, tone: 'own' as const, href: links.booking, action: own.action, own: true,
   },
 ];
 const n = items.length;
@@ -99,7 +99,7 @@ const frameStyle = (i: number) =>
           {it.href ? (
             <a
               href={it.href}
-              {...(it.own ? { 'data-calendly': '', 'data-track': 'agendar', 'data-track-place': 'proyectos' } : {})}
+              {...(it.own ? { 'data-booking': '', 'data-track': 'agendar', 'data-track-place': 'proyectos' } : {})}
               class="mt-2.5 inline-flex min-h-11 items-center text-sm font-semibold text-mediterraneo no-underline"
             >{it.action}</a>
           ) : (

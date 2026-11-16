@@ -1,5 +1,5 @@
 // Interacciones del home rediseñado. JS vanilla, sin dependencias.
-import { track, initTracking } from './track';
+import { track } from './track';
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer  = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -276,7 +276,7 @@ function initClock() {
   setInterval(tick, 30_000);
 }
 
-/* ── Formulario por pasos del cierre: alimenta a Calendly ───────────────────── */
+/* ── Formulario por pasos del cierre: alimenta a Cal.com ───────────────────── */
 function initLeadForm() {
   const root = document.querySelector<HTMLElement>('[data-lead]');
   const form = root?.querySelector<HTMLFormElement>('[data-lead-form]');
@@ -392,11 +392,11 @@ function initLeadForm() {
     const firstName = payload.name.split(/\s+/)[0];
     const values = { name: firstName, need: picked.need.label, niche: nicheText() };
 
-    const cal = new URL(d.calendlyBase!);
+    const cal = new URL(d.bookingBase!);
     cal.searchParams.set('name', payload.name);
     cal.searchParams.set('email', payload.email);
-    cal.searchParams.set('a1', `${values.need} · ${values.niche}`);
-    const calBtn = done.querySelector<HTMLAnchorElement>('[data-done-calendly]')!;
+    cal.searchParams.set('notes', `${values.need} · ${values.niche}`);
+    const calBtn = done.querySelector<HTMLAnchorElement>('[data-done-booking]')!;
     calBtn.href = cal.toString();
 
     const wa = done.querySelector<HTMLAnchorElement>('[data-done-wa]')!;
@@ -420,7 +420,7 @@ function initLeadForm() {
     }
     title.focus({ preventScroll: true });
 
-    // Abre Calendly prellenado; el botón queda por si el usuario lo cierra
+    // Abre Cal.com prellenado; el botón queda por si el usuario lo cierra
     setTimeout(() => calBtn.click(), 600);
   });
 }
@@ -434,4 +434,3 @@ initCases();
 initPlanDots();
 initClock();
 initLeadForm();
-initTracking();

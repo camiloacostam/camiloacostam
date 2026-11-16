@@ -11,8 +11,6 @@ export const diagnostico = {
     description:
       'Agenda una llamada gratis y sin compromiso: reviso tu web, Instagram, Google y WhatsApp, y te llevas ideas concretas para conseguir más clientes agendados.',
   },
-  // Calendly embebido; los parámetros solo ajustan los colores a la marca
-  calendlyEmbed: `${links.calendly}?hide_gdpr_banner=1&background_color=fffbf5&text_color=0a2342&primary_color=1d5fae`,
   whatsappHref: `${links.whatsapp}?text=${encodeURIComponent(waText)}`,
   cta: 'Agenda tu diagnóstico gratis',
   nav: { home: 'Inicio' },
@@ -41,7 +39,7 @@ export const diagnostico = {
     titleScript: 'queden bien.',
     eventName: 'Cafecito para conocernos ☕ (diagnóstico gratis, 30 min)',
     loading: 'Cargando el calendario…',
-    noscript: 'Abrir el calendario en Calendly',
+    noscript: 'Abrir el calendario en Cal.com',
     or: '¿No te queda cómodo agendar aquí?',
     whatsapp: 'Prefiero escribir por WhatsApp',
   },

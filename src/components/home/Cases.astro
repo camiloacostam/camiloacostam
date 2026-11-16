@@ -37,7 +37,7 @@ const tones = {
           const num = String(i + 1).padStart(2, '0');
           const tone = tones[p.tone];
           const ctaAttrs = p.cta
-            ? { 'data-calendly': '', 'data-track': 'agendar', 'data-track-place': 'casos', 'data-cta': '' }
+            ? { 'data-booking': '', 'data-track': 'agendar', 'data-track-place': 'casos', 'data-cta': '' }
             : {};
           return (
             <a
@@ -91,7 +91,7 @@ const tones = {
       <p class="text-2xl leading-8 tracking-[-0.02em] max-sm:text-xl max-sm:leading-[27px]">{c.barText}</p>
       <div class="flex flex-wrap items-center gap-4 max-sm:mt-3.5">
         <a class="link-u text-[15px] text-mar max-sm:hidden" href={allProjects}>{c.barAll}</a>
-        <a class="btn pill fill-btn breathe bg-mediterraneo text-white max-sm:min-h-[52px] max-sm:w-full" href={links.calendly} data-calendly data-track="agendar" data-track-place="casos-barra">
+        <a class="btn pill fill-btn breathe bg-mediterraneo text-white max-sm:min-h-[52px] max-sm:w-full" href={links.booking} data-booking data-track="agendar" data-track-place="casos-barra">
           {c.barCta}<Icon name="arrow-right" />
         </a>
       </div>

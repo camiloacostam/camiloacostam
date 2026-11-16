@@ -72,9 +72,9 @@ functions/api/contact.ts  # endpoint del formulario (Cloudflare Pages Function)
 Casi todo se cambia en **`src/data/home.ts`**, sin tocar componentes.
 
 - **Cifras** (`stats` al inicio del archivo): `projects` (`'15+'`), `years` (`'5+'`), `slots` (`'3'`). Aparecen en el hero, la presentación y el bento.
-- **Enlaces** (`links`): Calendly, WhatsApp, email, Instagram (vacío = no se muestra), LinkedIn, GitHub.
+- **Enlaces** (`links`): Cal.com (`links.booking`), WhatsApp, email, Instagram (vacío = no se muestra), LinkedIn, GitHub.
 - **Textos por sección**: objetos `hero`, `statement`, `bento`, `cases`, `process`, `plans`, `faq`, `closing`, `mobileBar`, en `es` y en `en`. Los dos idiomas tienen la misma forma: el objeto `en` está tipado con la forma de `es`, así que el editor marca si falta una clave en inglés (el build no revisa tipos).
-- **Casos** (`cases.items`): cada franja tiene `name`, `title`, `cat`, `desc`, `media` (placeholder de la captura), `href` y `tone` (`mar` | `cielo` | `crema` | `aqua`). La franja `cta: true` abre Calendly.
+- **Casos** (`cases.items`): cada franja tiene `name`, `title`, `cat`, `desc`, `media` (placeholder de la captura), `href` y `tone` (`mar` | `cielo` | `crema` | `aqua`). La franja `cta: true` abre el popup de Cal.com.
 - **Opciones del formulario**: en **`src/data/lead.ts`**. Cambiar o agregar una opción ahí actualiza el formulario y la validación del backend a la vez.
 
 ---
@@ -87,10 +87,13 @@ Casi todo se cambia en **`src/data/home.ts`**, sin tocar componentes.
 - **Progreso**: la línea inferior de la píldora sigue el scroll; al llegar al final, el CTA hace un destello.
 - **Menú móvil**: pantalla completa, cierra con Escape o al tocar un enlace, devuelve el foco al botón.
 
-### Calendly
-- Cualquier `<a data-calendly href="https://calendly.com/...">` abre el popup. El script de Calendly se carga con el **primer clic** (no en cada página) desde `Layout.astro`.
-- Si el `href` trae parámetros (`?name=…&email=…&a1=…`), el popup se abre **prellenado**.
-- Si Calendly no carga, se abre la página de Calendly en otra pestaña.
+### Agendamiento (Cal.com)
+- Evento: `https://cal.com/camiloacostam/cafecito-para-conocernos`. Toda la integración vive en `src/scripts/cal.ts` (embed oficial de Cal.com, namespace `cafecito`, colores de la marca con `cssVarsPerTheme`).
+- Cualquier `<a data-booking href="...">` abre el **popup** de Cal.com. El embed se descarga con el **primer clic** (lo conecta `Layout.astro` en todas las páginas).
+- Si el `href` trae `name`, `email` o `notes`, el popup se abre **prellenado** (lo usa el formulario del cierre).
+- Si el embed no carga, se abre la página del evento en otra pestaña.
+- En `/diagnostico/` el calendario va **embebido** (inline) y se descarga al acercarse al bloque.
+- La reserva completada envía el evento `agendado` (escucha `bookingSuccessfulV2`, que reemplaza al obsoleto `bookingSuccessful`). El embed solo acepta eventos que vienen de su propio iframe.
 
 ### Casos
 - Escritorio: al pasar el mouse sobre una franja, se abre; flechas ← → con contador y barra de progreso; sobre la franja abierta, el cursor se vuelve un círculo de vidrio "Ver caso".
@@ -110,9 +113,9 @@ Casi todo se cambia en **`src/data/home.ts`**, sin tocar componentes.
 | 3 | Tus datos | `name`, `email`, `phone` (+57), `message` | Nombre y email |
 
 - Los chips son `<button aria-pressed>` en `role="group"`; todo funciona con teclado; "← Atrás" conserva lo elegido.
-- **Éxito**: confirmación "¡Listo, {nombre}!", y a los 600 ms se abre Calendly con `name`, `email` y `a1 = {necesidad} · {nicho}`. Debajo, un enlace a WhatsApp con el mensaje armado.
+- **Éxito**: confirmación "¡Listo, {nombre}!", y a los 600 ms se abre Cal.com con `name`, `email` y `notes = {necesidad} · {nicho}`. Debajo, un enlace a WhatsApp con el mensaje armado.
 - **Error**: mensaje en la tarjeta; los datos se conservan.
-- Sin JavaScript el formulario no se muestra (los chips lo necesitan); siguen disponibles el botón de Calendly, el email y WhatsApp.
+- Sin JavaScript el formulario no se muestra (los chips lo necesitan); siguen disponibles el enlace a Cal.com, el email y WhatsApp.
 
 ### Endpoint `POST /api/contact`
 
@@ -137,13 +140,13 @@ Los elementos con `data-track` envían un evento al hacer clic, y el formulario 
 
 | Evento | Propiedades | Cuándo |
 |---|---|---|
-| `agendar` | `place`: nav, menu, hero, presentacion, bento, casos, casos-barra, proceso, paquete-1/2/3, cierre, barra-movil | Clic en un CTA de Calendly |
+| `agendar` | `place`: nav, menu, hero, presentacion, bento, casos, casos-barra, proceso, paquete-1/2/3, cierre, barra-movil | Clic en un CTA de agendar (popup de Cal.com) |
 | `whatsapp` | `place`: faq, cierre, barra-movil, form | Clic en WhatsApp |
 | `email` | `place`: cierre | Clic en el email |
 | `form_step` | `step`: 1–3 | Cambio de paso |
 | `form_submit` / `form_success` | `need`, `niche`, `timeline` | Envío / envío exitoso |
-| `calendly_open` | `place`: form | Apertura de Calendly desde la confirmación |
-| `agendado` | — | Calendly confirma una cita (`postMessage`) |
+| `booking_open` | `place`: form | Apertura de Cal.com desde la confirmación |
+| `agendado` | — | Cal.com confirma una reserva (`bookingSuccessfulV2`) |
 
 ---
 
@@ -196,7 +199,7 @@ Lo que sigue en `[corchetes]` o depende de una decisión (detalle en `TODO.md`):
 - Testimonio del bento y nicho del caso destacado.
 - URL de Instagram.
 - Confirmar: opción "Odontología" vs "Wedding planner"; 7 días corridos o hábiles.
-- Configuración externa: dominio en Resend + `RESEND_FROM`; en Calendly, renombrar el evento y crear la **primera pregunta personalizada** (para el prellenado `a1`); elegir herramienta de analítica.
+- Configuración externa: dominio en Resend + `RESEND_FROM`; en Cal.com, revisar que el evento muestre el campo de notas (prellenado `notes`); elegir herramienta de analítica.
 
 ## Siguientes pasos
 
@@ -211,7 +214,7 @@ Lo que sigue en `[corchetes]` o depende de una decisión (detalle en `TODO.md`):
 
 - Página solo en español (`alternates={false}` en `Layout` para no anunciar un `/en/` que no existe). Textos en `src/data/diagnostico.ts`; script en `src/scripts/diagnostico.ts`.
 - Un solo objetivo: agendar. Header mínimo (logo + "Inicio"), sin precios.
-- Calendly **embebido** (`hello-camiloacosta/30min`, colores de la marca por parámetros). El script de Calendly se descarga solo cuando el bloque está a 600 px de la pantalla; la altura está reservada (720 px, 1000 px en móvil) para no mover la página.
+- Cal.com **embebido** (`camiloacostam/cafecito-para-conocernos`, colores de la marca). El embed se descarga solo cuando el bloque está a 600 px de la pantalla; la caja reserva una altura mínima (600 px, 1000 px en móvil) y crece con el calendario, sin scroll anidado.
 - Botón fijo en móvil que se oculta cuando hay otro CTA o el calendario a la vista.
-- Eventos: `schedule_click` y `whatsapp_click` con `place` = `hero`, `agenda`, `cierre` o `sticky`; `agendado` cuando Calendly confirma la cita. La analítica vive en `src/scripts/track.ts` (compartida con el home).
+- Eventos: `schedule_click` y `whatsapp_click` con `place` = `hero`, `agenda`, `cierre` o `sticky`; `agendado` cuando Cal.com confirma la reserva. La analítica vive en `src/scripts/track.ts` y se inicializa una sola vez en `Layout.astro` para todas las páginas.
 - Lighthouse móvil (preview local): Performance 100 · Accesibilidad 95 · Buenas prácticas 100 · SEO 100. El 95 viene de contraste medido a mitad de la animación de entrada de bloques bajo el pliegue; los pares reales de colores pasan AA (mínimo 5,67:1).

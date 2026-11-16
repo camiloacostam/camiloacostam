@@ -40,8 +40,8 @@ const socials = [
       <a class="p-2.5 text-[13px] font-semibold text-white no-underline opacity-85 transition-colors duration-[450ms] group-[.on-light]/nav:text-mar max-sm:hidden" href={altPath} hreflang={lang === 'es' ? 'en' : 'es'} aria-label={c.langAria}>{c.langLabel}</a>
       <a
         class="pill fill-btn inline-flex min-h-11 items-center rounded-full bg-mediterraneo px-[22px] text-[15px] font-semibold whitespace-nowrap text-white no-underline max-sm:hidden"
-        href={links.calendly}
-        data-calendly
+        href={links.booking}
+        data-booking
         data-nav-cta
         data-track="agendar"
         data-track-place="nav"
@@ -69,7 +69,7 @@ const socials = [
     ))}
   </nav>
   <div class="mt-auto flex flex-col gap-3">
-    <a class="btn bg-aqua text-mar" href={links.calendly} data-calendly data-track="agendar" data-track-place="menu" data-menu-close>{c.menuCta}</a>
+    <a class="btn bg-aqua text-mar" href={links.booking} data-booking data-track="agendar" data-track-place="menu" data-menu-close>{c.menuCta}</a>
     <div class="flex justify-between text-[13px] text-ink-muted-dark">
       <span>
         {socials.map((s, i) => (

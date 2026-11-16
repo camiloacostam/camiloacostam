@@ -19,7 +19,7 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 - [ ] **FAQ**: qué incluye dominio, hosting y correo.
 - [ ] **Testimonio** con nombre, profesión y foto.
 - [ ] **URL de Instagram**.
-- [x] Formulario en el home: decidido en el brief (formulario por pasos en el cierre que alimenta a Calendly).
+- [x] Formulario en el home: decidido en el brief (formulario por pasos en el cierre que alimenta a Cal.com).
 - [ ] Confirmar las opciones de nicho del formulario: el brief pide `Wedding planner`; se puso `Odontología` siguiendo `CLAUDE.md` (se cambia en `src/data/lead.ts`).
 - [ ] Confirmar los valores de la tabla "Valores a definir" del brief (cifras, precios, dominio/hosting, resultados de Prometálica y Atelier, testimonio).
 - [ ] Decidir el blog: publicar 2 o 3 artículos o quitarlo del menú hasta tener contenido.
@@ -30,8 +30,8 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 - [ ] Finder → **Mantener descargado** en la carpeta del proyecto (si no, iCloud saca `node_modules` y el build se cuelga).
 - [ ] Verificar `camiloacosta.dev` en Resend y configurar `RESEND_FROM` en Cloudflare Pages (con `onboarding@resend.dev` solo llega al dueño de la cuenta).
 - [ ] Probar el formulario de punta a punta en producción.
-- [ ] Calendly: renombrar "30 Minute Meeting" a "Llamada de diagnóstico gratuita (30 min)".
-- [ ] Calendly: crear como **primera pregunta personalizada** del evento algo como "¿Qué necesitas y a qué te dedicas?". El formulario la prellena con el parámetro `a1`; si no existe, Calendly ignora el dato.
+- [x] Agendamiento migrado de Calendly a Cal.com (`camiloacostam/cafecito-para-conocernos`).
+- [ ] Cal.com: revisar que el evento muestre el campo **notas** (el formulario lo prellena con `notes` = necesidad · nicho).
 - [ ] Google Search Console: registrar el sitio y enviar `sitemap-index.xml`.
 - [ ] Perfil de Empresa en Google (SEO local Cartagena).
 - [ ] Verificar que `@camiloacostam` exista en X/Twitter; si no, quitar `twitter:creator` y el `sameAs`.
@@ -77,7 +77,7 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 - [ ] Enlace a la política en el footer.
 
 ### Medición
-- [ ] Elegir herramienta (Plausible, Umami o GA4) y conectar los eventos `data-track` del rediseño: clic en Agendar, Calendly agendado, clic en WhatsApp/email, envío del formulario.
+- [ ] Elegir herramienta (Plausible, Umami o GA4) y conectar los eventos `data-track` del rediseño: clic en Agendar, reserva en Cal.com, clic en WhatsApp/email, envío del formulario.
 
 ### Secciones que faltan para vender
 - [ ] 🎨 Proceso de trabajo.
@@ -121,7 +121,7 @@ Contexto general del proyecto en `CLAUDE.md`. Última actualización: 22 de octu
 
 - [x] Endpoint del formulario: escape de HTML, validación, `replyTo`, errores de Resend, honeypot, 405 en métodos distintos de POST, `method="post"` sin JS (`a0cb65c`).
 - [x] Página 404 en es y en, fuera del sitemap.
-- [x] Calendly cargado con el primer clic; botones `type="button"`.
+- [x] Agendamiento (Cal.com) cargado con el primer clic; botones `type="button"`.
 - [x] Barra final en enlaces internos; `/en/` enlaza a páginas en inglés; `lang="en"`, H1 y `<title>` en `/en/proyectos/` y `/en/blog/`.
 - [x] Limpieza: `package-lock.json`, restos del starter y `favicon 2.png`.
 

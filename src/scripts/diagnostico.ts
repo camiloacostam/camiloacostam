@@ -1,47 +1,23 @@
-// Interacciones de /diagnostico/: Calendly embebido bajo demanda, botón fijo en móvil y analítica.
-import { initTracking } from './track';
+// Interacciones de /diagnostico/: Cal.com embebido bajo demanda, botón fijo en móvil y analítica.
+import { mountInline } from './cal';
 
-/* ── Calendly embebido: el script se descarga solo al acercarse al bloque ──── */
-function loadCalendly(): Promise<void> {
-  const w = window as any;
-  if (w.Calendly) return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    const css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = 'https://assets.calendly.com/assets/external/widget.css';
-    document.head.appendChild(css);
-
-    const js = document.createElement('script');
-    js.src = 'https://assets.calendly.com/assets/external/widget.js';
-    js.onload = () => resolve();
-    js.onerror = () => reject();
-    document.head.appendChild(js);
-  });
-}
-
-function initCalendly() {
-  const box = document.querySelector<HTMLElement>('[data-calendly-inline]');
-  const loading = document.querySelector<HTMLElement>('[data-calendly-loading]');
+/* ── Cal.com embebido: el script se descarga solo al acercarse al bloque ───── */
+function initInlineBooking() {
+  const box = document.querySelector<HTMLElement>('[data-cal-inline]');
+  const loading = document.querySelector<HTMLElement>('[data-cal-loading]');
   if (!box) return;
 
   const mount = async () => {
-    try {
-      await loadCalendly();
-      (window as any).Calendly.initInlineWidget({ url: box.dataset.url, parentElement: box });
-      loading?.remove();
-    } catch {
-      // Sin conexión con Calendly: dejamos un enlace directo
-      if (loading) {
-        loading.innerHTML = '';
-        const a = document.createElement('a');
-        a.href = box.dataset.url!.split('?')[0];
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.textContent = 'Abrir el calendario en Calendly';
-        a.className = 'font-semibold text-mediterraneo underline';
-        loading.appendChild(a);
-      }
-    }
+    const ok = await mountInline(box, () => loading?.remove());
+    if (ok || !loading) return;
+    // Sin conexión con Cal.com: dejamos un enlace directo al evento
+    const a = document.createElement('a');
+    a.href = box.dataset.fallbackHref!;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = box.dataset.fallbackLabel!;
+    a.className = 'font-semibold text-mediterraneo underline';
+    loading.replaceChildren(a);
   };
 
   const io = new IntersectionObserver(
@@ -93,6 +69,5 @@ function initHeaderTone() {
 }
 
 initHeaderTone();
-initCalendly();
+initInlineBooking();
 initStickyCta();
-initTracking();

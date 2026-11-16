@@ -35,7 +35,7 @@ const next   = 'pill fill-btn inline-flex min-h-[52px] items-center justify-cent
   data-success-tpl={f.successTitle}
   data-wa-tpl={f.waLead}
   data-wa-base={links.whatsapp}
-  data-calendly-base={links.calendly}
+  data-booking-base={links.booking}
   data-submitting={f.submitting}
   data-pick-one={f.pickOne}
   data-other-required={f.otherRequired}
@@ -129,7 +129,7 @@ const next   = 'pill fill-btn inline-flex min-h-[52px] items-center justify-cent
       <path class="[stroke-dasharray:36]" d="M15 27 l7 7 l15 -16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
     <p class="text-2xl leading-8 tracking-[-0.02em] focus:outline-none" data-done-title tabindex="-1"></p>
-    <a class="btn pill fill-btn bg-aqua text-mar max-sm:w-full" href={links.calendly} data-calendly data-done-calendly data-track="calendly_open" data-track-place="form">
+    <a class="btn pill fill-btn bg-aqua text-mar max-sm:w-full" href={links.booking} data-booking data-done-booking data-track="booking_open" data-track-place="form">
       {f.successCta}<Icon name="arrow-right" />
     </a>
     <a class="link-u inline-flex items-center gap-2 text-[15px] text-ink-muted-dark hover:text-crema" href={links.whatsapp} target="_blank" rel="noopener noreferrer" data-done-wa data-track="whatsapp" data-track-place="form">

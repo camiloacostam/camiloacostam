@@ -99,12 +99,12 @@ const ctaClass = 'pill fill-btn inline-flex min-h-14 items-center justify-center
             <p class="mt-3 text-base text-ink-muted-dark">{c.schedule.eventName}</p>
           </div>
 
-          <!-- Calendly embebido: se carga al acercarse al bloque. La altura reservada evita saltos de layout -->
-          <div class="relative mt-8 h-[720px] overflow-hidden rounded-3xl bg-crema-raised max-sm:mt-6 max-sm:h-[1000px] max-sm:rounded-2xl">
-            <div class="absolute inset-0" data-calendly-inline data-url={c.calendlyEmbed}></div>
-            <p class="absolute inset-0 flex items-center justify-center text-ink-muted" data-calendly-loading aria-live="polite">{c.schedule.loading}</p>
+          <!-- Cal.com embebido: se carga al acercarse al bloque. La altura mínima reserva el espacio; el iframe crece con su contenido (sin scroll anidado) -->
+          <div class="relative mt-8 min-h-[600px] overflow-hidden rounded-3xl bg-crema-raised max-sm:mt-6 max-sm:min-h-[1000px] max-sm:rounded-2xl">
+            <p class="absolute inset-0 flex items-center justify-center text-ink-muted" data-cal-loading aria-live="polite">{c.schedule.loading}</p>
+            <div class="relative" data-cal-inline data-fallback-href={links.booking} data-fallback-label={c.schedule.noscript}></div>
             <noscript>
-              <a href={links.calendly} class="absolute inset-0 flex items-center justify-center bg-crema-raised font-semibold text-mediterraneo underline">{c.schedule.noscript}</a>
+              <a href={links.booking} class="absolute inset-0 flex items-center justify-center bg-crema-raised font-semibold text-mediterraneo underline">{c.schedule.noscript}</a>
             </noscript>
           </div>
 

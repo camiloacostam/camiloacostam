@@ -2,7 +2,7 @@
 // Todo lo que está entre [corchetes] es contenido pendiente: reemplázalo por el dato real.
 
 export const links = {
-  calendly:  'https://calendly.com/hello-camiloacosta/30min',
+  booking:   'https://cal.com/camiloacostam/cafecito-para-conocernos', // Cal.com
   whatsapp:  'https://wa.me/573104327497',
   email:     'hola@camiloacosta.dev',
   instagram: '', // [URL de Instagram] — vacío = no se muestra
@@ -167,7 +167,7 @@ const es = {
       {
         name: '¿El próximo eres tú?', title: 'Tu marca podría estar aquí.', cat: 'Cupos este mes',
         desc: 'Agenda 30 minutos gratis y diseñemos la web que convierte a tus visitantes en clientes.',
-        media: '', href: links.calendly, tone: 'aqua', cta: true,
+        media: '', href: links.booking, tone: 'aqua', cta: true,
       },
     ] as CaseItem[],
     actionCase: 'Ver caso →',
@@ -276,7 +276,7 @@ const es = {
       pickOne: 'Elige a qué te dedicas y para cuándo la necesitas.',
       otherRequired: 'Cuéntame a qué te dedicas.',
       successTitle: '¡Listo, {name}! Ahora elige tu horario.',
-      successCta: 'Elegir horario en Calendly',
+      successCta: 'Elegir mi horario',
       successWa: '¿Prefieres WhatsApp? Escríbeme',
       waLead: 'Hola Camilo, soy {name}. Me interesa {need} para mi marca de {niche}.',
       error: 'No se pudo enviar. Intenta de nuevo o escríbeme por WhatsApp.',
@@ -418,7 +418,7 @@ const en: HomeContent = {
       {
         name: 'Are you next?', title: 'Your brand could be here.', cat: 'Spots this month',
         desc: 'Book a free 30-minute call and let’s design the website that turns your visitors into clients.',
-        media: '', href: links.calendly, tone: 'aqua', cta: true,
+        media: '', href: links.booking, tone: 'aqua', cta: true,
       },
     ],
     actionCase: 'View case →',
@@ -526,7 +526,7 @@ const en: HomeContent = {
       pickOne: 'Choose what you do and when you need it.',
       otherRequired: 'Tell me what you do.',
       successTitle: 'All set, {name}! Now pick a time.',
-      successCta: 'Pick a time on Calendly',
+      successCta: 'Pick my time',
       successWa: 'Prefer WhatsApp? Message me',
       waLead: 'Hi Camilo, I’m {name}. I’m interested in {need} for my {niche} brand.',
       error: 'Couldn’t send it. Try again or message me on WhatsApp.',

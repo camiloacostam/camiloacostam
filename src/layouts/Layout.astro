@@ -106,45 +106,12 @@ const jsonLd = {
   <body class="funnel">
     <slot />
 
-    <!-- Calendly: se carga con el primer clic en un botón [data-calendly] -->
+    <!-- Analítica en todas las páginas + Cal.com (el embed se carga con el primer clic en un botón [data-booking]) -->
     <script>
-      const CALENDLY_URL = 'https://calendly.com/hello-camiloacosta/30min';
-      let calendlyReady: Promise<void> | null = null;
-
-      function loadCalendly() {
-        calendlyReady ??= new Promise((resolve, reject) => {
-          const css = document.createElement('link');
-          css.rel = 'stylesheet';
-          css.href = 'https://assets.calendly.com/assets/external/widget.css';
-          document.head.appendChild(css);
-
-          const js = document.createElement('script');
-          js.src = 'https://assets.calendly.com/assets/external/widget.js';
-          js.onload = () => resolve();
-          js.onerror = () => {
-            calendlyReady = null;
-            reject();
-          };
-          document.head.appendChild(js);
-        });
-        return calendlyReady;
-      }
-
-      document.addEventListener('click', async (e) => {
-        const trigger = (e.target as Element).closest('[data-calendly]');
-        if (!trigger) return;
-        e.preventDefault();
-        // Un enlace a Calendly puede traer datos prellenados (name, email, a1)
-        const href = trigger.getAttribute('href') ?? '';
-        const url = href.startsWith(CALENDLY_URL) ? href : CALENDLY_URL;
-        try {
-          await loadCalendly();
-          (window as any).Calendly.initPopupWidget({ url });
-        } catch {
-          // Sin conexión con Calendly: abrimos la página directamente
-          window.open(url, '_blank', 'noopener');
-        }
-      });
+      import { initTracking } from '../scripts/track';
+      import { initBookingButtons } from '../scripts/cal';
+      initTracking();
+      initBookingButtons();
     </script>
   </body>
 </html>
