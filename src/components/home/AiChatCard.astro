@@ -1,0 +1,29 @@
+---
+// ARCHIVADO: tarjeta "Mi diferencial" con el chat de WhatsApp con IA.
+// No se usa mientras el asistente no sea un servicio activo. Para reactivarla,
+// impórtala en Bento.astro en lugar de la tarjeta de los 3 pasos (textos en home.ts → bento.ai).
+import { getHome } from '../../data/home';
+import { getLang } from '../../i18n/utils';
+
+const c = getHome(getLang(Astro.currentLocale)).bento;
+---
+<div class="col-span-2 grid grid-cols-2 items-center gap-6 overflow-hidden rounded-3xl bg-linear-150 from-mar from-0% via-mar-raised via-60% to-mediterraneo to-100% p-8 text-crema transition-transform duration-500 ease-brand hover:-translate-y-[3px] max-sm:grid-cols-1 max-sm:gap-4 max-sm:p-[22px]">
+  <div>
+    <p class="inline-flex items-center gap-2 text-xs uppercase tracking-[.08em] text-aqua-light"><span class="rounded-full bg-aqua/18 px-[9px] py-[3px]">{c.ai.badge}</span></p>
+    <h3 class="mt-3.5 text-[28px] leading-8 tracking-[-0.03em] max-sm:text-[22px] max-sm:leading-7">{c.ai.title}</h3>
+    <p class="mt-2.5 text-[15px] leading-[23px] text-ink-muted-dark max-sm:text-sm max-sm:leading-[21px]">{c.ai.desc}</p>
+  </div>
+  <div class="flex flex-col gap-2 text-[13px] leading-[18px]" aria-hidden="true">
+    {c.ai.chat.map((m, i) => (
+      <span
+        class:list={[
+          'max-w-[88%] px-3 py-[9px]',
+          m.from === 'me'
+            ? 'self-end rounded-[14px_14px_4px_14px] bg-aqua text-mar'
+            : 'self-start rounded-[14px_14px_14px_4px] bg-white/12 text-crema',
+          { 'max-sm:hidden': i === 2 },
+        ]}
+      >{m.text}</span>
+    ))}
+  </div>
+</div>

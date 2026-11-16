@@ -17,6 +17,9 @@ const stats = {
   slots:    '[N]', // cupos libres este mes, entero: '3'
 };
 
+/** true si el texto aún tiene contenido pendiente entre [corchetes]: esa pieza no se muestra */
+export const isPending = (text: string) => /\[[^\]]+\]/.test(text);
+
 export interface CaseItem {
   name: string;      // texto vertical de la franja cerrada
   title: string;
@@ -81,7 +84,8 @@ const es = {
     cta: 'Agenda tu diagnóstico gratis',
     secondary: 'Ver trabajos',
     hello: 'Hola, soy Camilo',
-    role: `Diseñador y desarrollador web · ${stats.years} años`,
+    role: 'Diseñador y desarrollador web',
+    roleYears: `${stats.years} años`,
     photoAlt: 'Camilo Acosta, diseñador y desarrollador web',
     location: '[ Cartagena, CO — GMT−5 ]',
     scroll: 'Desliza para explorar',
@@ -110,7 +114,8 @@ const es = {
       'Respondes los mismos mensajes de WhatsApp todo el día y muchos se enfrían antes de agendar.',
       'Tu trabajo es excelente, pero tu presencia digital no lo transmite.',
     ],
-    aside: `Diseño, código, IA y lanzamiento en las mismas manos. ${stats.years} años y ${stats.projects} webs entregadas.`,
+    aside: 'Diseño, código, IA y lanzamiento en las mismas manos.',
+    asideStats: `${stats.years} años y ${stats.projects} webs entregadas.`,
     button: ['Agenda tu', 'diagnóstico gratis'],
   },
   bento: {
@@ -131,6 +136,7 @@ const es = {
       role: '[Profesión]',
     },
     experience: { label: 'Experiencia', value: stats.projects, desc: `webs entregadas en ${stats.years} años.` },
+    // Inactivo: el asistente de WhatsApp con IA aún no es un servicio (ver AiChatCard.astro)
     ai: {
       badge: 'Mi diferencial',
       title: 'WhatsApp con IA que responde y agenda por ti',
@@ -142,7 +148,14 @@ const es = {
         { from: 'me',   text: 'Listo, quedaste agendado ✓' },
       ] as ChatLine[],
     },
-    allInOne: { label: 'Todo en uno', text: 'Diseño y código con la misma persona.', stack: 'Figma · Astro · React · Tailwind' },
+    // Visual activo de "Mi diferencial". El chat de `ai` queda guardado para reactivarlo (AiChatCard.astro)
+    differential: {
+      badge: 'Mi diferencial',
+      title: 'Webs pensadas para que te agenden',
+      desc: 'Cada sección guía a tu visitante hacia un solo paso: agendar contigo. Sin adornos que distraigan.',
+      steps: ['Te encuentran', 'Confían en ti', 'Agendan'],
+    },
+    allInOne: { label: 'Todo en uno', text: 'Diseño y desarrollo con la misma persona. Hablas directo conmigo, sin intermediarios.' },
     availability: { label: 'Disponible', text: `${stats.slots} cupos este mes`, desc: 'Pocos proyectos, dedicación real.' },
     cta: 'Hablemos 30 minutos, gratis.',
   },
@@ -333,7 +346,8 @@ const en: HomeContent = {
     cta: 'Book your free assessment',
     secondary: 'See my work',
     hello: 'Hi, I’m Camilo',
-    role: `Web designer & developer · ${stats.years} years`,
+    role: 'Web designer & developer',
+    roleYears: `${stats.years} years`,
     photoAlt: 'Camilo Acosta, web designer and developer',
     location: '[ Cartagena, CO — GMT−5 ]',
     scroll: 'Scroll to explore',
@@ -361,7 +375,8 @@ const en: HomeContent = {
       'You answer the same WhatsApp messages all day and many leads go cold before booking.',
       'Your work is excellent, but your online presence doesn’t show it.',
     ],
-    aside: `Design, code, AI and launch in the same hands. ${stats.years} years and ${stats.projects} websites delivered.`,
+    aside: 'Design, code, AI and launch in the same hands.',
+    asideStats: `${stats.years} years and ${stats.projects} websites delivered.`,
     button: ['Book your', 'free assessment'],
   },
   bento: {
@@ -393,7 +408,13 @@ const en: HomeContent = {
         { from: 'me',   text: 'Done, you’re booked ✓' },
       ],
     },
-    allInOne: { label: 'All in one', text: 'Design and code by the same person.', stack: 'Figma · Astro · React · Tailwind' },
+    differential: {
+      badge: 'My edge',
+      title: 'Websites built to get you booked',
+      desc: 'Every section guides your visitor toward one step: booking with you. Nothing to distract them.',
+      steps: ['They find you', 'They trust you', 'They book'],
+    },
+    allInOne: { label: 'All in one', text: 'Design and development by the same person. You talk directly to me, no middlemen.' },
     availability: { label: 'Available', text: `${stats.slots} spots this month`, desc: 'Few projects, real dedication.' },
     cta: 'Let’s talk for 30 minutes, free.',
   },

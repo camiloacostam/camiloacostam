@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 import Icon from '../components/home/Icon.astro';
 import { diagnostico as c } from '../data/diagnostico';
-import { links } from '../data/home';
+import { isPending, links } from '../data/home';
 import { projects, projectText } from '../data/projects';
 import cutout from '../assets/home/camilo-cutout.webp';
 import avatar from '../assets/home/camilo.webp';
@@ -143,10 +143,10 @@ const ctaClass = 'pill fill-btn inline-flex min-h-14 items-center justify-center
                 <p class="text-[13px] tracking-[.04em] text-ink-muted uppercase">{p.text.kind} · {p.text.category}</p>
                 <h3 class="mt-1.5 text-2xl leading-8 tracking-[-0.02em]">{p.title}</h3>
                 <p class="mt-2 text-[15px] leading-[23px] text-ink-muted">{p.text.shortDesc}</p>
-                <figure class="mt-5 border-t border-line pt-4">
+                {!isPending(c.proof.testimonial) && <figure class="mt-5 border-t border-line pt-4">
                   <blockquote class="text-base leading-[25px]">“{c.proof.testimonial}”</blockquote>
                   <figcaption class="mt-1.5 text-[13px] text-ink-muted">{c.proof.testimonialAuthor}</figcaption>
-                </figure>
+                </figure>}
               </div>
             </article>
           ))}

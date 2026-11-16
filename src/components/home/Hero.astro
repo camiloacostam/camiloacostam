@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import cutout from '../../assets/home/camilo-cutout.webp';
 import avatar from '../../assets/home/camilo.webp';
-import { getHome, links } from '../../data/home';
+import { getHome, isPending, links } from '../../data/home';
 import { getLang } from '../../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -22,8 +22,8 @@ const calloutPos = [
 
   <div class="wrap relative grid w-full grow grid-cols-[minmax(0,5fr)_minmax(0,7fr)] grid-rows-[auto_auto_auto] content-center items-center gap-x-6 pt-[140px] pb-8 max-lg:grid-cols-1 max-lg:pt-[120px] max-sm:pt-[100px] max-sm:pb-7">
     <div class="col-start-1 row-start-1 self-end">
-      <div class="glass inline-flex items-center gap-2.5 rounded-full py-2 pr-4 pl-3 text-[13px] leading-5 text-cielo-soft max-sm:gap-2 max-sm:py-1.5 max-sm:pr-3.5 max-sm:pl-2.5 max-sm:text-xs"><span class="pulse-dot"></span>{c.availability}</div>
-      <h1 class="mt-7 text-[64px] leading-[68px] font-normal tracking-[-0.035em] max-sm:mt-5 max-sm:text-[42px] max-sm:leading-[45px]">{c.titleStart} <span class="script text-[84px] text-aqua max-sm:text-[56px]">{c.titleScript}</span></h1>
+      {!isPending(c.availability) && <div class="glass inline-flex items-center gap-2.5 rounded-full py-2 pr-4 pl-3 text-[13px] leading-5 text-cielo-soft max-sm:gap-2 max-sm:py-1.5 max-sm:pr-3.5 max-sm:pl-2.5 max-sm:text-xs"><span class="pulse-dot"></span>{c.availability}</div>}
+      <h1 class="mt-7 text-[64px] first:mt-0 leading-[68px] font-normal tracking-[-0.035em] max-sm:mt-5 max-sm:text-[42px] max-sm:leading-[45px]">{c.titleStart} <span class="script text-[84px] text-aqua max-sm:text-[56px]">{c.titleScript}</span></h1>
       <p class="mt-6 max-w-[440px] text-lg leading-[29px] text-ink-muted-dark max-sm:mt-4 max-sm:text-base max-sm:leading-[25px]">{c.subline}</p>
     </div>
 
@@ -38,7 +38,7 @@ const calloutPos = [
 
     <div class="col-start-1 row-start-3 mt-16 flex items-center gap-3 self-start max-lg:row-start-4 max-lg:mt-8 max-sm:mt-3 max-sm:gap-2.5 max-sm:px-1 max-sm:py-1.5">
       <Image src={avatar} alt="" width={88} height={88} class="size-11 rounded-full border border-white/25 bg-cielo object-cover object-[50%_12%] max-sm:size-10" />
-      <p class="text-sm leading-5 text-ink-muted-dark max-sm:text-[13px] max-sm:leading-[18px]"><span class="script text-xl text-crema max-sm:text-lg">{c.hello}</span><br />{c.role}</p>
+      <p class="text-sm leading-5 text-ink-muted-dark max-sm:text-[13px] max-sm:leading-[18px]"><span class="script text-xl text-crema max-sm:text-lg">{c.hello}</span><br />{c.role}{!isPending(c.roleYears) && ` · ${c.roleYears}`}</p>
     </div>
 
     <div class="relative col-start-2 row-span-3 row-start-1 h-[680px] w-[620px] max-w-full justify-self-center max-lg:col-start-1 max-lg:row-span-1 max-lg:row-start-2 max-lg:mx-auto max-lg:-mt-10 max-lg:-mb-[60px] max-lg:scale-[.82] max-sm:mx-[-16px] max-sm:mt-4 max-sm:mb-0 max-sm:h-[430px] max-sm:w-auto max-sm:max-w-none max-sm:scale-100 max-sm:justify-self-stretch">
@@ -93,7 +93,7 @@ const calloutPos = [
   <div class="wrap relative flex w-full items-end justify-between gap-4 pb-7 text-[11px] leading-4 tracking-[.12em] text-ink-muted-dark uppercase max-sm:hidden">
     <span>{c.location}</span>
     <span class="flex flex-col items-center gap-2.5">{c.scroll}<span class="block h-8 w-px origin-top animate-scrollline bg-aqua"></span></span>
-    <span>{c.delivered}</span>
+    {isPending(c.delivered) ? <span aria-hidden="true"></span> : <span>{c.delivered}</span>}
   </div>
 </section>
 
