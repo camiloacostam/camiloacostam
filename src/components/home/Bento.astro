@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import caseDesktop from '../../assets/projects/prometalica-desktop.jpg';
 import caseMobile from '../../assets/projects/prometalica-mobile.jpg';
-import avatar from '../../assets/home/camilo.webp';
+import clientLogo from '../../assets/projects/prometalicas-logo.png';
 import { getHome, isPending, links } from '../../data/home';
 import { getLang } from '../../i18n/utils';
 
@@ -69,8 +69,8 @@ const text  = 'mt-auto text-[22px] leading-[30px] tracking-[-0.015em] max-sm:tex
         <p class="text-[13px] leading-5 text-mar max-sm:text-xs">{c.testimonial.label}</p>
         <blockquote class="mt-6 text-2xl leading-8 tracking-[-0.015em] max-sm:mt-3.5 max-sm:text-[19px] max-sm:leading-[27px]">{c.testimonial.quote}</blockquote>
         <figcaption class="mt-auto flex items-center gap-3 pt-6 text-sm leading-5 max-sm:pt-4 max-sm:text-[13px] max-sm:leading-[18px]">
-          <Image src={avatar} alt="" width={88} height={88} class="size-11 shrink-0 rounded-full bg-cielo-soft object-cover object-[50%_12%] max-sm:size-9" />
-          <span><strong class="block font-semibold">{c.testimonial.name}</strong>{c.testimonial.role}</span>
+          <span class="flex h-11 shrink-0 items-center rounded-xl bg-mar px-2.5 max-sm:h-9"><Image src={clientLogo} alt="" width={160} class="h-7 w-auto max-sm:h-6" /></span>
+          <strong class="font-semibold">{c.testimonial.name}</strong>
         </figcaption>
       </figure>
       )}

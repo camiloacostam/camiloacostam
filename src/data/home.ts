@@ -26,11 +26,12 @@ export const stats = {
 /** true si el texto aún tiene contenido pendiente entre [corchetes]: esa pieza no se muestra */
 export const isPending = (text: string) => /\[[^\]]+\]/.test(text);
 
-// Testimonio del cliente de Prometálicas Solutions y Atelier (es el mismo cliente, un solo testimonio).
-// Pendiente de aprobación: mientras tenga [corchetes] no se muestra en /diagnostico.
+// Testimonio real del cliente de Prometálicas Solutions y Atelier (mismo cliente, un solo testimonio).
+// Se firma solo con la empresa. Lo usan la tarjeta del bento y los casos de /diagnostico.
 export const clientTestimonial = {
-  quote:  '[TESTIMONIO REAL]',
-  author: '[Nombre, cargo]',
+  es: { quote: 'El resultado superó por completo nuestras expectativas. Excelente trabajo, Camilo.' },
+  en: { quote: 'The result completely exceeded our expectations. Excellent work, Camilo.' },
+  author: 'Prometálicas Solutions',
 };
 
 export interface CaseItem {
@@ -145,13 +146,11 @@ const es = {
       linkLabel: 'Ver el sitio en vivo',
     },
     delivery: { label: 'Entrega', value: '7 días', desc: 'De la primera llamada a tu web en línea.' },
-    // Tarjeta de la frase destacada. Cuando el cliente apruebe su testimonio, cámbialo aquí
-    // (label 'Testimonio', su frase, su nombre y su cargo).
+    // Tarjeta de testimonio: texto en clientTestimonial (arriba)
     testimonial: {
-      label: 'Mi compromiso',
-      quote: '“Si en 7 días tu web no está lista, seguimos trabajando sin costo extra hasta entregarla.”',
-      name: 'Camilo Acosta',
-      role: 'Diseñador y desarrollador web',
+      label: 'Testimonio',
+      quote: `“${clientTestimonial.es.quote}”`,
+      name: clientTestimonial.author,
     },
     experience: { label: 'Experiencia', value: stats.projects, desc: 'proyectos digitales desarrollados desde 2020.' },
     // Inactivo: el asistente de WhatsApp con IA aún no es un servicio (ver AiChatCard.astro)
@@ -228,6 +227,7 @@ const es = {
     deliveryLabel: 'Entrega',
     resultLabel: 'Resultado',
     cta: 'Agenda tu diagnóstico gratis →',
+    guarantee: 'Si no entrego tu web en el plazo acordado, sigo trabajando sin costo extra hasta terminarla.',
     items: [
       {
         name: 'Landing page',
@@ -239,8 +239,8 @@ const es = {
       },
       {
         name: 'Sitio profesional', badge: 'Más elegido',
-        desc: 'Tu marca completa en internet: servicios, sobre ti, blog y contacto.',
-        includes: ['Todo lo de la landing page', 'Hasta 5 páginas: Inicio, Sobre mí, Servicios, Casos y Contacto', 'Blog que tú mismo puedes editar', 'SEO básico para aparecer en Google'],
+        desc: 'Tu marca completa en internet: inicio, sobre ti, servicios, casos y contacto.',
+        includes: ['Todo lo de la landing page', 'Hasta 5 páginas: Inicio, Sobre mí, Servicios, Casos y Contacto', 'SEO básico para aparecer en Google'],
         delivery: '2 a 3 semanas',
         result: 'Una presencia que genera confianza y te trae clientes desde Google',
         price: 'Precio según tu proyecto', featured: true,
@@ -401,10 +401,9 @@ const en: HomeContent = {
     },
     delivery: { label: 'Delivery', value: '7 days', desc: 'From our first call to your site going live.' },
     testimonial: {
-      label: 'My promise',
-      quote: '“If your website isn’t ready in 7 days, I keep working at no extra cost until it’s delivered.”',
-      name: 'Camilo Acosta',
-      role: 'Web designer & developer',
+      label: 'Testimonial',
+      quote: `“${clientTestimonial.en.quote}”`,
+      name: clientTestimonial.author,
     },
     experience: { label: 'Experience', value: stats.projects, desc: 'digital projects built since 2020.' },
     ai: {
@@ -479,6 +478,7 @@ const en: HomeContent = {
     deliveryLabel: 'Delivery',
     resultLabel: 'Result',
     cta: 'Book your free assessment →',
+    guarantee: 'If I don’t deliver your website by the agreed date, I keep working at no extra cost until it’s finished.',
     items: [
       {
         name: 'Landing page',
@@ -490,8 +490,8 @@ const en: HomeContent = {
       },
       {
         name: 'Professional site', badge: 'Most popular',
-        desc: 'Your full brand online: services, about you, blog and contact.',
-        includes: ['Everything in the landing page', 'Up to 5 pages: Home, About, Services, Cases and Contact', 'A blog you can edit yourself', 'Basic SEO to show up on Google'],
+        desc: 'Your full brand online: home, about you, services, cases and contact.',
+        includes: ['Everything in the landing page', 'Up to 5 pages: Home, About, Services, Cases and Contact', 'Basic SEO to show up on Google'],
         delivery: '2 to 3 weeks',
         result: 'A presence that builds trust and brings you clients from Google',
         price: 'Price based on your project', featured: true,

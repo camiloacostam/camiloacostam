@@ -9,6 +9,7 @@ import { clientTestimonial, isPending, links } from '../data/home';
 import { projects, projectText } from '../data/projects';
 import cutout from '../assets/home/camilo-cutout.webp';
 import avatar from '../assets/home/camilo.webp';
+import clientLogo from '../assets/projects/prometalicas-logo.png';
 
 const cases = projects.map((p) => ({ ...p, text: projectText(p, 'es') }));
 const ctaClass = 'pill fill-btn inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full px-7 text-base font-semibold whitespace-nowrap no-underline max-sm:w-full';
@@ -149,10 +150,13 @@ const ctaClass = 'pill fill-btn inline-flex min-h-14 items-center justify-center
         </div>
 
         {/* Un solo testimonio para los dos casos (mismo cliente); oculto mientras esté pendiente */}
-        {!isPending(clientTestimonial.quote) && (
+        {!isPending(clientTestimonial.es.quote) && (
           <figure class="reveal mt-4 rounded-[28px] bg-crema-raised p-8 max-sm:p-6">
-            <blockquote class="text-2xl leading-8 tracking-[-0.015em] max-sm:text-[19px] max-sm:leading-[27px]">“{clientTestimonial.quote}”</blockquote>
-            <figcaption class="mt-3 text-sm text-ink-muted">{clientTestimonial.author}</figcaption>
+            <blockquote class="text-2xl leading-8 tracking-[-0.015em] max-sm:text-[19px] max-sm:leading-[27px]">“{clientTestimonial.es.quote}”</blockquote>
+            <figcaption class="mt-5 flex items-center gap-3 text-sm text-ink-muted">
+              <span class="flex h-11 shrink-0 items-center rounded-xl bg-mar px-2.5"><Image src={clientLogo} alt="" width={160} class="h-7 w-auto" /></span>
+              <strong class="font-semibold text-mar">{clientTestimonial.author}</strong>
+            </figcaption>
           </figure>
         )}
       </div>
